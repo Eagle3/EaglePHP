@@ -15,7 +15,6 @@ use lib\system\Curl;
 use lib\system\DataFormatConvert;
 use lib\system\Datetime;
 
-
 class IndexController extends CommonController {
     public function init(){
         //echo 'init operation<br>';
