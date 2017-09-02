@@ -51,6 +51,7 @@ $GLOBALS['SMARTY_OBJ'] = getSmartyObj();
 
 function autoLoad($class){
     //echo $class.'<br>';
+    $class = str_replace('\\','/',$class);
     $classFile = $class.'.class.php';
     $classDir = array(
             EAGLE_PATH,
