@@ -2,21 +2,19 @@
 第一套模板<br>
 {$name}
 
+<script>
+	eagle.ajaxPost({
+		url : 'http://eagle.test/index.php?r=home&c=index&a=ajax',
+		data : {
+			name: 'jack'
+		},
+		success : function (res){
+			console.log(res);
+			console.log(JSON.parse(res));
+		}
+	});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</script>
 
 
 </body>
