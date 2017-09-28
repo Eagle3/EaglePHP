@@ -58,7 +58,7 @@ protected  $smarty = null;
     private function initSmarty(){
         //$this->smarty = getSmartyObj();
         $this->smarty = $GLOBALS['SMARTY_OBJ'];
-        $this->smartyConfigArr = getConfig('SMARTY_CONFIG');
+        $this->smartyConfigArr = getConfig('SMARTY_TPL_CONFIG');
         $this->setSmarty();
     }
     

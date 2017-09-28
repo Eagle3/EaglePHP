@@ -1,9 +1,8 @@
 <?php
 
 namespace home\controller;
-use home\controller\CommonController;
 
-//use lib\Controller;
+use home\controller\CommonController;
 use home\model\UserModel;
 use lib\system\Page;
 use lib\system\Mulupload;
@@ -23,6 +22,18 @@ class IndexController extends CommonController {
     public function index() {
         $this->assign('name', 'jack');
         $this->display('index');
+    }
+    
+    //测试内置模板引擎
+    public function testTpl() {
+    	$v = new \lib\Template();
+    	$v->assign('name', 'jack');
+    	
+    	$c = $v->fetch('testTpl');
+		var_dump($c) ;
+		exit;
+		
+    	$v->display('testTpl');
     }
     
     public function js() {

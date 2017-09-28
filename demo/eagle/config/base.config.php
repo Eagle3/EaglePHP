@@ -3,17 +3,13 @@ return array(
         /** 只在系统配置文件中有效，项目配置文件中无效  start **/
         
         //smarty模板引擎配置
-        'SMARTY_CONFIG' => array(
+        'SMARTY_TPL_CONFIG' => array(
                 'debugging' => false, //开启调试
                 'caching' => false,              //是否使用缓存
                 'cache_lifetime' => 0, //缓存时间
-                
-                
                 'template_dir' => APP_PATH,//设置模板目录
-                
-                
-                'compile_dir' => './tmp/templates_c',//设置编译目录
-                'cache_dir' => './tmp/cache/smarty_cache',//缓存文件夹
+                'compile_dir' => './tmp/smarty_templates_c',//设置编译目录
+                'cache_dir' => './tmp/cache/smarty_templates_cache',//缓存文件夹
                 //修改左右边界符号
                 'delimiter' => array(
                         'left_delimiter' => '{',
@@ -22,11 +18,26 @@ return array(
                 
         ),
         
+		//系统内置模板引擎配置
+		'SYSTEM_TPL_CONFIG' => array(
+				'debugging' => false, //开启调试
+				'caching' => false,              //是否使用缓存
+				'cache_lifetime' => 0, //缓存时间
+				'template_dir' => APP_PATH,//设置模板目录
+				'compile_dir' => DIR.'/tmp/system_templates_c/',//设置编译目录
+				'cache_dir' => DIR.'/tmp/cache/system_templates_cache/',//缓存文件夹
+				//修改左右边界符号
+				'delimiter' => array(
+						'left_delimiter' => '{',
+						'right_delimiter' => '}',
+				),
+		
+		),
+		
         /** 只在系统配置文件中有效，项目配置文件中无效  end **/
         
         
         /** 可以在系统配置文件填写，也可在项目配置文件中填写，同时填写以项目中的为准  start **/
-        
         //模板默认目录标识
         'DEFAULT_TPL_NAME' => 'view',
         
@@ -67,8 +78,6 @@ return array(
                          ),
                 ),
         ),
-        
-        
         /** 可以在系统配置文件填写，也可在项目配置文件中填写，同时填写以项目中的为准  end **/
         
         

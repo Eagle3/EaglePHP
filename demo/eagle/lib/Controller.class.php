@@ -1,5 +1,7 @@
 <?php
 namespace lib;
+
+//使用smarty模板引擎
 use lib\View;
 class Controller extends View {
     public function __construct(){
