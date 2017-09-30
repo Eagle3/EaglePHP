@@ -182,26 +182,23 @@
 		
 		//调用ajax方法时，组装发送的参数
 		joinParam : function(url,data){
-			if (typeof data == "string") {
-				 if(this.ajax.method == 'GET'){
-					 return url.indexOf("?") == -1 ? url + '?' + data : url + '&' + data;
-				 }else{
-					 return data;
-				 }
-			}
 			var p = '';
-			if (typeof data == "object") {
-				 if(!this.isEmptyObject(data)){
-					 for (var k in data){
-						 p = p + k + '=' + data[k] + '&';
-					 }
-					 p = p.substring(0, p.lastIndexOf('&'));
+			if ( typeof data == "object" && !this.isEmptyObject(data) ) {
+				 for (var k in data){
+					 p = p + k + '=' + data[k] + '&';
 				 }
-				 if(this.ajax.method == 'GET'){
-					 return p ? (url.indexOf("?") == -1 ? url + '?' + p : url + '&' + p) : url;
-				 }
-				 return p;
+				 p = p.substring(0, p.lastIndexOf('&'));
 			}
+			
+			if ( typeof data == "string" ) {
+				 p = data;
+			}
+			
+			if( this.ajax.method == 'GET' ){
+				p = p ? (url.indexOf("?") == -1 ? url + '?' + p : url + '&' + p) : url;
+			}
+			 
+		    return p;
 		},
 		
 		//调用jsonp时组装数据
@@ -466,7 +463,65 @@
 			}
 		},
 		
+		//获取属性值
+		getAttr : function ( o , p ){
+			return o.getAttribute(p);
+		},
 		
+		//设置属性值
+		setAttr : function ( o , p , v ){
+			o.setAttribute( p , v );
+		},
+		
+		//获取表单数据
+		getFormData : function ( o ){
+			var p = '';
+			var q = '';
+			var r = '';
+			
+			var inputs = o.getElementsByTagName('input');
+			var selects = o.getElementsByTagName('select');
+			
+			var inlen = inputs.length;
+			if( inlen > 0 ){
+				for ( i = 0; i < inlen; i++ ){
+					var type =  inputs[i].type.toLowerCase();
+					switch ( type ) {
+						case 'text': case 'password': case 'hidden': case 'submit': case 'color': case 'date': case 'datetime': 
+						case 'datetime-local': case 'email': case 'month': case 'number': case 'range': case 'search': case 'url':
+							p += inputs[i].name + '=' + inputs[i].value + '&';
+						case 'radio': case 'checkbox':
+							if( inputs[i].checked == true ){
+								p = p + inputs[i].name + '=' + inputs[i].value + '&';
+							}
+							break;
+						default :
+							break;
+					}
+				}
+				p = p ? p.substring(0, p.lastIndexOf('&')) : '';
+			}
+			
+			var selen = selects.length;
+			if( selen > 0 ){
+				for ( i = 0; i < selen; i++ ){
+					var options = selects[i];
+					var oplen = options.length;
+					if( oplen > 0 ){
+						var j = 0;
+						for ( j = 0; j < oplen; j++ ){
+							if( options[j].selected == true ){
+								q += selects[i].name + '=' + options[j].value + '&';
+							}
+						}
+					}
+				}
+				q = q ? ( p ? '&'+q : '' ) : '';
+				q = q ? q.substring(0, q.lastIndexOf('&')) : '';
+			}
+			
+			return p + q;
+		},
 		
 		
 		

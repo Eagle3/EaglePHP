@@ -20,7 +20,7 @@ class IndexController extends CommonController {
     }
 	
     public function index() {
-        $this->assign('name', 'jack');
+        $this->assign('name', '');
         $this->display('index');
     }
     
@@ -41,6 +41,8 @@ class IndexController extends CommonController {
     }
     
     public function ajax() {
+    	pr($_POST);
+    	
     	$data = $_REQUEST;
     	$res = array(
     			'code' => 1,
