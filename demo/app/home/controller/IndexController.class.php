@@ -13,20 +13,59 @@ use lib\system\crypt\Rsa;
 use lib\system\Curl;
 use lib\system\DataFormatConvert;
 use lib\system\Datetime;
+use lib\system\Arr;
 
 class IndexController extends CommonController {
     public function init(){
         //echo 'init operation<br>';
     }
 	
+    
     public function index() {
-        $this->assign('name', '');
+    	$str = 'w1+-*/<>?:"{}+_)(*&^%$#@!~·！￥……（）——|：“《》？';
+    	$str = '201709_1009999';
+    	$key = '哈哈哈abcdef#$%123456';
+    	
+    	$en = new EnDecode();
+    	
+    	$enStr1 = $en->code1($str, $key, 'ENCODE' ) ;
+    	$deStr1 = $en->code1($enStr1,$key, 'DECODE') ;
+    	
+    	$enStr2 = $en->code2($str, $key,'encode') ;
+    	$deStr2 = $en->code2($enStr2, $key,'decode') ;
+    	
+    	$enStr3 = $en->code3($str, $key,'encode' ) ;
+    	$deStr3 = $en->code3($enStr3, $key,'decode') ;
+    	
+    	pr($enStr1,$deStr1,$enStr2,$deStr2,$enStr3,$deStr3);
+    	
+    	
+        $this->assign('name', 'test');
         $this->display('index');
     }
     
-    //测试内置模板引擎
+    //测试httpheader Authorization
+    public function oauthor() {
+    	$header = array(
+    			'Authorization: MAC id=123,ts=12345678901,nonce=ASgdwgdsbsn,mac=SSKGFJDKJwrtvSBDSKLB==',
+    	);
+    	
+    	$url = 'http://eagle.test/index.php?r=home&c=index&a=getCurl';
+    	$data = array(
+    			'name' => 'jack',
+    			'from' => '中国',
+    			'data' => json_encode(array('name' => 'jack','from' => '中国',),JSON_UNESCAPED_UNICODE),
+    	);
+    	//$data = 'name=jack&age=20';
+    	$curl = new Curl($url,$data,'post',1001);
+    	$curl->setHttpHeader($header);
+    	$res = $curl->send();
+    	pr($res);
+    	
+    }
+    
     public function testTpl() {
-    	$v = new \lib\Template();
+    	$v = new \lib\system\Template();
     	$v->assign('name', 'jack');
     	
     	$c = $v->fetch('testTpl');
@@ -41,7 +80,7 @@ class IndexController extends CommonController {
     }
     
     public function ajax() {
-    	pr($_POST);
+    	//pr($_POST);
     	
     	$data = $_REQUEST;
     	$res = array(
@@ -139,6 +178,9 @@ class IndexController extends CommonController {
     
     //测试CURL接收数据配合curl使用
     public function getCurl(){
+    	pr( $_SERVER,getallheaders () );
+    	
+    	
     	echo '收到数据';
     	
     	//测试curl get
@@ -292,6 +334,19 @@ class IndexController extends CommonController {
     }
     
     
+    public function arr (){
+    	$o = new Arr();
+    	//$arr = $o->createHugeArr();
+    	
+    	$arr10k = getConfig('arrSortData.10k');
+    	//$arr20k = getConfig('arrSortData.20k');
+    	//$arr50k = getConfig('arrSortData.50k');
+    	
+    	$arr = $o->bubbleSort($arr10k);
+    	
+    	
+    	pr($arr);
+    }
     
     
     

@@ -44,6 +44,8 @@ class Curl {
 	private $contentTypeCode = '';
 	private $sendData = '';
 	private $requestUrl = '';
+	private $httpHeader = array();
+	private $curlOption = array();
 	
 	/**
 	 * 初始化CURL类
@@ -154,6 +156,12 @@ class Curl {
 				break;
 		}
 		
+		if( $this->httpHeader ){
+			foreach ( $this->httpHeader as $k=>$v){
+				array_push($httpHeader, $v);
+			}
+		}
+		
 		$httpHeader && curl_setopt($this->ch, CURLOPT_HTTPHEADER, $httpHeader);
 		curl_setopt($this->ch, CURLOPT_POSTFIELDS, $postData);
 		$res = curl_exec($this->ch);
@@ -161,6 +169,10 @@ class Curl {
 		return $res;
 	}
 	
+	public function setHttpHeader( $arr ){
+		$arr && $this->httpHeader = $arr;
+	}
+		
 	private function initCurl(){
 		$ch = curl_init($this->requestUrl);
 		//curl_setopt($ch, CURLOPT_URL, $this->requestUrl);

@@ -1383,7 +1383,7 @@ function getMSToTime($str){
 	return $m * 60 + $s;
 }
 
-function quick_sort($arr) {
+function quickSort($arr) {
 	//先判断是否需要继续进行
 	$length = count($arr);
 	if($length <= 1) {
@@ -1408,8 +1408,8 @@ function quick_sort($arr) {
 	}
 	//再分别对 左边 和 右边的数组进行相同的排序处理方式
 	//递归调用这个函数,并记录结果
-	$left_array = quick_sort($left_array);
-	$right_array = quick_sort($right_array);
+	$left_array = quickSort($left_array);
+	$right_array = quickSort($right_array);
 	//合并左边 标尺 右边
 	return array_merge($left_array, array($base_num), $right_array);
 }

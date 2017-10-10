@@ -2,7 +2,7 @@
 namespace lib;
 
 //使用smarty模板引擎
-use lib\View;
+use lib\system\View;
 class Controller extends View {
     public function __construct(){
         parent::__construct();
