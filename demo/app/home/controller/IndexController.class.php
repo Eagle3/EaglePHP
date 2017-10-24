@@ -1,19 +1,9 @@
 <?php
 
 namespace home\controller;
-
 use home\controller\CommonController;
-use home\model\UserModel;
-use lib\system\Page;
-use lib\system\Mulupload;
-use lib\system\Validate;
-use lib\system\crypt\EnDecode;
-use lib\system\crypt\Mcrypt3DesEcb;
-use lib\system\crypt\Rsa;
-use lib\system\Curl;
-use lib\system\DataFormatConvert;
-use lib\system\Datetime;
-use lib\system\Arr;
+use lib\system\Arr as Arr;
+
 
 class IndexController extends CommonController {
     public function init(){
@@ -22,24 +12,19 @@ class IndexController extends CommonController {
 	
     
     public function index() {
-    	$str = 'w1+-*/<>?:"{}+_)(*&^%$#@!~·！￥……（）——|：“《》？';
-    	$str = '201709_1009999';
-    	$key = '哈哈哈abcdef#$%123456';
     	
-    	$en = new EnDecode();
-    	
-    	$enStr1 = $en->code1($str, $key, 'ENCODE' ) ;
-    	$deStr1 = $en->code1($enStr1,$key, 'DECODE') ;
-    	
-    	$enStr2 = $en->code2($str, $key,'encode') ;
-    	$deStr2 = $en->code2($enStr2, $key,'decode') ;
-    	
-    	$enStr3 = $en->code3($str, $key,'encode' ) ;
-    	$deStr3 = $en->code3($enStr3, $key,'decode') ;
-    	
-    	pr($enStr1,$deStr1,$enStr2,$deStr2,$enStr3,$deStr3);
-    	
-    	
+//     	$str = 'w1+-*/<>?:"{}+_)(*&^%$#@!~·！￥……（）——|：“《》？';
+//     	$str = '201709_1009999';
+//     	$key = '哈哈哈abcdef#$%123456';
+//     	$en = new \lib\system\crypt\EnDecode();
+//     	$enStr1 = $en->code1($str, $key, 'ENCODE' ) ;
+//     	$deStr1 = $en->code1($enStr1,$key, 'DECODE') ;
+//     	$enStr2 = $en->code2($str, $key,'encode') ;
+//     	$deStr2 = $en->code2($enStr2, $key,'decode') ;
+//     	$enStr3 = $en->code3($str, $key,'encode' ) ;
+//     	$deStr3 = $en->code3($enStr3, $key,'decode') ;
+//     	pr($enStr1,$deStr1,$enStr2,$deStr2,$enStr3,$deStr3);
+    
         $this->assign('name', 'test');
         $this->display('index');
     }
@@ -57,7 +42,7 @@ class IndexController extends CommonController {
     			'data' => json_encode(array('name' => 'jack','from' => '中国',),JSON_UNESCAPED_UNICODE),
     	);
     	//$data = 'name=jack&age=20';
-    	$curl = new Curl($url,$data,'post',1001);
+    	$curl = new \lib\system\Curl($url,$data,'post',1001);
     	$curl->setHttpHeader($header);
     	$res = $curl->send();
     	pr($res);
@@ -77,6 +62,10 @@ class IndexController extends CommonController {
     
     public function js() {
     	$this->display('js');
+    }
+    
+    public function log() {
+    	\lib\system\Log::error( var_export($_REQUEST,true) );
     }
     
     public function ajax() {
@@ -116,13 +105,13 @@ class IndexController extends CommonController {
     }
     
     public function model(){
-        $model = new UserModel();
+        $model = new \home\model\UserModel();
         $data = $model->getInfo();
         pr($data);
     }
     
     public function page(){
-        $page = new Page(20, 5, 1, 'http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"]);
+        $page = new \lib\system\Page(20, 5, 1, 'http://'.$_SERVER['SERVER_NAME'].$_SERVER["REQUEST_URI"]);
         echo $page->pubPageStyleOne();
     }
     
@@ -133,7 +122,7 @@ class IndexController extends CommonController {
     
     public function upload(){
         if(isset($_POST['submit']) && $_POST['submit']){
-            $mulup = new Mulupload();
+            $mulup = new \lib\system\Mulupload();
             $config = array(
                     'max_number' => 5,//最多上传文件个数
                     'max_size' => 0, //上传大小限制，单位：字节。0，无限制
@@ -151,13 +140,62 @@ class IndexController extends CommonController {
     }
     
     public function check(){
-        $v = new Validate('email');
+        $v = new \lib\system\Validate('email');
         $str = 'test@test.com';
         pr($v->check($str));
     }
     
     //测试CURL发送数据
     public function curl(){
+    	
+    	$appId = 'abcdef';
+    	$key = '123456';
+    	$accessTokenUrl = 'http://eagle.test/index.php?r=home&c=index&a=getCurl';
+    	$timestamp = time();
+    	$nonce = md5( uniqid( microtime( true ),true ) );
+    	$method = 'POST';
+    	$uri = '/oauth/access_token';
+    	$host = 'id.gionee.com';
+    	$port = '443';
+    	$n = "\n";
+    	$str = "{$timestamp}\n{$nonce}\n{$method}\n{$uri}\n{$host}\n{$port}\n{$n}";
+    	$signature = base64_encode( hash_hmac( 'sha1', $str, $key,true ) );
+    	$postData = array(
+    			'grant_type' => 'authorization_code', //	true	string	请求的类型，目前只支持一种authorization_code
+    			'code' => 'FSDGDJSGPJSWBGNKB', //	true	string	GrantCode值，有获取临时授权码接口获取所得。
+    			'redirect_uri' => 'http://api.egret-labs.org/v2/game/22853/91234', //	true	string	授权回调地址，必须与OAuth/Authorize设置一致。
+    	);
+
+    	$header = array(
+    			'Content-Type:application/x-www-form-urlencoded',
+    			//'Authorization: MAC id="'.$appId.'",'.$n.'ts="'.$timestamp.'",'.$n.'nonce="'.$nonce.'",'.$n.'mac="'.$signature.'"',
+    			"Authorization: MAC id=\"{$appId}\",ts=\"{$timestamp}\",nonce=\"{$nonce}\",mac=\"{$signature}\"",
+    	);
+    	
+    	$curl = new \lib\system\Curl($accessTokenUrl,$postData,'POST',1001);
+    	$curl->setOption(CURLOPT_HTTPHEADER,$header);
+    	$res = $curl->send();
+    	exit;
+		
+    	$url = 'https://blast.triumbest.net:11001/TopUp_server/rechangeEgret.json';
+    	$data = array (
+			  'orderId' => '42336448585242594645784665567848',
+			  'id' => '9100ef200d513db37f13ac6515ab16e3',
+			  'money' => '6',
+			  'ext' => '359540;9100ef200d513db37f13ac6515ab16e3',
+			  'time' => 1508318412,
+			  'serverId' => '1',
+			  'goodsId' => '30001',
+			  'goodsNumber' => 1,
+			  'sign' => 'efbbb014b5ad5ece7be72873179df784',
+		);
+    
+    	$curl = new \lib\system\Curl($url,$data,'POST',1001);
+    	$res = $curl->send();
+    	var_dump($res);
+    	exit;
+    	
+    	
 		$url = 'http://eagle.test/index.php?r=home&c=index&a=getCurl';
 		$data = array(
 				'name' => 'jack',
@@ -165,22 +203,22 @@ class IndexController extends CommonController {
 				'data' => json_encode(array('name' => 'jack','from' => '中国',),JSON_UNESCAPED_UNICODE),
 		);
 		//$data = 'name=jack&age=20';
-      	$curl = new Curl($url,$data,'get',1001);
+      	$curl = new \lib\system\Curl($url,$data,'get',1001);
       	$res = $curl->send();
       	pr($res);
     }
     
     public function dateTest(){
-    	$date = new DateTime();
+    	$date = new \lib\system\DateTime();
     	
     	pr($date);
     }
     
     //测试CURL接收数据配合curl使用
     public function getCurl(){
-    	pr( $_SERVER,getallheaders () );
-    	
-    	
+    	\lib\system\Log::debug( 'POST:'.var_export($_POST,true).',header:'.var_export(  getallheaders(),true ) );
+    	echo json_encode( array( 'post' => $_POST ) );
+
     	echo '收到数据';
     	
     	//测试curl get
@@ -256,7 +294,7 @@ class IndexController extends CommonController {
     public function endata(){
     	 
     	//自定义加密解密算法1
-    	/* $Authcode = new EnDecode();
+    	/* $Authcode = new \lib\system\crypt\EnDecode();
     	 $a = '{"Json解析":"支持格式化高亮折叠","Json格式验证":"更详细准确的错误信息"｝';
     	 $b = $Authcode->code1($a, "ENCODE", "这是密钥");
     	 echo $b."<br/>";
@@ -270,7 +308,7 @@ class IndexController extends CommonController {
     	 echo "<br/>"; */
     	 
     	//3DES ECB PKCS7（Java默认PKCS7模式填充） 加密解密
-    	/* $Mcrypt3DesEcb = new Mcrypt3DesEcb();
+    	/* $Mcrypt3DesEcb = new \lib\system\crypt\Mcrypt3DesEcb();
     	 $str = '北京欢迎你';
     	 $key = '123456';
     	 echo '明文：'.$str ;
@@ -287,7 +325,7 @@ class IndexController extends CommonController {
     public function rsa(){
     	//使用密钥文件签名、验签
     	/* $data = '签名串';
-    	 $rsa = new Rsa('./private_file/rsa_public_key.pem','./private_file/rsa_private_key.pem');
+    	 $rsa = new \lib\system\crypt\Rsa('./data/private_file/rsa_public_key.pem','./data/private_file/rsa_private_key.pem');
     	 $sign = $rsa->privateKeySign($data);
     	 $check = $rsa->publicKeyVerify($data,$sign);
     	 pr($sign,$check); */
@@ -296,14 +334,14 @@ class IndexController extends CommonController {
     	/* $data = '签名串';
     	 $rsa_public_key = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDcITVQ31bEL1qY0nEPloFjm/f2vOn1GuBzMYMdYi6S0FvVX/XFbLAklzepz2c0bHSVszT+8WNlU42xQoFuJ0rTe/oDtzxhTDbHgjUPt7fVrKHaPBSJnQIIRRU6YapXq0bn++SuU4QMlSTxb/onzSnM1t6Y2VskQnPMjna63VXehwIDAQAB';
     	 $rsa_private_key = 'MIICXgIBAAKBgQDcITVQ31bEL1qY0nEPloFjm/f2vOn1GuBzMYMdYi6S0FvVX/XFbLAklzepz2c0bHSVszT+8WNlU42xQoFuJ0rTe/oDtzxhTDbHgjUPt7fVrKHaPBSJnQIIRRU6YapXq0bn++SuU4QMlSTxb/onzSnM1t6Y2VskQnPMjna63VXehwIDAQABAoGBAJnKzbAJyVnZZ6dbZ0gns5A/GJeW1rG6rFNupRbzUGycC3zgxRnAXLPDvkzyLT2QBEfOY1k2lmXlYRoVx82IwBoCZ1TGgHJEfIjZrITpZVB+Yv8Jifp5fbScbemYO/gYyEZK3yjKHYzDhOdkctDf+ilokAIBA2ByGnf6G+gfHmfhAkEA/6TVQ7TKpnw96QPV5WNbJtMh5BeGKy3hBoEOi08bWR61iYSWHeb/NNszu+hrpa6MlOYq10RO7CdgSeIaIkLBdwJBANxvtdL39badasjfBasRZxhjBZZijx55uk57iWR6qr8l4cWaIGYb3WSSnERAZvJpE+etZNawW2MEzlUqGWXbj3ECQQC0kuXhUU7jklbYxNDNmwTDw9bomoU28s1EHtz7IgGbTcnFPVYcARK7byp3zJBdE5JRitMwAxwMSzQEfCUhli25AkAGaTFOi2uX/ggHA4V0rjLjYK3e68rhxgSHF8ytIWwp1v4z8wGSNqk/rYvh6EWWMzwi9sYCAGsH/DHMBEds0O/hAkEA9LG87JVuU+AV++B+GAGPpHEMIDrQH9QfwQ0H7PvobcM3pBb0L+wEl+mDB+keHjkGcLnckUQoDUoVQzxWsnoPvQ==';
-    	 $rsa = new Rsa($rsa_public_key,$rsa_private_key,false,false);
+    	 $rsa = new \lib\system\crypt\Rsa($rsa_public_key,$rsa_private_key,false,false);
     	 $sign = $rsa->privateKeySign($data);
     	 $check = $rsa->publicKeyVerify($data,$sign);
     	 pr($sign,$check); */
     	 
     	//使用私钥加密、公钥解密
     	/* $data = 'svsv';  //明文最多117字节，超过117字节需要分段加密处理，解密也需分段处理
-    	 $rsa = new Rsa('./private_file/rsa_public_key.pem','./private_file/rsa_private_key.pem');
+    	 $rsa = new \lib\system\crypt\Rsa('./data/private_file/rsa_public_key.pem','./data/private_file/rsa_private_key.pem');
     	 $enData = $rsa->privateKeyEn($data);
     	 $deData = $rsa->publicKeyDe($enData);
     	 pr($enData,$deData); */
@@ -311,7 +349,7 @@ class IndexController extends CommonController {
     	
     	//使用公钥加密、私钥解密
     	 /* $data = '签名串';
-    	 $rsa = new Rsa('./private_file/rsa_public_key.pem','./private_file/rsa_private_key.pem');
+    	 $rsa = new \lib\system\crypt\Rsa('./data/private_file/rsa_public_key.pem','./data/private_file/rsa_private_key.pem');
     	 $enData = $rsa->publicKeyEn($data);
     	 $deData = $rsa->privateKeyDe($enData);
     	 pr($enData,$deData); */
@@ -319,7 +357,7 @@ class IndexController extends CommonController {
     	 //使用私钥加密、公钥解密 (超过117字节时分段加密)
     	/*  //$data = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa9'  //明文最多117字节，超过117字节需要分段加密处理，解密也需分段处理
     	 $data = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa是aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa是999';
-    	 $rsa = new Rsa('./private_file/rsa_public_key.pem','./private_file/rsa_private_key.pem');
+    	 $rsa = new \lib\system\crypt\Rsa('./data/private_file/rsa_public_key.pem','./data/private_file/rsa_private_key.pem');
     	 $enData = $rsa->privateKeyEnm($data);
     	 $deData = $rsa->publicKeyDem($enData);
     	 pr($enData,$deData); */
@@ -327,7 +365,7 @@ class IndexController extends CommonController {
     	 
     	 //使用公钥加密、私钥解密 (超过117字节时分段加密)
     	  /* $data = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa是aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa是999';
-    	  $rsa = new Rsa('./private_file/rsa_public_key.pem','./private_file/rsa_private_key.pem');
+    	  $rsa = new \lib\system\crypt\Rsa('./data/private_file/rsa_public_key.pem','./data/private_file/rsa_private_key.pem');
     	  $enData = $rsa->publicKeyEnM($data);
     	  $deData = $rsa->privateKeyDeM($enData);
     	  pr($enData,$deData); */
@@ -335,16 +373,19 @@ class IndexController extends CommonController {
     
     
     public function arr (){
-    	$o = new Arr();
-    	//$arr = $o->createHugeArr();
-    	
-    	$arr10k = getConfig('arrSortData.10k');
+    	//$arr10k = getConfig('arrSortData.10k');
     	//$arr20k = getConfig('arrSortData.20k');
     	//$arr50k = getConfig('arrSortData.50k');
     	
-    	$arr = $o->bubbleSort($arr10k);
+    	$arr = Arr::createHugeArr(10000);
     	
+//     	$arr = Arr::phpSort($arr,'desc');
+//     	pr($arr);
     	
+//     	$arr = Arr::bubbleSort($arr,'desc');
+//     	pr($arr);
+    	
+    	$arr = Arr::quickSort($arr,'desc');
     	pr($arr);
     }
     

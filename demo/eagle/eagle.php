@@ -14,6 +14,8 @@ defined('PROJECT_JS_PATH') or define('PROJECT_JS_PATH', '/static/js/');
 defined('PROJECT_CSS_PATH') or define('PROJECT_CSS_PATH', '/static/css/');
 //项目图片路径
 defined('PROJECT_IMAGE_PATH') or define('PROJECT_IMAGE_PATH', '/static/image/');
+//日志文件目录
+defined('LOGS_PATH') or define('LOGS_PATH', PROJECT_PATH . 'logs');
 
 // 框架路径
 defined('EAGLE_PATH') or define('EAGLE_PATH', __DIR__ . DIRECTORY_SEPARATOR);
@@ -32,8 +34,10 @@ require PROJECT_COMMON_PATH . 'function.php';
 
 //系统配置
 $sysConfig = getConfig('',array(SYS_CONFIG_PATH));
+
 //项目配置
 $projectConfig = getConfig('',array(PROJECT_CONFIG_PATH));
+
 
 //语言包
 if(!isset($projectConfig['DEFAULT_LANGUAGE']) || $projectConfig['DEFAULT_LANGUAGE'] == '' || !in_array($projectConfig['DEFAULT_LANGUAGE'], array('zh-cn','zh-tw','en-us')) || !in_array($sysConfig['DEFAULT_LANGUAGE'], array('zh-cn','zh-tw','en-us'))){
@@ -47,8 +51,6 @@ $langData = getLangConfig($lang);
 defined('SMARTY_PATH') or define('SMARTY_PATH', EAGLE_PATH.'lib/plugin/smarty/Autoloader.php');
 $GLOBALS['SMARTY_OBJ'] = getSmartyObj();
 
-//pr(getConfig());
-
 function autoLoad($class){
     //echo $class.'<br>';
     $class = str_replace('\\','/',$class);
@@ -57,16 +59,17 @@ function autoLoad($class){
             EAGLE_PATH,
             APP_PATH,
     );
+    //pr( $classDir );
     foreach ($classDir as $key=>$val){
-        //echo $val.$classFile.'<br>';
         if(file_exists($val.$classFile)){
+        	//echo $val.$classFile.'<br>';
             require $val.$classFile;
             break;
         }
         continue;
     }
 }
+
 spl_autoload_register('autoLoad');
 
-use lib\Dispatch;
-Dispatch::getInstance()->run();
+\lib\system\Dispatch::getInstance()->run();

@@ -1,5 +1,6 @@
 <?php
 namespace lib\system;
+use lib\system\Log;
 
 /**
  * 简易CURL
@@ -44,7 +45,6 @@ class Curl {
 	private $contentTypeCode = '';
 	private $sendData = '';
 	private $requestUrl = '';
-	private $httpHeader = array();
 	private $curlOption = array();
 	
 	/**
@@ -99,9 +99,7 @@ class Curl {
 			}
 		}
 		curl_setopt($this->ch, CURLOPT_URL, $url);
-		$res = curl_exec($this->ch);
-		curl_close ($this->ch);
-		return $res;
+		return $this->endCurl();
 	}
 	
 	private function doPost(){
@@ -155,42 +153,60 @@ class Curl {
 			default:
 				break;
 		}
-		
-		if( $this->httpHeader ){
-			foreach ( $this->httpHeader as $k=>$v){
-				array_push($httpHeader, $v);
-			}
-		}
-		
-		$httpHeader && curl_setopt($this->ch, CURLOPT_HTTPHEADER, $httpHeader);
 		curl_setopt($this->ch, CURLOPT_POSTFIELDS, $postData);
-		$res = curl_exec($this->ch);
-		curl_close ($this->ch);
-		return $res;
+		return $this->endCurl();
 	}
 	
-	public function setHttpHeader( $arr ){
-		$arr && $this->httpHeader = $arr;
+	public function setOption( $key, $val = 0 ){
+		if( is_array( $key ) ){
+			foreach ( $key as $k => $v ) {
+				$this->curlOption[$k] = $v;
+			}
+		}else{
+			$this->curlOption[$key] = $val;
+		}
 	}
 		
 	private function initCurl(){
-		$ch = curl_init($this->requestUrl);
+		//$ch = curl_init();
 		//curl_setopt($ch, CURLOPT_URL, $this->requestUrl);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		
+		$ch = curl_init($this->requestUrl);
+		$this->ch = $ch;
+		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true); //返回的内容作为变量储存，而不是直接输出。true作为变量存储；false直接输出
 		if (defined('CURLOPT_TIMEOUT_MS')) {
 			$timeoutMS = $this->timeout * 1000;
-			curl_setopt($ch, CURLOPT_NOSIGNAL, 1);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, $timeoutMS);
-			curl_setopt($ch, CURLOPT_TIMEOUT_MS, $timeoutMS);
+			curl_setopt($this->ch, CURLOPT_NOSIGNAL, 1);
+			curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT_MS, $timeoutMS);
+			curl_setopt($this->ch, CURLOPT_TIMEOUT_MS, $timeoutMS);
 		} else {
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->timeout);
-			curl_setopt($ch, CURLOPT_TIMEOUT, $this->timeout);
+			curl_setopt($this->ch, CURLOPT_CONNECTTIMEOUT, $this->timeout);
+			curl_setopt($this->ch, CURLOPT_TIMEOUT, $this->timeout);
 		}
-		//curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-		//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		
-		$this->ch = $ch;
+		$arr = explode('://',$this->requestUrl);
+		if( $arr[0] == 'https' ){
+			curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false); //https不验证证书
+			curl_setopt($this->ch, CURLOPT_SSL_VERIFYHOST, false); //https不验证证书
+		}
 	}
+	
+	private function endCurl(){
+		if( $this->curlOption ){
+			foreach ( $this->curlOption as $k=>$v){
+				curl_setopt($this->ch, $k, $v);
+			}
+		}
+		$res = curl_exec($this->ch);
+		$errno = curl_errno($this->ch);
+		$error = curl_error($this->ch);
+		if ($errno) {
+			log::error(  "curl error:{$error}"   )  ;
+		}
+		curl_close($this->ch);
+		return $res;
+	}
+	
 	
 	/**
 	 * JSON转XML(先转成数组，再转成XML)

@@ -9,7 +9,9 @@ if(is_dir($dir_path)){
     if($dir_handle){
         while (($file = readdir($dir_handle)) !== false){
             if($file != '.' && $file != '..'){
-                $configArr = array_merge($configArr,require $dir_path.$file);
+            	if( file_exists( $dir_path.$file ) && strpos($file, '.config.php') ){
+            		$configArr = array_merge($configArr,require $dir_path.$file);
+            	}
             }
         }
     }

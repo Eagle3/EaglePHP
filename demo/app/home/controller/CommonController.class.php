@@ -1,10 +1,8 @@
 <?php
 
 namespace home\controller;
-use lib\Controller;
-use lib\system\DataFormatConvert;
 
-class CommonController extends Controller {
+class CommonController extends \lib\system\Controller {
 	
 	public function echoJsonp($callback,$data){
 		echo $callback.'('."'{$data}'".')';
@@ -19,7 +17,7 @@ class CommonController extends Controller {
 				break;
 			case 'xml' :
 				header("Content-type: text/xml;charset=utf-8");
-				$res = DataFormatConvert::getInstance()->arrayToXml($data);
+				$res = \lib\system\DataFormatConvert\DataFormatConvert::getInstance()->arrayToXml($data);
 				break;
 			case 'text' :
 				header( 'Content-Type:text/html;charset=utf-8 ');

@@ -3,7 +3,7 @@ namespace lib\system;
 
 /**
  * 数据格式转换类
- * @description 实现：PHP数组、XML、JSON、对象四中数据之间的转换
+ * @description 实现：PHP数组、XML、JSON、对象四种格式之间转换
  * 
 $arr = array(
         'code' => 0,
