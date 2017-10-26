@@ -1,9 +1,38 @@
 {include file="../Common/header.html"}
-<!-- 第一套模板<br> -->
 {$name}
 
 <script>
-	eagle.ajaxPost({
+
+/*
+ //为浏览器回退按钮添加监听事件
+
+ pushHistory(); 
+//清空浏览器历史记录  
+function pushHistory() {  
+    var url = "#";  
+    var state = {  
+        title: "title",  
+        url: "#"  
+    };  
+    window.history.pushState(state, "title", "#");  
+}
+
+window.onload = function (){
+	//监听浏览器后退事件  
+	window.addEventListener("popstate",  
+	    function(e) {  
+	    //转向指定的URL  
+		 alert( 1 );
+	    window.history.go(-2);
+	    
+	    
+	    }, false);  
+	    
+};
+
+ */
+
+/* 	eagle.ajaxPost({
 		url : 'http://eagle.test/index.php?r=home&c=index&a=ajax',
 		data : {
 			name: 'jack'
@@ -12,7 +41,8 @@
 			console.log(res);
 			console.log(JSON.parse(res));
 		}
-	});
+	}); 
+*/
 
 </script>
 
