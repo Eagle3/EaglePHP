@@ -392,7 +392,7 @@ class IndexController extends CommonController {
     	pr($arr);    	
     	
     	
-    	
+    
     }
     
     
