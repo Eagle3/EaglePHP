@@ -1254,7 +1254,7 @@ function percent($num,$total_num){
 }
 
 if(!function_exists('array_column')) {
-	function array_column(array $input, $columnKey, $indexKey = null)
+	function array_column( $input, $columnKey, $indexKey = null)
 	{
 		$result = array();
 		if (null === $indexKey) {
