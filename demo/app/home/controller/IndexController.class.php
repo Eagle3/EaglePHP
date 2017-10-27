@@ -3,7 +3,6 @@
 namespace home\controller;
 use home\controller\CommonController;
 use lib\system\Arr as Arr;
-use lib\system\Datetime as Datetime;
 
 class IndexController extends CommonController {
     public function init(){
