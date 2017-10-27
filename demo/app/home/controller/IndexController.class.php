@@ -395,15 +395,6 @@ class IndexController extends CommonController {
     	
     }
     
-    public function date (){
-        $leapYear = Datetime::leapYear();
-        pr( $leapYear );
-         
-         
-         
-    }
-    
-    
     
     
     
