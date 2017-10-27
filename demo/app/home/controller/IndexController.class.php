@@ -3,7 +3,7 @@
 namespace home\controller;
 use home\controller\CommonController;
 use lib\system\Arr as Arr;
-
+use lib\system\Datetime as Datetime;
 
 class IndexController extends CommonController {
     public function init(){
@@ -377,7 +377,7 @@ class IndexController extends CommonController {
     	//$arr20k = getConfig('arrSortData.20k');
     	//$arr50k = getConfig('arrSortData.50k');
     	
-    	$arr = Arr::createHugeArr(10000);
+    	$arr = Arr::createHugeArr(10);
     	
 //     	$arr = Arr::phpSort($arr,'desc');
 //     	pr($arr);
@@ -385,11 +385,23 @@ class IndexController extends CommonController {
 //     	$arr = Arr::bubbleSort($arr,'desc');
 //     	pr($arr);
     	
+//     	$arr = Arr::quickSort($arr,'desc');
+//     	pr($arr);
+
     	$arr = Arr::quickSort($arr,'desc');
-    	pr($arr);
+    	pr($arr);    	
+    	
+    	
+    	
     }
     
-    
+    public function date (){
+        $leapYear = Datetime::leapYear();
+        pr( $leapYear );
+         
+         
+         
+    }
     
     
     

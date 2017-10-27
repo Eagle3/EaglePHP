@@ -1383,6 +1383,22 @@ function getMSToTime($str){
 	return $m * 60 + $s;
 }
 
+/*
+ * 是不是闰年
+ *
+ *  能被4整除但不能被100整除，或能被400整除的年份即为闰年
+ *
+ *  1. 如果是世纪年： 例如 1800 1900 2000， 被400整除即为闰年
+ *  2. 如果非世纪年： 例如 1996 1998 1999， 能被4整除即为闰年
+ */
+function leapYear( $year = null ) {
+    $year = !$year ? date('Y') : $year;
+    if( ( $year % 100 != 0 && $year % 4 == 0 ) || ( $year % 400 == 0 )  ){
+        return true;
+    }
+    return false;
+}
+
 function quickSort($arr) {
 	//先判断是否需要继续进行
 	$length = count($arr);
