@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2017-10-27 09:53:11
+/* Smarty version 3.1.30, created on 2017-10-27 14:59:04
   from "D:\eclipse_workplace\9.1-EaglePHP\demo\app\home\view\Index\index.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_59f291878d6aa7_53357988',
+  'unifunc' => 'content_59f2d9387bb920_59247419',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '0d9b893117b5b7e6be7fd32027d0fbb81d98e208' => 
     array (
       0 => 'D:\\eclipse_workplace\\9.1-EaglePHP\\demo\\app\\home\\view\\Index\\index.html',
-      1 => 1509069189,
+      1 => 1509071746,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:../Common/header.html' => 1,
   ),
 ),false)) {
-function content_59f291878d6aa7_53357988 (Smarty_Internal_Template $_smarty_tpl) {
+function content_59f2d9387bb920_59247419 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:../Common/header.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 
@@ -31,10 +31,12 @@ $_smarty_tpl->_subTemplateRender("file:../Common/header.html", $_smarty_tpl->cac
 <?php echo '<script'; ?>
 >
 
+/*
+ //为浏览器回退按钮添加监听事件
+
+ pushHistory(); 
 //清空浏览器历史记录  
-pushHistory(); 
-//清空浏览器历史记录  
-	function pushHistory() {  
+function pushHistory() {  
     var url = "#";  
     var state = {  
         title: "title",  
@@ -56,6 +58,7 @@ window.onload = function (){
 	    
 };
 
+ */
 
 /* 	eagle.ajaxPost({
 		url : 'http://eagle.test/index.php?r=home&c=index&a=ajax',
@@ -66,7 +69,8 @@ window.onload = function (){
 			console.log(res);
 			console.log(JSON.parse(res));
 		}
-	}); */
+	}); 
+*/
 
 <?php echo '</script'; ?>
 >
