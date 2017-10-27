@@ -1,0 +1,22 @@
+2017:10:26 19:13:04 POST:array (
+  'grant_type' => 'authorization_code',
+  'code' => 'FSDGDJSGPJSWBGNKB',
+  'redirect_uri' => 'http://api.egret-labs.org/v2/game/22853/91234',
+),header:array (
+  'Host' => 'eagle.test',
+  'Accept' => '*/*',
+  'Content-Type' => 'application/x-www-form-urlencoded',
+  'Authorization' => 'MAC id="abcdef",ts="1509016384",nonce="74bbdbca8d1a47df39ec720dd2562fe1",mac="10w71iwktsR1CN3cj15BdnCjb/M="',
+  'Content-Length' => '111',
+)
+2017:10:26 19:13:32 POST:array (
+  'grant_type' => 'authorization_code',
+  'code' => 'FSDGDJSGPJSWBGNKB',
+  'redirect_uri' => 'http://api.egret-labs.org/v2/game/22853/91234',
+),header:array (
+  'Host' => 'eagle.test',
+  'Accept' => '*/*',
+  'Content-Type' => 'application/x-www-form-urlencoded',
+  'Authorization' => 'MAC id="abcdef",ts="1509016412",nonce="485edd06a9e8c62970534db50db16a3d",mac="KoOwH6MnHUddc0YBRqoD6qIWqrY="',
+  'Content-Length' => '111',
+)
