@@ -3,6 +3,7 @@
 namespace home\controller;
 use home\controller\CommonController;
 use lib\system\Arr as Arr;
+use lib\system\Mail as Mail;
 
 class IndexController extends CommonController {
     public function init(){
@@ -394,7 +395,13 @@ class IndexController extends CommonController {
     
     }
     
-    
+    public function mail(){
+        $subject = "这是邮件标题";
+        $content = "这是邮件内容";
+        $res = Mail::send( $subject, $content );
+        pr( $res );
+        
+    }
     
     
     
