@@ -407,7 +407,6 @@ class IndexController extends CommonController {
         
     }
     
-<<<<<<< HEAD
     //Excel表格导出
     public function import(){
         
@@ -441,12 +440,6 @@ class IndexController extends CommonController {
          */
         Excel::import( $data ); //默认
         //Excel::import( $data, $version, $fileName, $headFields, $keys );  //传递自定义参数
-=======
-    
-    public function import(){
-       $res = Import::load();
-       pr();
->>>>>>> branch 'master' of https://github.com/Eagle3/EaglePHP.git
     }
     
     
