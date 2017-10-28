@@ -4,6 +4,8 @@ namespace home\controller;
 use home\controller\CommonController;
 use lib\system\Arr as Arr;
 use lib\system\Mail as Mail;
+use lib\system\Excel as Excel;
+
 
 class IndexController extends CommonController {
     public function init(){
@@ -403,8 +405,40 @@ class IndexController extends CommonController {
         
     }
     
-    
-    
+    //Excel表格导出
+    public function import(){
+        
+        $fileName = '测试';
+        $headFields = array(
+            '名字',
+            '年龄',
+        );
+        
+        $keys = array(
+            'name',
+            'age',
+        );
+        
+        $data = array(
+            array('name' => 'jack',  'age' => 20),
+            array('name' => 'jack2', 'age' => 21),
+            array('name' => 'jack3', 'age' => 22),
+            array('name' => 'jack4', 'age' => 23),
+        );
+        
+        $version = '2003';
+        
+        /**
+         * excel导出 （精简版，去掉不必要的样式，数据最好在500以内）
+         * @param array  $data        导出的数据                                必须
+         * @param string $version     导出的版本 2003或者2007   可选
+         * @param string $fileName    导出的文件名                            可选
+         * @param array  $headFields  导出的字段格式化后名称（表格头部列的名称）       可选
+         * @param unknown $keys       导出的字段名称                       可选
+         */
+        Excel::import( $data ); //默认
+        //Excel::import( $data, $version, $fileName, $headFields, $keys );  //传递自定义参数
+    }
     
     
     
