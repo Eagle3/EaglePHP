@@ -4,6 +4,9 @@ namespace home\controller;
 use home\controller\CommonController;
 use lib\system\Arr as Arr;
 use lib\system\Mail as Mail;
+use lib\system\Import as Import;
+
+
 
 class IndexController extends CommonController {
     public function init(){
@@ -404,7 +407,10 @@ class IndexController extends CommonController {
     }
     
     
-    
+    public function import(){
+       $res = Import::load();
+       pr();
+    }
     
     
     
