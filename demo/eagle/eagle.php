@@ -47,9 +47,9 @@ if(!isset($projectConfig['DEFAULT_LANGUAGE']) || $projectConfig['DEFAULT_LANGUAG
 }
 $langData = getLangConfig($lang);
 
-//smarty模板引擎路径
-defined('SMARTY_PATH') or define('SMARTY_PATH', EAGLE_PATH.'lib/plugin/smarty/Autoloader.php');
-$GLOBALS['SMARTY_OBJ'] = getSmartyObj();
+// smarty模板引擎路径
+// defined('SMARTY_PATH') or define('SMARTY_PATH', EAGLE_PATH.'lib/plugin/smarty/Autoloader.php');
+// $GLOBALS['SMARTY_OBJ'] = getSmartyObj();
 
 function autoLoad($class){
     //echo $class.'<br>';

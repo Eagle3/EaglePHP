@@ -1,5 +1,7 @@
 <?php
 namespace lib\system;
+use lib\system\Import;
+
 class View {
 protected  $smarty = null;
     protected  $smartyConfigArr = array();
@@ -24,7 +26,6 @@ protected  $smarty = null;
         if(!$this->initSmartyStatus){
             $this->initSmarty();
         }
-        
         $this->initAssign();
         $tplFile = $this->getTplFilePath($tpl);
         return $this->smarty->fetch($tplFile);
@@ -34,7 +35,6 @@ protected  $smarty = null;
         if(!$this->initSmartyStatus){
             $this->initSmarty();
         }
-        
         $this->initAssign();
         $tplFile = $this->getTplFilePath($tpl);
         $this->smarty->display($tplFile);
@@ -56,8 +56,13 @@ protected  $smarty = null;
     }
     
     private function initSmarty(){
-        //$this->smarty = getSmartyObj();
-        $this->smarty = $GLOBALS['SMARTY_OBJ'];
+        //$this->smarty = $GLOBALS['SMARTY_OBJ'];
+        
+        Import::load( 'eagle/lib/plugin/smarty/Autoloader.php' );
+        \Smarty_Autoloader::register();
+        $this->smarty = new \Smarty();
+        
+        $this->initSmartyStatus = true;
         $this->smartyConfigArr = getConfig('SMARTY_TPL_CONFIG');
         $this->setSmarty();
     }

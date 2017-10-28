@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2017-10-28 09:54:33
-  from "D:\workspace\zendstudio_workspace\9.1-EaglePHP\demo\app\home\view\Index\index.html" */
+/* Smarty version 3.1.30, created on 2017-10-30 11:18:09
+  from "D:\eclipse_workplace\9.1-EaglePHP\demo\app\home\view\Index\index.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_59f3e359e24d84_42863153',
+  'unifunc' => 'content_59f699f1394915_43284737',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'd82c3cb86c833d92e318a102d73a8e68946e9de8' => 
+    '0d9b893117b5b7e6be7fd32027d0fbb81d98e208' => 
     array (
-      0 => 'D:\\workspace\\zendstudio_workspace\\9.1-EaglePHP\\demo\\app\\home\\view\\Index\\index.html',
-      1 => 1509147025,
+      0 => 'D:\\eclipse_workplace\\9.1-EaglePHP\\demo\\app\\home\\view\\Index\\index.html',
+      1 => 1509328495,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:../Common/header.html' => 1,
   ),
 ),false)) {
-function content_59f3e359e24d84_42863153 (Smarty_Internal_Template $_smarty_tpl) {
+function content_59f699f1394915_43284737 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender("file:../Common/header.html", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 

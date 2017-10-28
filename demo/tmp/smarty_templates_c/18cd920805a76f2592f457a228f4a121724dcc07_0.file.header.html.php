@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.30, created on 2017-10-28 09:54:33
-  from "D:\workspace\zendstudio_workspace\9.1-EaglePHP\demo\app\home\view\Common\header.html" */
+/* Smarty version 3.1.30, created on 2017-10-30 11:18:09
+  from "D:\eclipse_workplace\9.1-EaglePHP\demo\app\home\view\Common\header.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_59f3e359e5f712_97553133',
+  'unifunc' => 'content_59f699f13afe92_01748150',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '64e89d1613c97f73113349a8c300ad4ea1ee69fe' => 
+    '18cd920805a76f2592f457a228f4a121724dcc07' => 
     array (
-      0 => 'D:\\workspace\\zendstudio_workspace\\9.1-EaglePHP\\demo\\app\\home\\view\\Common\\header.html',
-      1 => 1509147025,
+      0 => 'D:\\eclipse_workplace\\9.1-EaglePHP\\demo\\app\\home\\view\\Common\\header.html',
+      1 => 1509068169,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_59f3e359e5f712_97553133 (Smarty_Internal_Template $_smarty_tpl) {
+function content_59f699f13afe92_01748150 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html>
