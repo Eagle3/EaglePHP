@@ -1,8 +1,10 @@
 <?php
 namespace home\model;
-use lib\system\Pdomysql;
+
+use home\model\CommonModel;
 use lib\system\Cache;
-class UserModel extends Pdomysql {
+
+class UserModel extends CommonModel {
     public function getInfo(){
         $cache = Cache::getInstance();
         $key = 'test';
