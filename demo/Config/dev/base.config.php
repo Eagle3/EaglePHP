@@ -41,7 +41,7 @@ return array(
         
         //缓存配置
         'CACHE_CONFIG' => array(
-                'CACHE_TYPE' => 1, //缓存类型：0=file | 1=memcache | 2=redis
+                'CACHE_TYPE' => 0, //缓存类型：0=file | 1=memcache | 2=redis
                 'FILE' => array(
                         'CACHE_TIME' => 60, //缓存时间
                         'CACHE_PATH' => './Tmp/cache/file_cache/',//设置文件缓存目录

@@ -11,11 +11,11 @@ class UserModel extends CommonModel {
         $key = 'test';
         $data = $cache->get(md5($key));
         if(!$data){
-            echo 1;
+            echo '查询数据库<br>';
             $pdo = Pdomysql::getInstance();
-            $data = $pdo->getAll('select * from user where id > :id ',array(':id'=>340));
+            $data = $pdo->getAll('select * from user where id > :id ',array(':id'=>0));
             $cache->set(md5($key),$data);
         }
-       return $data;
+        return $data;
     }
 }

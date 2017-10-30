@@ -275,14 +275,14 @@ class IndexController extends CommonController {
 				<from>中国</from>
 				<data>{"name":"jack","from":"中国"}</data>
 				</content>';
-    	$jsonData = DataFormatConvert::getInstance()->xmlToJson($xmlData);
+    	$jsonData = \Lib\System\DataFormatConvert::getInstance()->xmlToJson($xmlData);
     	echo $jsonData;
     	file_put_contents('./tmp/curl.log', '-$jsonData：'.$jsonData.PHP_EOL,FILE_APPEND);
     	file_put_contents('./tmp/curl.log', '--------------------------------------------------------'.PHP_EOL,FILE_APPEND);
     	 
     	echo '<br>';
     
-    	print_r( DataFormatConvert::getInstance()->xmlToArray($xmlData) );
+    	print_r( \Lib\System\DataFormatConvert::getInstance()->xmlToArray($xmlData) );
     	 
     	echo '<br>';
    }
@@ -295,7 +295,7 @@ class IndexController extends CommonController {
    			'from' => '中国',
    			'data' => json_encode(array('name' => 'jack','from' => '中国',),JSON_UNESCAPED_UNICODE),
    	);
-   	echo DataFormatConvert::getInstance()->arrayToXml($arr);
+   	echo \Lib\System\DataFormatConvert::getInstance()->arrayToXml($arr);
    }
     
     //测试加密解密数据
@@ -385,18 +385,18 @@ class IndexController extends CommonController {
     	//$arr20k = getConfig('arrSortData.20k');
     	//$arr50k = getConfig('arrSortData.50k');
     	
-    	$arr = Arr::createHugeArr(10);
+    	$arr = \Lib\System\Arr::createHugeArr(10);
     	
-//     	$arr = Arr::phpSort($arr,'desc');
+//     	$arr = \Lib\System\Arr::phpSort($arr,'desc');
 //     	pr($arr);
     	
-//     	$arr = Arr::bubbleSort($arr,'desc');
+//     	$arr = \Lib\System\Arr::bubbleSort($arr,'desc');
 //     	pr($arr);
     	
-//     	$arr = Arr::quickSort($arr,'desc');
+//     	$arr = \Lib\System\Arr::quickSort($arr,'desc');
 //     	pr($arr);
 
-    	$arr = Arr::quickSort($arr,'desc');
+    	$arr = \Lib\System\Arr::quickSort($arr,'desc');
     	pr($arr);    	
     	
     	
