@@ -1,10 +1,9 @@
 <?php
 namespace lib\system;
 
-//使用smarty模板引擎
-use lib\system\View;
+use lib\system\Smarty;
 
-class Controller extends View {
+class Controller extends Smarty {
     public function __construct(){
         parent::__construct();
         if(method_exists($this,'init')){

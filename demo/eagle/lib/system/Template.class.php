@@ -1,5 +1,6 @@
 <?php
 namespace lib\system;
+
 class Template {
 	private $tplVar = array();
 	private $SystemConfigArr = array();

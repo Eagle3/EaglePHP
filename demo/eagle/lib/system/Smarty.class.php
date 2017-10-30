@@ -2,8 +2,8 @@
 namespace lib\system;
 use lib\system\Import;
 
-class View {
-protected  $smarty = null;
+class Smarty {
+    protected  $smarty = null;
     protected  $smartyConfigArr = array();
     protected  $initSmartyStatus = false;
     
