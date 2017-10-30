@@ -10,8 +10,8 @@ return array(
                 'caching' => false,              //是否使用缓存
                 'cache_lifetime' => 0, //缓存时间
                 'template_dir' => APP_PATH,//设置模板目录
-                'compile_dir' => './tmp/smarty_templates_c',//设置编译目录
-                'cache_dir' => './tmp/cache/smarty_templates_cache',//缓存文件夹
+                'compile_dir' => './Tmp/smarty_templates_c',//设置编译目录
+                'cache_dir' => './Tmp/cache/smarty_templates_cache',//缓存文件夹
                 //修改左右边界符号
                 'delimiter' => array(
                         'left_delimiter' => '{',
@@ -26,8 +26,8 @@ return array(
 				'caching' => false,              //是否使用缓存
 				'cache_lifetime' => 0, //缓存时间
 				'template_dir' => APP_PATH,//设置模板目录
-				'compile_dir' => DIR.'/tmp/system_templates_c/',//设置编译目录
-				'cache_dir' => DIR.'/tmp/cache/system_templates_cache/',//缓存文件夹
+				'compile_dir' => DIR.'/Tmp/system_templates_c/',//设置编译目录
+				'cache_dir' => DIR.'/Tmp/cache/system_templates_cache/',//缓存文件夹
 				//修改左右边界符号
 				'delimiter' => array(
 						'left_delimiter' => '{',
@@ -61,7 +61,7 @@ return array(
         
         //缓存配置
         'CACHE_CONFIG' => array(
-                'CACHE_TYPE' => 1, //缓存类型：0=file | 1=memcache | 2=redis
+                'CACHE_TYPE' => 0, //缓存类型：0=file | 1=memcache | 2=redis
                 'FILE' => array(
                         'CACHE_TIME' => 60, //缓存时间
                         'CACHE_PATH' => './Tmp/cache/file_cache/',//设置文件缓存目录

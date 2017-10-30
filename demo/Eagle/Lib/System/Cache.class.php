@@ -8,9 +8,13 @@ class Cache {
     protected $setOptions = array();
     
     private function connect() {
-        $cacheConfigArr = getConfig('CACHE_CONFIG'); pr( $cacheConfigArr );
+        $cacheConfigArr = getConfig('CACHE_CONFIG');
+        
+        pr( $cacheConfigArr,$cacheConfigArr['CACHE_TYPE'] );
+        
         $cacheTag = '';
         $setOptions = array();
+        
         switch ($cacheConfigArr['CACHE_TYPE']) {
             case 0:
                 $cacheTag = 'File';
