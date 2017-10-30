@@ -9,9 +9,6 @@ class Cache {
     
     private function connect() {
         $cacheConfigArr = getConfig('CACHE_CONFIG');
-        
-        pr( $cacheConfigArr,$cacheConfigArr['CACHE_TYPE'] );
-        
         $cacheTag = '';
         $setOptions = array();
         
