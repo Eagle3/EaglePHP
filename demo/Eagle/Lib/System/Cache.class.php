@@ -8,28 +8,32 @@ class Cache {
     protected $setOptions = array();
     
     private function connect() {
-        $cacheConfigArr = getConfig('CACHE_CONFIG');
+        $cacheConfigArr = getConfig('CACHE_CONFIG'); pr( $cacheConfigArr );
         $cacheTag = '';
         $setOptions = array();
         switch ($cacheConfigArr['CACHE_TYPE']) {
             case 0:
-                $cacheTag = 'FILE';
+                $cacheTag = 'File';
                 $setOptions = $cacheConfigArr['FILE'];
                 break;
             case 1:
-                $cacheTag = 'memcache';
+                $cacheTag = 'Memcache';
                 $setOptions = $cacheConfigArr['MEMCACHE'];
                 break;
             case 2:
-                $cacheTag = 'redis';
+                $cacheTag = 'Redis';
                 $setOptions = $cacheConfigArr['REDIS'];
                 break;
             default:
-                $cacheTag = 'file';
+                $cacheTag = 'File';
                 $setOptions = $cacheConfigArr['FILE'];
         }
+        
+       
+        
         $cacheTag = "Lib\System\Cache\\".ucfirst(strtolower($cacheTag));
         $instance = new $cacheTag($setOptions);
+       
         self::$instance = $instance;
         return $instance;
     }

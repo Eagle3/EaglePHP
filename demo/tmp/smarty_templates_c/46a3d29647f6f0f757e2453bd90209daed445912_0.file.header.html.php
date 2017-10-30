@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.30, created on 2017-10-30 17:52:15
+/* Smarty version 3.1.30, created on 2017-10-30 18:31:00
   from "D:\eclipse_workplace\9.1-EaglePHP\demo\App\Home\View\Common\header.html" */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.30',
-  'unifunc' => 'content_59f6f64f3a4338_29961911',
+  'unifunc' => 'content_59f6ff641fe3b5_51158738',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_59f6f64f3a4338_29961911 (Smarty_Internal_Template $_smarty_tpl) {
+function content_59f6ff641fe3b5_51158738 (Smarty_Internal_Template $_smarty_tpl) {
 ?>
 <!DOCTYPE html>
 <html>

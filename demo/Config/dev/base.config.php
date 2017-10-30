@@ -44,7 +44,7 @@ return array(
                 'CACHE_TYPE' => 1, //缓存类型：0=file | 1=memcache | 2=redis
                 'FILE' => array(
                         'CACHE_TIME' => 60, //缓存时间
-                        'CACHE_PATH' => './tmp/cache/file_cache/',//设置文件缓存目录
+                        'CACHE_PATH' => './Tmp/cache/file_cache/',//设置文件缓存目录
                         'CACHE_PREFIX' => 'file', //文件缓存前缀
                         'CACHE_POSTFIX' => '.txt', //缓存文件后缀名
                 ),

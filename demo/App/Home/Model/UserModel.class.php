@@ -2,7 +2,8 @@
 namespace Home\Model;
 
 use Home\Model\CommonModel;
-use lib\system\Cache;
+use Lib\System\Cache;
+use Lib\System\Pdomysql;
 
 class UserModel extends CommonModel {
     public function getInfo(){

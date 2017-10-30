@@ -1,6 +1,6 @@
 <?php
 namespace Admin\Controller;
-use lib\system\Controller;
+use Lib\System\Controller;
 class IndexController extends Controller {
     public function index(){
     	pr($_GET,'admin\controller\index');

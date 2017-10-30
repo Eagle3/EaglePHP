@@ -1,8 +1,8 @@
 <?php
 
 namespace Home\Controller;
-use lib\system\Controller;
-use home\model\UserModel;
+use Lib\System\Controller;
+use Home\Model\UserModel;
 
 class UserController extends Controller {
     function index() {

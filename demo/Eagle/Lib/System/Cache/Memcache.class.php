@@ -1,5 +1,6 @@
 <?php
 namespace Lib\System\Cache;
+use Lib\System\Cache;
 
 class Memcache extends Cache {
     public function __construct($setOptions){
