@@ -11,7 +11,7 @@ class Cache {
         $cacheConfigArr = getConfig('CACHE_CONFIG');
         $cacheTag = '';
         $setOptions = array();
-        
+        pr( $cacheConfigArr );
         switch ($cacheConfigArr['CACHE_TYPE']) {
             case 0:
                 $cacheTag = 'File';
