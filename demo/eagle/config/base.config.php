@@ -2,6 +2,8 @@
 return array(
         /** 只在系统配置文件中有效，项目配置文件中无效  start **/
         
+        'TPL_ENGINE' => 1, // 1:Smarty 2:内置
+        
         //smarty模板引擎配置
         'SMARTY_TPL_CONFIG' => array(
                 'debugging' => false, //开启调试
