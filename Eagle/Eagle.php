@@ -15,6 +15,8 @@ defined('PROJECT_JS_PATH') or define('PROJECT_JS_PATH', '/Static/js/');
 defined('PROJECT_CSS_PATH') or define('PROJECT_CSS_PATH', '/Static/css/');
 //项目图片路径
 defined('PROJECT_IMAGE_PATH') or define('PROJECT_IMAGE_PATH', '/Static/image/');
+//字体文件路径
+defined('PROJECT_FONT_PATH') or define('PROJECT_FONT_PATH', PROJECT_PATH . 'Static/font/');
 
 // 框架路径
 defined('EAGLE_PATH') or define('EAGLE_PATH', __DIR__ . DIRECTORY_SEPARATOR);

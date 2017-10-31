@@ -5,9 +5,8 @@ use Home\Controller\CommonController;
 
 use Lib\System\Arr as Arr;
 use Lib\System\Mail as Mail;
-
 use Lib\System\Excel as Excel;
-
+use Lib\System\Code as Code;
 
 
 class IndexController extends CommonController {
@@ -446,7 +445,14 @@ class IndexController extends CommonController {
         //Excel::import( $data, $version, $fileName, $headFields, $keys );  //传递自定义参数
     }
     
-    
+    public function code () {
+        $code = new Code();
+        $code->set(array(
+              'width' => 100,
+              'height' => 50,
+        ));
+        $code->output();
+    }
     
     
     

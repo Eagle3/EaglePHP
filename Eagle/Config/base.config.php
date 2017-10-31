@@ -40,6 +40,11 @@ return array(
         
         
         /** 可以在系统配置文件填写，也可在项目配置文件中填写，同时填写以项目中的为准  start **/
+        
+        
+        //验证码验证类型： 1，cookie  2，session
+        'DEFAULT_CODE_verify' => 1,
+        
         //模板默认目录标识
         'DEFAULT_TPL_NAME' => 'View',
         
