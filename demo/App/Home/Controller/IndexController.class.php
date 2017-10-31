@@ -412,7 +412,7 @@ class IndexController extends CommonController {
     }
     
     //Excel表格导出
-    public function import(){
+    public function export(){
         
         $fileName = '测试';
         $headFields = array(
@@ -442,7 +442,7 @@ class IndexController extends CommonController {
          * @param array  $headFields  导出的字段格式化后名称（表格头部列的名称）       可选
          * @param unknown $keys       导出的字段名称                       可选
          */
-        Excel::import( $data ); //默认
+        Excel::export( $data ); //默认
         //Excel::import( $data, $version, $fileName, $headFields, $keys );  //传递自定义参数
     }
     
