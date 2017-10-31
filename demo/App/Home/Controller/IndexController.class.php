@@ -451,7 +451,7 @@ class IndexController extends CommonController {
         $code = new Code();
         $code->set(array(
               'width' => 100,
-              'height' => 50,
+              'height' => 40,
         ));
         $code->output();
     }
