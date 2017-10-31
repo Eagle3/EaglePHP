@@ -3,7 +3,20 @@
 namespace Home\Controller;
 
 class CommonController extends \Lib\System\Controller {
-	
+    protected $verifyType = 'cookie';
+    protected $verifyName = '_verifyCode';
+    
+    public function init(){
+        $verifyType = getConfig('DEFAULT_CODE_VERIFY');
+        if( (int)$verifyType == 1 ){
+            $this->verifyType = 'cookie';
+        }else{
+            $this->verifyType = 'session';
+        }
+        $verifyName = getConfig('DEFAULT_CODE_NAME');
+        $this->verifyName = $verifyName;
+    }
+    
 	public function echoJsonp($callback,$data){
 		echo $callback.'('."'{$data}'".')';
 		exit;
@@ -37,4 +50,15 @@ class CommonController extends \Lib\System\Controller {
 		echo $res;
 		exit;
 	}
+	
+	public function verifyCode( $code ){
+	    if( $this->verifyType == 'cookie' && strtolower($code) == strtolower($_COOKIE[$this->verifyName])){
+	        return true;
+	    }
+	    if( $this->verifyType == 'session' && strtolower($code) == strtolower($_SESSION[$this->verifyName])){
+	        return true;
+	    }
+	    return false;
+	}
+	
 }

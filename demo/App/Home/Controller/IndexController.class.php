@@ -11,6 +11,7 @@ use Lib\System\Code as Code;
 
 class IndexController extends CommonController {
     public function init(){
+        parent::init();
         //echo 'init operation<br>';
     }
 	

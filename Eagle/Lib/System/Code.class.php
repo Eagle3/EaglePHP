@@ -7,6 +7,8 @@ class Code {
     private $imgHandle;
     private $fontColor;
     private $fontPath = '';
+    private $verifyType = 'cookie';
+    private $verifyName = '_verifyCode';
     
     private $width = 130;
     private $height = 50;
@@ -15,6 +17,14 @@ class Code {
     
     public function __construct(){
         $this->fontPath = PROJECT_FONT_PATH . 'Elephant.ttf';
+        $verifyType = getConfig('DEFAULT_CODE_VERIFY');
+        $verifyName = getConfig('DEFAULT_CODE_NAME');
+        if( (int)$verifyType == 2 ){
+            $this->verifyType = 'cookie';
+        }else{
+            $this->verifyType = 'session';
+        }
+        $this->verifyName = $verifyName;
     }
     
     public function set( $setArr = array() ){
@@ -31,8 +41,17 @@ class Code {
     }
     
     public function output(){
+        if( isset($_SESSION[$this->verifyName]) ){
+            unset($_SESSION[$this->verifyName]);
+        }
         $this->createBg();
         $this->createCode();
+        if( $this->verifyType == 'cookie' ){
+            setcookie($this->verifyName,$this->code);
+        }else{
+            session_start();
+            $_SESSION[$this->verifyName] = $this->code;
+        }
         $this->createLine();
         $this->createFont();
         $this->export();

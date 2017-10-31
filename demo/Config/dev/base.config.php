@@ -2,7 +2,8 @@
 return array(
         
         //验证码验证类型： 1，cookie  2，session
-        'DEFAULT_CODE_verify' => 1,
+        'DEFAULT_CODE_VERIFY' => 1,
+        'DEFAULT_CODE_NAME' => '_verifyCode',
         
         //模板默认后缀
         'DEFAULT_TPL_POSTFIX' => '.html',
