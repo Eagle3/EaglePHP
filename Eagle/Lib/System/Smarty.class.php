@@ -58,7 +58,7 @@ class Smarty {
     private function initSmarty(){
         //$this->smarty = $GLOBALS['SMARTY_OBJ'];
         
-        Import::load( 'eagle/lib/plugin/smarty/Autoloader.php' );
+        Import::load( 'Lib/Plugin/smarty/Autoloader.php' );
         \Smarty_Autoloader::register();
         $this->smarty = new \Smarty();
         
