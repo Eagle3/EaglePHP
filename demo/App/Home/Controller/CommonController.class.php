@@ -52,10 +52,11 @@ class CommonController extends \Lib\System\Controller {
 	}
 	
 	public function verifyCode( $code ){
-	    if( $this->verifyType == 'cookie' && strtolower($code) == strtolower($_COOKIE[$this->verifyName])){
+	    if( $this->verifyType == 'cookie' && isset($_COOKIE[$this->verifyName]) && strtolower($code) == strtolower($_COOKIE[$this->verifyName])){
 	        return true;
 	    }
-	    if( $this->verifyType == 'session' && strtolower($code) == strtolower($_SESSION[$this->verifyName])){
+	    //session_start();
+	    if( $this->verifyType == 'session' && isset($_SESSION[$this->verifyName]) && strtolower($code) == strtolower($_SESSION[$this->verifyName])){
 	        return true;
 	    }
 	    return false;

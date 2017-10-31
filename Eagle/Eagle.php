@@ -1,6 +1,8 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
 
+session_start();
+
 // 项目路径（入口文件所在的目录）
 defined('PROJECT_PATH') or define('PROJECT_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR);
 //项目公共函数路径

@@ -19,7 +19,7 @@ class Code {
         $this->fontPath = PROJECT_FONT_PATH . 'Elephant.ttf';
         $verifyType = getConfig('DEFAULT_CODE_VERIFY');
         $verifyName = getConfig('DEFAULT_CODE_NAME');
-        if( (int)$verifyType == 2 ){
+        if( (int)$verifyType == 1 ){
             $this->verifyType = 'cookie';
         }else{
             $this->verifyType = 'session';
@@ -49,7 +49,7 @@ class Code {
         if( $this->verifyType == 'cookie' ){
             setcookie($this->verifyName,$this->code);
         }else{
-            session_start();
+            //session_start();
             $_SESSION[$this->verifyName] = $this->code;
         }
         $this->createLine();

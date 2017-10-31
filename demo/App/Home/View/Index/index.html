@@ -1,7 +1,7 @@
 {include file="../Common/header.html"}
 {$name}
 
-<img src="http://eagle.test/index.php{$FILE_VERSION}&r=home&c=index&a=code" />
+
 
 <script>
 
@@ -47,7 +47,11 @@ window.onload = function (){
 */
 
 </script>
-
+<form action="http://eagle.test/index.php?r=home&c=index&a=vCode" method="POST">
+<input type="text" name="code" value=""  />
+<img src="http://eagle.test/index.php{$FILE_VERSION}&r=home&c=index&a=code" />
+<input type="submit" name="" value="submit"  />
+</form>
 
 </body>
 </html>

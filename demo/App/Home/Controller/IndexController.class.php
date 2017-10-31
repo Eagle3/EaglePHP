@@ -446,6 +446,7 @@ class IndexController extends CommonController {
         //Excel::import( $data, $version, $fileName, $headFields, $keys );  //传递自定义参数
     }
     
+    //输出验证码
     public function code () {
         $code = new Code();
         $code->set(array(
@@ -455,7 +456,11 @@ class IndexController extends CommonController {
         $code->output();
     }
     
-    
+    //校验验证码
+    public function vCode () {
+        $code = $_REQUEST['code'];
+        var_dump($this->verifyCode( $code ));
+    }
     
     
     

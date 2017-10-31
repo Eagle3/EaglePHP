@@ -8,7 +8,7 @@
 /**
  * 调试输出
  */
-function pr(){
+function pr (){
     echo '<pre>';
     foreach (func_get_args() as $info){
     	//var_dump($info);
