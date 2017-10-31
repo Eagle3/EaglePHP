@@ -115,7 +115,7 @@ class IndexController extends CommonController {
     public function model(){
         $model = new \Home\Model\UserModel();
         $data = $model->getInfo();
-        pr($data);
+        pr($data); 
     }
     
     public function page(){
