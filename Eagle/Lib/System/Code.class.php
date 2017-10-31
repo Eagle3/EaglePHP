@@ -16,7 +16,7 @@ class Code {
     private $codeLen = 4;
     
     public function __construct(){
-        $this->fontPath = PROJECT_FONT_PATH . 'Elephant.ttf';
+        $this->fontPath = PROJECT_FONT_PATH . 'georgiab.ttf';
         $verifyType = getConfig('DEFAULT_CODE_VERIFY');
         $verifyName = getConfig('DEFAULT_CODE_NAME');
         if( (int)$verifyType == 1 ){
