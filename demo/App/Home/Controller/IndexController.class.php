@@ -1,8 +1,7 @@
 <?php
 
 namespace Home\Controller;
-use Home\Controller\CommonController;
-
+use Home\Controller\CommonController as CommonController;
 use Lib\System\Arr as Arr;
 use Lib\System\Mail as Mail;
 use Lib\System\Excel as Excel;
@@ -11,6 +10,7 @@ use Lib\System\Code as Code;
 
 class IndexController extends CommonController {
     public function init(){
+        parent::init();
         //echo 'init operation <br>';
     }
 	
