@@ -9,8 +9,8 @@ use Lib\System\Cache\Redis;
 class UserModel extends Model {
     public function getInfo(){
         //$cache = File::getInstance();
-        //$cache = Memcache::getInstance();
-        $cache = Redis::getInstance();
+        $cache = Memcache::getInstance();
+        //$cache = Redis::getInstance();
         
         $key = 'test';
         $data = $cache->get(md5($key));
