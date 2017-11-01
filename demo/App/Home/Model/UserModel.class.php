@@ -1,12 +1,17 @@
 <?php
 namespace Home\Model;
 
-use Lib\System\Cache;
 use Lib\System\Model;
+use Lib\System\Cache\File;
+use Lib\System\Cache\Memcache;
+use Lib\System\Cache\Redis;
 
 class UserModel extends Model {
     public function getInfo(){
-        $cache = Cache::getInstance();
+        //$cache = File::getInstance();
+        //$cache = Memcache::getInstance();
+        $cache = Redis::getInstance();
+        
         $key = 'test';
         $data = $cache->get(md5($key));
         if(!$data){

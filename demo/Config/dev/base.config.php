@@ -46,18 +46,18 @@ return array(
         
         //缓存配置
         'CACHE_CONFIG' => array(
-                'CACHE_TYPE' => 0, //缓存类型：0=file | 1=memcache | 2=redis
                 'FILE' => array(
-                        'CACHE_TIME' => 60, //缓存时间
+                        'CACHE_TIME' => 3, //缓存时间
                         'CACHE_PATH' => './Tmp/cache/file_cache/',//设置文件缓存目录
                         'CACHE_PREFIX' => 'file', //文件缓存前缀
                         'CACHE_POSTFIX' => '.txt', //缓存文件后缀名
                 ),
                 'REDIS' => array(
-                        'CACHE_TIME' => 2, //缓存时间
+                        'CACHE_TIME' => 3, //缓存时间
                         //多台redis服务器
                         'SERVERS' => array(
-                                array('HOST' => '127.0.0.1', 'PORT' => '6379',),
+                                array('HOST' => '10.0.2.195', 'PORT' => '6379',),
+                                //array('HOST' => '127.0.0.1', 'PORT' => '6379',),
                                 //array('HOST' => '10.0.6.194', 'PORT' => '6379',),
                         ),
                 ),

@@ -1,8 +1,21 @@
 <?php
 namespace Lib\System\Cache;
-use Lib\System\Cache;
 
-class Redis extends Cache {
+class Redis {
+    
+    private static $instance = NULL;
+    private $cacheHandler = NULL;
+    private $setOptions = array();
+    
+    public static function getInstance() {
+        if (is_null(self::$instance) || !is_object(self::$instance)) {
+            $cacheConfigArr = getConfig('CACHE_CONFIG.REDIS');
+            self::$instance = new self( $cacheConfigArr );
+            return self::$instance;
+        }
+        return self::$instance;
+    }
+    
     public function __construct($setOptions){
         if(!$this->setOptions){
             $this->setOptions = $setOptions;
@@ -18,7 +31,7 @@ class Redis extends Cache {
 
     public function set($key,$value,$expire = null){
         $setOptions = $this->setOptions;
-        return $this->cacheHandler->set($key,$value, MEMCACHE_COMPRESSED, $expire ? $expire : $setOptions['CACHE_TIME']);
+        return $this->cacheHandler->set($key,$value, $expire ? $expire : $setOptions['CACHE_TIME']);
     }
 
     public function delete($key){

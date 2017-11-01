@@ -1,9 +1,22 @@
 <?php
 namespace Lib\System\Cache;
-use Lib\System\Cache;
 
-class Memcache extends Cache {
-    public function __construct($setOptions){
+class Memcache {
+    
+    private static $instance = NULL;
+    private $cacheHandler = NULL;
+    private $setOptions = array();
+    
+    public static function getInstance() {
+        if (is_null(self::$instance) || !is_object(self::$instance)) {
+            $cacheConfigArr = getConfig('CACHE_CONFIG.MEMCACHE');
+            self::$instance = new self( $cacheConfigArr );
+            return self::$instance;
+        }
+        return self::$instance;
+    }
+    
+    private function __construct($setOptions){
         if(!$this->setOptions){
             $this->setOptions = $setOptions;
         }
