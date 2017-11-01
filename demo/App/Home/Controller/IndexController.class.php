@@ -13,7 +13,7 @@ class IndexController extends CommonController {
         parent::init();
         //echo 'init operation <br>';
     }
-	
+	 
     
     public function index() {
 
