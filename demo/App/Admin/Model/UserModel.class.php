@@ -1,6 +1,8 @@
 <?php
 namespace Admin\Model;
-class UserModel {
+use Lib\System\Model;
+
+class UserModel extends Model{
     public function getInfo(){
         echo 555;
     }

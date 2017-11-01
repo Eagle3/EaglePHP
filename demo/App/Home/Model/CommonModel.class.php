@@ -1,6 +1,7 @@
 <?php
 namespace Home\Model;
-use Lib\System\Pdomysql;
-class CommonModel extends Pdomysql {
+use Lib\System\Model;
+
+class CommonModel extends Model {
     public function __construct(){}
 }
