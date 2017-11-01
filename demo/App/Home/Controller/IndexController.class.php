@@ -6,7 +6,7 @@ use Lib\System\Arr as Arr;
 use Lib\System\Mail as Mail;
 use Lib\System\Excel as Excel;
 use Lib\System\Code as Code;
-
+use Lib\System\File as File;
 
 class IndexController extends CommonController {
     public function init(){
@@ -461,7 +461,10 @@ class IndexController extends CommonController {
         var_dump($this->verifyCode( $code ));
     }
     
-    
+    public function file(){
+        $file = PROJECT_PATH . 'Data/readMe.txt';
+        pr( File::cp($file, PROJECT_PATH . 'Data/readMe2.txt'  ) );
+    }
     
     
     
