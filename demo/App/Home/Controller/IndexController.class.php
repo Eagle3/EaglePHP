@@ -466,9 +466,37 @@ class IndexController extends CommonController {
         pr( File::cp($file, PROJECT_PATH . 'Data/readMe2.txt'  ) );
     }
     
+    public function redis(){
+        $redis = \Lib\System\Cache\Redis::getInstance();
+        $data = array(
+                array(
+                        'name' => 'jack',
+                        'age' => 20,
+                ),
+                array(
+                        'name' => 'jack1',
+                        'age' => 21,
+                ),
+        );
+        $redis->set('test', $data);
+        pr( $redis->get('test') );
+    }
     
-    
-    
+    public function memcache(){
+        $Memcache = \Lib\System\Cache\Memcache::getInstance();
+        $data = array(
+                array(
+                        'name' => 'jack',
+                        'age' => 20,
+                ),
+                array(
+                        'name' => 'jack1',
+                        'age' => 21,
+                ),
+        );
+        $Memcache->set('test', $data);
+        pr( $Memcache->get('test') );
+    }
     
     
     
