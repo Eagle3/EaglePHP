@@ -26,10 +26,11 @@ class Redis {
     }
 
     public function get($key){
-        return $this->cacheHandler->get($key);
+        return unserialize( $this->cacheHandler->get($key) );
     }
 
     public function set($key,$value,$expire = null){
+        $value = serialize($value);
         $setOptions = $this->setOptions;
         return $this->cacheHandler->set($key,$value, $expire ? $expire : $setOptions['CACHE_TIME']);
     }
