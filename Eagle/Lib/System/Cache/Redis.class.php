@@ -8,7 +8,7 @@ class Redis extends Cache {
             $this->setOptions = $setOptions;
         }
         //初始化
-        $this->cacheHandler = new \Redis();pr($this->cacheHandler);
+        $this->cacheHandler = new \Redis();
         $this->cacheHandler->connect($setOptions['SERVERS'][0]['HOST'],$setOptions['SERVERS'][0]['PORT']);
     }
 
