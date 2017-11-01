@@ -6,10 +6,7 @@ class Controller {
     private $ENGINE_NAME = 'Smarty';
     private $obj = NULL;
     
-    public function __construct(){
-        if(method_exists($this,'init')){
-            $this->init();
-        }
+    private function initialize(){
         $TPL_ENGINE = 1;
         $TPL_ENGINE_CONFIG = getConfig('TPL_ENGINE');
         if( $TPL_ENGINE_CONFIG && in_array( $TPL_ENGINE_CONFIG, array( 1,2 ) ) ){
@@ -18,9 +15,16 @@ class Controller {
                     $this->ENGINE_NAME = 'Smarty';
                     break;
                 case 2:
-                     $this->ENGINE_NAME = 'Template';
+                    $this->ENGINE_NAME = 'Template';
                     break;
             }
+        }
+    }
+    
+    public function __construct(){
+        $this->initialize();
+        if(method_exists($this,'init')){
+            $this->init();
         }
     }
     
