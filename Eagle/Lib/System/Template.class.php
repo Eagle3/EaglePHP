@@ -15,7 +15,6 @@ class Template {
 	
     public function __construct(){
     	$this->initSystem();
-    	$this->initAssign();
     }
         
     public function assign( $tplVar, $tplValue = null){
@@ -44,15 +43,6 @@ class Template {
     	exit;
     }
 	
-    private function initAssign(){
-    	$this->assign(array(
-    			'PROJECT_JS_PATH' => PROJECT_JS_PATH,
-    			'PROJECT_CSS_PATH' => PROJECT_CSS_PATH,
-    			'PROJECT_IMAGE_PATH' => PROJECT_IMAGE_PATH,
-    			'FILE_VERSION' => '?v='.time().mt_rand(10000, 99999),
-    	));
-    }
-    
     private function getTplFilePath($tpl){
     	$tplPostfix = getConfig('DEFAULT_TPL_POSTFIX');
     	$path = $this->template_dir.$tpl.$tplPostfix;

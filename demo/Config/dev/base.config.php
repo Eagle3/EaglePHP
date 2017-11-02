@@ -1,7 +1,43 @@
 <?php
 return array(
-        //项目中是否全局开启session 1开启
-        'SESSION_OPEN' => 1,
+        //项目中是否全局开启session true开启
+        'SESSION_OPEN' => true,
+        
+        //模板引擎选择 1:Smarty 2:内置
+        'TPL_ENGINE' => 1,
+        
+        //smarty模板引擎配置
+        'SMARTY_TPL_CONFIG' => array(
+                'debugging' => false, //开启调试
+                'caching' => false,              //是否使用缓存
+                'cache_lifetime' => 0, //缓存时间
+                'template_dir' => APP_PATH,//设置模板目录
+                'compile_dir' => './Tmp/smarty_templates_c',//设置编译目录
+                'cache_dir' => './Tmp/cache/smarty_templates_cache',//缓存文件夹
+                //修改左右边界符号
+                'delimiter' => array(
+                        'left_delimiter' => '{',
+                        'right_delimiter' => '}',
+                ),
+        
+        ),
+        
+        //系统内置模板引擎配置
+        'SYSTEM_TPL_CONFIG' => array(
+                'debugging' => false, //开启调试
+                'caching' => false,              //是否使用缓存
+                'cache_lifetime' => 0, //缓存时间
+                'template_dir' => APP_PATH,//设置模板目录
+                'compile_dir' => DIR.'/Tmp/system_templates_c/',//设置编译目录
+                'cache_dir' => DIR.'/Tmp/cache/system_templates_cache/',//缓存文件夹
+                //修改左右边界符号
+                'delimiter' => array(
+                        'left_delimiter' => '{',
+                        'right_delimiter' => '}',
+                ),
+
+        ),
+        
         
         //验证码验证类型： 1，cookie  2，session
         'DEFAULT_CODE_VERIFY' => 2,

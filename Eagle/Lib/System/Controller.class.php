@@ -7,17 +7,17 @@ class Controller {
     private $obj = NULL;
     
     private function initialize(){
-        $TPL_ENGINE = 1;
         $TPL_ENGINE_CONFIG = getConfig('TPL_ENGINE');
-        if( $TPL_ENGINE_CONFIG && in_array( $TPL_ENGINE_CONFIG, array( 1,2 ) ) ){
-            switch ( $TPL_ENGINE_CONFIG ) {
-                case 1:
-                    $this->ENGINE_NAME = 'Smarty';
-                    break;
-                case 2:
-                    $this->ENGINE_NAME = 'Template';
-                    break;
-            }
+        if( !$TPL_ENGINE_CONFIG || !in_array( $TPL_ENGINE_CONFIG, array( 1,2 ) ) ){
+            $TPL_ENGINE_CONFIG = 1;
+        }
+        switch ( $TPL_ENGINE_CONFIG ) {
+            case 1:
+                $this->ENGINE_NAME = 'Smarty';
+                break;
+            case 2:
+                $this->ENGINE_NAME = 'Template';
+                break;
         }
     }
     
