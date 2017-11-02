@@ -19,15 +19,12 @@ return array(
         
         //默认访问
         'DEFAULT_CALL' => array(
-                'DEFAULT_ROUTE_PARAM' => '_EAGLE_ROUTE_',
-                'DEFAULT_CONTROLLER_PARAM' => '_EAGLE_CONTROLLER_',
-                'DEFAULT_ACTION_PARAM' => '_EAGLE_ACTION_',
-        		'DEFAULT_ROUTE_PARAM' => 'r',
-        		'DEFAULT_CONTROLLER_PARAM' => 'c',
-        		'DEFAULT_ACTION_PARAM' => 'a',
-                'DEFAULT_ROUTE' => 'Home',
-                'DEFAULT_CONTROLLER' => 'Index',
-                'DEFAULT_ACTION' => 'index',
+        		'ROUTE_PARAM' => 'r',
+        		'CONTROLLER_PARAM' => 'c',
+        		'ACTION_PARAM' => 'a',
+                'ROUTE' => 'Home',
+                'CONTROLLER' => 'Index',
+                'ACTION' => 'index',
         ),
         
         //数据库配置
