@@ -14,8 +14,9 @@ class Dispatch {
     public function run(){
         $paramArr = Route::getInstance()->handRoute();
         $class = "\\".$paramArr['r']."\Controller\\".$paramArr['c'].'Controller';
+        $controller = new $class();
         call_user_func_array(
-                array( new $class(), $paramArr['a']), 
+                array($controller, $paramArr['a']), 
                 array()
         );
     }

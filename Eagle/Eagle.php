@@ -47,22 +47,17 @@ if(!isset($projectConfig['DEFAULT_LANGUAGE']) || $projectConfig['DEFAULT_LANGUAG
 }
 $langData = getLangConfig($lang);
 
-// smarty模板引擎路径
-// defined('SMARTY_PATH') or define('SMARTY_PATH', EAGLE_PATH.'lib/plugin/smarty/Autoloader.php');
-// $GLOBALS['SMARTY_OBJ'] = getSmartyObj();
-
 function autoLoad($class){
-    //echo $class.'<br>';
-    $class = str_replace('\\','/',$class);
+    $class = str_replace( array( '\\','/' ), DIRECTORY_SEPARATOR, $class);
     $classFile = $class.'.class.php';
     $classDir = array(
             EAGLE_PATH,
             APP_PATH,
     );
-    //pr( $classDir );
+    
     foreach ($classDir as $key=>$val){
         if(file_exists($val.$classFile)){
-        	//echo $val.$classFile.'<br>';
+        	echo $val.$classFile.'<br>';
             require $val.$classFile;
             break;
         }
@@ -71,5 +66,5 @@ function autoLoad($class){
 }
 
 spl_autoload_register('autoLoad');
-
-\lib\system\Dispatch::getInstance()->run();
+use Lib\System\Dispatch;
+Dispatch::getInstance()->run();
