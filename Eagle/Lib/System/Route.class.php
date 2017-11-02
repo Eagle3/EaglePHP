@@ -31,6 +31,15 @@ class Route {
         $controller = isset( $_GET[$this->ControllerParam] ) && $_GET[$this->ControllerParam] ? $_GET[$this->ControllerParam] : $this->Controller;
         $controller = ucfirst( $controller );
         $action = isset( $_GET[$this->ActionParam] ) && $_GET[$this->ActionParam] ? $_GET[$this->ActionParam] : $this->Action;
+        
+        //如果请求的文件不存在走默认请求。此处也可以不判断，让程序报错
+        $class = "\\" . $route . "\Controller\\" . $controller. 'Controller';
+        if ( !file_exists( APP_PATH . $class ) ) {
+            $route = $this->Route;
+            $controller = $this->Controller;
+            $action = $this->Action;
+        }
+        
         defined( 'ROUTE_NAME' ) or define( 'ROUTE_NAME', $route );
         defined( 'CONTROLLER_NAME' ) or define( 'CONTROLLER_NAME', $controller );
         defined( 'ACTION_NAME' ) or define( 'ACTION_NAME', $action );
