@@ -463,7 +463,7 @@ class IndexController extends CommonController {
     
     public function file(){
         $file = PROJECT_PATH . 'Data/readMe.txt';
-        pr( File::cp($file, PROJECT_PATH . 'Data/readMe2.txt'  ) );
+        pr( File::dir2array( PROJECT_PATH , true  ) );
     }
     
     public function redis(){
