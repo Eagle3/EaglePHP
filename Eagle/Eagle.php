@@ -1,8 +1,6 @@
 <?php
 header("Content-type: text/html; charset=utf-8");
 
-session_start();
-
 // 项目路径（入口文件所在的目录）
 defined('PROJECT_PATH') or define('PROJECT_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR);
 //项目公共函数路径
@@ -12,13 +10,13 @@ defined('PROJECT_CONFIG_PATH') or define('PROJECT_CONFIG_PATH', PROJECT_PATH . '
 //日志文件目录
 defined('LOGS_PATH') or define('LOGS_PATH', PROJECT_PATH . 'Logs');
 //项目js路径
-defined('PROJECT_JS_PATH') or define('PROJECT_JS_PATH', '/Static/js/');
+defined('JS_PATH') or define('JS_PATH', '/Static/js/');
 //项目css路径
-defined('PROJECT_CSS_PATH') or define('PROJECT_CSS_PATH', '/Static/css/');
+defined('CSS_PATH') or define('CSS_PATH', '/Static/css/');
 //项目图片路径
-defined('PROJECT_IMAGE_PATH') or define('PROJECT_IMAGE_PATH', '/Static/image/');
+defined('IMAGE_PATH') or define('IMAGE_PATH', '/Static/image/');
 //字体文件路径
-defined('PROJECT_FONT_PATH') or define('PROJECT_FONT_PATH', PROJECT_PATH . 'Static/font/');
+defined('FONT_PATH') or define('FONT_PATH', PROJECT_PATH . 'Static/font/');
 
 // 框架路径
 defined('EAGLE_PATH') or define('EAGLE_PATH', __DIR__ . DIRECTORY_SEPARATOR);

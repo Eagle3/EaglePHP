@@ -7,6 +7,7 @@ class CommonController extends \Lib\System\Controller {
     protected $verifyName = '_verifyCode';
     
     public function init(){
+        getConfig('SESSION_OPEN') && session_start();
         $verifyType = getConfig('DEFAULT_CODE_VERIFY');
         if( (int)$verifyType == 1 ){
             $this->verifyType = 'cookie';
@@ -15,6 +16,12 @@ class CommonController extends \Lib\System\Controller {
         }
         $verifyName = getConfig('DEFAULT_CODE_NAME');
         $this->verifyName = $verifyName;
+        $this->assign(array(
+                'JS_PATH' => JS_PATH,
+                'CSS_PATH' => CSS_PATH,
+                'IMAGE_PATH' => IMAGE_PATH,
+                'FILE_VERSION' => time().mt_rand(10000, 99999),
+        ));
     }
     
 	public function echoJsonp($callback,$data){
@@ -55,7 +62,6 @@ class CommonController extends \Lib\System\Controller {
 	    if( $this->verifyType == 'cookie' && isset($_COOKIE[$this->verifyName]) && strtolower($code) == strtolower($_COOKIE[$this->verifyName])){
 	        return true;
 	    }
-	    //session_start();
 	    if( $this->verifyType == 'session' && isset($_SESSION[$this->verifyName]) && strtolower($code) == strtolower($_SESSION[$this->verifyName])){
 	        return true;
 	    }

@@ -1,5 +1,7 @@
 <?php
 return array(
+        //项目中是否全局开启session 1开启
+        'SESSION_OPEN' => 1,
         
         //验证码验证类型： 1，cookie  2，session
         'DEFAULT_CODE_VERIFY' => 2,
