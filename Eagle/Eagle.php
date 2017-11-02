@@ -57,7 +57,7 @@ function autoLoad($class){
     
     foreach ($classDir as $key=>$val){
         if(file_exists($val.$classFile)){
-        	echo $val.$classFile.'<br>';
+        	//echo $val.$classFile.'<br>';
             require $val.$classFile;
             break;
         }
