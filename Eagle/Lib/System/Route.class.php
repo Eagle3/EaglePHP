@@ -33,7 +33,7 @@ class Route {
         $action = isset( $_GET[$this->ActionParam] ) && $_GET[$this->ActionParam] ? $_GET[$this->ActionParam] : $this->Action;
         
         //如果请求的文件不存在走默认请求。此处也可以不判断，让程序报错
-        $class = "\\" . $route . "\Controller\\" . $controller. 'Controller';
+        $class = "\\" . $route . "\Controller\\" . $controller. 'Controller.class.php';
         if ( !file_exists( APP_PATH . $class ) ) {
             $route = $this->Route;
             $controller = $this->Controller;

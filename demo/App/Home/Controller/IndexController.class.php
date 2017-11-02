@@ -16,7 +16,7 @@ class IndexController extends CommonController {
 	 
     
     public function index() {
-        // pr( $_GET );
+         //pr( $_GET );
 //        $o = new \Admin\Controller\IndexController();
 //        $o->index2();
         
