@@ -90,15 +90,15 @@
 		},
 		
 		//判断是安卓还是IOS
-		isIOS : function() {
+		androidOrIOS : function() {
 			var u = navigator.userAgent;
 		    var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1;
 		    var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
 		    if (isAndroid) {
-		       return false;
+		       return 'android';
 		    }
 		    if (isIOS) {
-		    	return true;
+		    	return 'ios';
 		    }
 		},
 		
@@ -494,16 +494,6 @@
 				recursiveLoad(0);*/
 				
 			}
-		},
-		
-		//获取属性值
-		getAttr : function ( o , p ){
-			return o.getAttribute(p);
-		},
-		
-		//设置属性值
-		setAttr : function ( o , p , v ){
-			o.setAttribute( p , v );
 		},
 		
 		//获取表单数据
