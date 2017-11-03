@@ -7,6 +7,7 @@ use Lib\System\Mail as Mail;
 use Lib\System\Excel as Excel;
 use Lib\System\Code as Code;
 use Lib\System\File as File;
+use Lib\System\Fsocket;
 
 class IndexController extends CommonController {
     public function init(){
@@ -16,7 +17,7 @@ class IndexController extends CommonController {
 	 
     
     public function index() {
-         //pr( $_GET );
+         pr( $_SERVER );
 //        $o = new \Admin\Controller\IndexController();
 //        $o->index2();
         
@@ -223,8 +224,8 @@ class IndexController extends CommonController {
     
     //测试CURL接收数据配合curl使用
     public function getCurl(){
-    	\Lib\System\Log::debug( 'POST:'.var_export($_POST,true).',header:'.var_export(  getallheaders(),true ) );
-    	echo json_encode( array( 'post' => $_POST ) );
+    	\Lib\System\Log::debug( 'request:'.var_export($_REQUEST,true).',header:'.var_export(  getallheaders(),true ) );
+    	echo json_encode( array( 'request' => $_REQUEST ) );
 
     	echo '收到数据';
     	
@@ -498,7 +499,15 @@ class IndexController extends CommonController {
         pr( $Memcache->get('test') );
     }
     
-    
+   
+    public function fsocket(){
+        Fsocket::set('127.0.0.1/note/websocket/',array(
+                'name' => 'jack',
+                'age' => 20,
+        ),'POST','80');
+        //$res = Fsocket::send();
+       // pr( $res );
+    }
     
     
     
