@@ -7,7 +7,6 @@ class Import {
         if( !$file ){
             return false;
         }
-        $file = EAGLE_PATH . $file;
-        require_once $file;
+        require_once EAGLE_PATH . $file;
     }
 }
