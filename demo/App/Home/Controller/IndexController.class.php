@@ -73,7 +73,17 @@ class IndexController extends CommonController {
     }
     
     public function log() {
-    	\Lib\System\Log::error( var_export($_REQUEST,true) );
+        
+//         $string = 'http://thirdapp0.qlogo.cn/qzopenapp/b025b6dd00a560fcc7ee9340291c76359572fc67bd88348a03b3bb52003841ef/50';
+//         $data = str_replace(array('-', '_'), array('+', '/'), $string);
+//         $mod4 = strlen($data) % 4;
+//         if ($mod4) {
+//             $data .= substr('====', $mod4);
+//         }
+//         $url = base64_decode($data);
+//         $_REQUEST['url'] = $url;
+        
+    	\Lib\System\Log::debug( var_export($_REQUEST,true) );
     }
     
     public function ajax() {
