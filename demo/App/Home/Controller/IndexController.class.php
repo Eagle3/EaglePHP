@@ -516,7 +516,7 @@ class IndexController extends CommonController {
                 'age' => 20,
         ),'POST','80');
         //$res = Fsocket::send();
-       // pr( $res );
+       // pr( $res ); 
     }
     
     
