@@ -154,7 +154,7 @@ class Curl {
 				break;
 		}
 		curl_setopt($this->ch, CURLOPT_POSTFIELDS, $postData);
-		return $this->endCurl();
+		return $this->endCurl(); 
 	}
 	
 	public function setOption( $key, $val = 0 ){
