@@ -310,21 +310,26 @@ class IndexController extends CommonController {
     
     //测试加密解密数据
     public function endata(){
-    	 
+        $Authcode = new \Lib\System\Crypt\EnDecode();
+        
     	//自定义加密解密算法1
-    	/* $Authcode = new \Lib\System\Crypt\EnDecode();
+    	/*
     	 $a = '{"Json解析":"支持格式化高亮折叠","Json格式验证":"更详细准确的错误信息"｝';
     	 $b = $Authcode->code1($a, "ENCODE", "这是密钥");
     	 echo $b."<br/>";
     	 echo $Authcode->code1($b, "DECODE", "这是密钥");
-    	 echo "<br/>"; */
-    	 
+    	 echo "<br/>"; 
+    	  */
+        
+        
     	//自定义加密解密算法1
     	/* $psa = $Authcode->code2("这是明文","这是密钥",'encode');
     	 echo $psa.'<br>';
     	 echo $Authcode->code2($psa,"这是密钥",'decode');
-    	 echo "<br/>"; */
-    	 
+    	 echo "<br/>"; 
+    	 */
+        
+        
     	//3DES ECB PKCS7（Java默认PKCS7模式填充） 加密解密
     	/* $Mcrypt3DesEcb = new \Lib\System\Crypt\Mcrypt3DesEcb();
     	 $str = '北京欢迎你';
@@ -519,11 +524,273 @@ class IndexController extends CommonController {
        // pr( $res );
     }
     
+    //注册 ajax请求
+    public function register(){
+        //$post = MooVar::postx();
+        $post = $_POST;
+        $uid = $post['uid'];
+        
+        /* 验证账号格式  */
+        $regByEmail = false;
+        $regByPhone = false;
+        if( filter_var($uid, FILTER_VALIDATE_EMAIL) ){
+            $regByEmail = true;
+        }
+        if( preg_match('/^13[\d]{9}$|^14[5,7]{1}\d{8}$|^15[\d]{9}$|^17[0,1,3,6,7,8]{1}\d{8}$|^18[\d]{9}$/', $uid) ){
+            $regByPhone = true;
+        }
+        if( !$regByEmail && !$regByPhone ){
+            echo '填写的手机号或邮箱格式错误';
+            return false;
+        }
+        
+        /* 验证密码  */
+        $password = $post['password'];
+        $rePassword = $post['rePassword'];
+        $passLen = strlen($password);
+        $rePassLen = strlen($rePassword);
+        if( $passLen > 16 || $passLen < 6 ){
+            echo '密码的长度不在规定范围内';
+            return false;
+        }
+        if( $passLen > 16 || $passLen < 6 ){
+            echo '确认密码的长度不在规定范围内';
+            return false;
+        }
+        if( $password != $rePassword ){
+            echo '两次输入的密码不一致';
+            return false;
+        }
+        
+        if( is_numeric(strpos($password,' ')) || is_numeric(strpos($rePassword,' ')) ){
+            echo '密码中不能含有空格';
+            return false;
+        }
+        echo '数据验证通过<br>';
+        
+        /* 根据uid查询数据库，是否有此账号  */
+        $sql = "SELECT * FROM `user` WHERE phone='{$uid}' or email='{$uid}'  LIMIT 1";
+        $res = false;
+        if( $res ){
+            echo '该账号已被注册';
+            return false;
+        }
+        
+        /* 入库成功，返回前端  */
+        if( $regByEmail ){
+            //插入email字段
+        }
+        if( $regByPhone ){
+            //插入Phone字段
+        }
+        
+        // 用户 status 状态是未激活
+        
+        $passwordData = $this->createPassword( $password );
+        $password = $passwordData['password'];
+        $salt = $passwordData['salt'];
+        
+        $sql = "  insert ";
+        $insertId = true;
+        if( $insertId ){
+            echo '注册成功';
+            return false;
+        }else{
+            echo '注册失败';
+            return false;
+        }
+
+    }
     
     
     
+    //登录 ajax请求
+    public function login(){
+        //$post = MooVar::postx();
+        $post = $_POST;
+        $uid = $post['uid'];
+        $password = $post['password'];
+       
+        /* 根据uid查询数据库，是否有此账号  */
+        $sql = "SELECT * FROM `user` WHERE phone='{$uid}' or email='{$uid}'  LIMIT 1";
+        $res = array();
+        $res = array( 'salt' => 'fe4b74fa1cace8f51710b4','password' => 'e02a474b52b21736c12998244460a0bc'  );
+        if( !$res ){
+            echo '没有此账号';
+            return false;
+        }
     
+        /* 验证密码  */
+        $passwordData = $this->createPassword( $password,$res['salt'] );
+        if( $res['password'] == $passwordData['password'] ){
+            echo '登录成功';
+            return false;
+        }else{
+            echo '密码错误';
+            return false;
+        }
     
+    }
+    
+    //发送验证码(向手机号或者邮箱。用户激活、忘记密码时调用)  ajax请求； 发送规则： a: 时间间隔大于等于60秒  b:当天最多发送5条短信或5封邮件  c:凡是站内调用发送验证码接口都计算在内
+    public function sendCode(){
+        $actionArr = array(
+                1 => 'activate',
+                2 => 'forgetPassword'
+        );
+        $action = $post['action']; //何种情况下发送（例如： 激活、忘记密码）,不同操作调用不同模板
+        
+        
+        /*  验证用户是否登录（ 激活操作时需要验证是否登录，忘记密码不需要 ）  */
+        
+        if( ( $action == 1 ) && !$this->_checkLogin() ){
+            echo '用户未登录，请登录后执行激活操作';
+            return false;
+        }
+        
+        /*  发送激活码  */
+        //$post = MooVar::postx();
+        $post = $_POST;
+        $sendType = $post['sendType']; //发送类型。1短信，2邮件
+        
+        
+        //查询数据库（ 条件： 当天 、uid、类型为短信或邮件 ）
+        $res = getRes( 'select * from ......' );
+        $res = array();
+        
+        //发送次数
+        if( count( $res ) == 5 ){
+            echo '当天已发送5条';
+            return false;
+        }
+        
+        //最后一次发送时间
+        if( $resp[4]['time'] + 60  > time() ){
+            echo '发送时间间隔应大于等于60秒';
+            return false;
+        }
+          
+        //生成6位验证码
+        $code = $this->createCode();
+        
+        //不同操作调用不同发送模板
+        $tpl = '';
+        
+        //入库
+        // insert
+        
+        //调用发送短信接口
+        if( $sendType == 1 ){
+            // send
+        }elseif( $sendType == 2 ){
+            // send
+        }
+       
+    }
+    
+    //用户激活。手机号或者Email激活  ajax请求 ; 激活条件： 激活码正确并且在5分钟以内
+    public function activate(){
+        /*  验证用户是否登录  */
+        if( !$this->_checkLogin() ){
+            echo '用户未登录，请登录后执行激活操作';
+            return false;
+        }
+        
+        //$post = MooVar::postx();
+        $post = $_POST;
+        $uid = $post['uid'];
+        $sendType = $post['sendType'];
+        $code = $post['code'];
+        
+        //查询数据库（ 条件： 当天 、uid、类型为短信或邮件，time ），并且取最后发送的一条记录
+        $res = getRes( 'select * from ......' );
+        $res = array();
+    
+        /* 验证 */
+        if( $res['time'] + ( 5 * 60 ) > time() ){
+            echo '激活码已过期';
+            return false;
+        }elseif( $res['code'] != $code){
+            echo '激活码输入有误';
+            return false;
+        }else{
+            //更新用户status状态值，激活成功
+            // update
+            echo '激活成功';
+        }
+    }
+    
+    //忘记密码,URL跳转
+    public function forgetPassword(){
+        
+    }
+    
+    //修改密码，ajax请求
+    public function updatePassword(){
+        /* 判断是根据手机号还是邮箱修改的密码 */
+        $post = MooVar::postx();
+        $updateType = $post['updteType'];
+        /* 验证密码  */
+        $password = $post['password'];
+        $rePassword = $post['rePassword'];
+        $passLen = strlen($password);
+        $rePassLen = strlen($rePassword);
+        if( $passLen > 16 || $passLen < 6 ){
+            echo '密码的长度不在规定范围内';
+            return false;
+        }
+        if( $passLen > 16 || $passLen < 6 ){
+            echo '确认密码的长度不在规定范围内';
+            return false;
+        }
+        if( $password != $rePassword ){
+            echo '两次输入的密码不一致';
+            return false;
+        }
+        
+        if( is_numeric(strpos($password,' ')) || is_numeric(strpos($rePassword,' ')) ){
+            echo '密码中不能含有空格';
+            return false;
+        }
+        echo '数据验证通过<br>';
+        
+        /* 生成密码 */
+        $passwordData = $this->createPassword( $password );
+        $password = $passwordData['password'];
+        $salt = $passwordData['salt'];
+        
+        //手机
+        if( $updateType == 1 ){
+            
+        }elseif( $updateType == 2 ){
+        
+        }
+        
+        //更新用户密码
+        
+    }
+    
+    //生成密码
+    private function createPassword( $password, $salt = '' ){
+        /**
+         * 忘记密码重置密码为 123456 时，
+         * 
+         * 数据库中请把 
+         * 密串（盐值）设置为：   fe4b74fa1cace8f51710b4  密串生成方式为   substr( md5( 'egret' ), 0, 22 )
+         * 密码为：                          e02a474b52b21736c12998244460a0bc
+         * 
+         */
+        $salt = !$salt ? str_replace( '.', '',uniqid('',true) ) : $salt;
+        return array(
+                'salt' => $salt,
+                'password' => md5( substr( $salt,0,14 ).md5( $password ).substr( $salt,14,8 ) ),
+        );
+    }
+    
+    //生成6位验证码
+    private function createCode( $length = 6 ){
+        return mt_rand( pow(10 , ($length - 1)) , pow(10, $length) - 1 );
+    }
     
     
     
