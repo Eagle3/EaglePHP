@@ -518,7 +518,16 @@ class IndexController extends CommonController {
         pr( $Memcache->get('test') );
     }
     
-   
+    //远程图片打包下载
+    public function remoteDownload(){
+        //传入远程图片地址
+        $fileArr = array(
+                1 => 'http://pic4.nipic.com/20091217/3885730_124701000519_2.jpg',
+                2 =>  'http://img07.tooopen.com/images/20170316/tooopen_sy_201956178977.jpg',
+        );
+        $remoteDownload = new \Lib\System\RemoteDownload( $fileArr );
+        $remoteDownload->down();
+    }
 
     
     
