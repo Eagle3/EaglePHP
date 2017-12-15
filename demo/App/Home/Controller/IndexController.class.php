@@ -7,7 +7,7 @@ use Lib\System\Mail as Mail;
 use Lib\System\Excel as Excel;
 use Lib\System\Code as Code;
 use Lib\System\File as File;
-use Lib\System\Fsocket;
+//use Lib\System\Fsocket;
 
 class IndexController extends CommonController {
     public function init(){
@@ -526,6 +526,7 @@ class IndexController extends CommonController {
                 2 =>  'http://img07.tooopen.com/images/20170316/tooopen_sy_201956178977.jpg',
         );
         $remoteDownload = new \Lib\System\RemoteDownload( $fileArr );
+        
         $remoteDownload->down();
     }
 

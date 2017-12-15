@@ -28,7 +28,7 @@ class RemoteDownload{
             $postfix = substr($v, strrpos($v, '.'));
             $filename = $k.$postfix;
             $return_content = $this->http_get_data( $v );
-            $fp= @fopen($filename,"a"); //将文件绑定到流
+            $fp= fopen($filename,"a"); //将文件绑定到流
             fwrite($fp,$return_content); //写入文件
             $v = $filename;
         }
@@ -49,7 +49,8 @@ class RemoteDownload{
         }
     
         if(!file_exists($filename)){
-             exit("无法找到文件");
+            echo '无法找到文件';
+            exit;
         }
         header("Cache-Control: public");
         header("Content-Description: File Transfer");
