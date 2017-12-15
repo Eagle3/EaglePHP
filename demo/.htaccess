@@ -1,12 +1,12 @@
 <IfModule mod_rewrite.c>
-  RewriteEngine Off
-  
-  RewriteRule ^(\w*)/(\w*)/(\w*)$ index.php?r=$1&c=$2&a=$3  [NC,QSA]
-  RewriteRule ^(\w*)/(\w*)$ index.php?r=$1&c=$2&a=index  [NC,QSA]
-  RewriteRule ^(\w*)$ index.php?r=$1&c=Index&a=index  [NC,QSA]
-  
-  RewriteCond %{REQUEST_FILENAME} !-d 
-  RewriteCond %{REQUEST_FILENAME} !-f 
-  RewriteRule ^(.*)$ index.php/$1 [L]
+	RewriteEngine On
+
+	RewriteRule ^(\w*)/(\w*)/(\w*)$ index.php?r=$1&c=$2&a=$3  [NC,QSA]
+	RewriteRule ^(\w*)/(\w*)$ index.php?r=$1&c=$2&a=index  [NC,QSA]
+	RewriteRule ^(\w*)$ index.php?r=$1&c=Index&a=index  [NC,QSA]
+
+	RewriteCond %{REQUEST_FILENAME} !-d 
+	RewriteCond %{REQUEST_FILENAME} !-f 
+	RewriteRule ^(.*)$ index.php/$1 [L]
 
 </IfModule>
