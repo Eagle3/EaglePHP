@@ -41,12 +41,10 @@ class CommonController extends \Lib\System\Controller {
 				break;
 			case 'text' :
 				header( 'Content-Type:text/html;charset=utf-8 ');
-				if(is_array($data)){
+				if(is_array($data) || is_object($data)){
 					$res = json_encode($data,JSON_UNESCAPED_UNICODE);
 				}elseif(is_string($data)){
 					$res = $data;
-				}elseif(is_object($data)){
-					$res = $res = json_encode($data,JSON_UNESCAPED_UNICODE);
 				}elseif(is_bool($data)){
 					$res = (int)$data;
 				}else{
