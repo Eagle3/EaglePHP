@@ -5,13 +5,16 @@
 <title>多文件上传</title>
 </head>
 <body>
-	<h3 style="color:red;">上传限制：最多能上传5个文件</h3>	
-	<form id="form1" action="http://eagle.test/index.php?r=home&c=index&a=upload" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="MAX_FILE_SIZE" value="100000000">
-		<input type="submit" name="submit" value="点击上传"><br><br>
-		<span>请选择文件：</span><input type="file" name="pic[]" />  <input type="button" value="点击添加更多" onclick='addNewLine()' /><br>
+	<h3 style="color: red;">上传限制：最多能上传5个文件</h3>
+	<form id="form1"
+		action="http://eagle.test/index.php?r=home&c=index&a=upload"
+		method="post" enctype="multipart/form-data">
+		<input type="hidden" name="MAX_FILE_SIZE" value="100000000"> <input
+			type="submit" name="submit" value="点击上传"><br>
+		<br> <span>请选择文件：</span><input type="file" name="pic[]" /> <input
+			type="button" value="点击添加更多" onclick='addNewLine()' /><br>
 	</form>
-	
+
 	<script type="text/javascript">
 		function addNewLine(){
 			var form=document.getElementById('form1');//获取父节点

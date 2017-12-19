@@ -1,6 +1,5 @@
 <?php
+
 namespace Lib\System;
 
-class String {
-    
-}
+class String {}

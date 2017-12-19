@@ -1,4 +1,4 @@
 <?php
 return array(
-         'name' => 'jack'
+        'name' => 'jack' 
 );

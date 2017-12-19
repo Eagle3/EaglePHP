@@ -1,4 +1,5 @@
 <?php
+
 namespace Lib\System;
 
 class Validate {
@@ -12,25 +13,24 @@ class Validate {
             'letter' => 'letter',
             'chinese' => 'chinese',
             'ip' => 'ip',
-            'postcode' => 'postcode',
+            'postcode' => 'postcode' 
     );
-    
     private $typeFun = '';
-    
-    public function __construct($type){
+    public function __construct( $type ) {
         $typeArr = $this->typeArr;
         $this->typeFun = $typeArr[$type];
     }
-    
-    public function check($str){
-        return call_user_func_array(array($this,$this->typeFun), array($str));
+    public function check( $str ) {
+        return call_user_func_array( array(
+                $this,
+                $this->typeFun 
+        ), array(
+                $str 
+        ) );
     }
-    
-    private function email($str){
+    private function email( $str ) {
         return true;
     }
-    
-    
 }
 
 

@@ -49,7 +49,7 @@ class File {
     
     /**
      * 遍历目录，将遍历结果放入数组
-     * 
+     *
      * @param string $dir
      *            遍历的目录
      * @param bool $subdirs

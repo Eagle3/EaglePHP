@@ -62,7 +62,7 @@ class Arr {
      * @param string $sort            
      */
     public static function quickSort( $arr, $sort = 'asc' ) {
-        $len = count( $arr ); 
+        $len = count( $arr );
         if ( $len <= 1 ) {
             return $arr;
         }
@@ -78,7 +78,7 @@ class Arr {
                         $maxArr[] = $arr[$i];
                     }
                     break;
-                default:
+                default :
                     if ( $arr[$i] > $baseNum ) {
                         $maxArr[] = $arr[$i];
                     } else {
@@ -89,11 +89,13 @@ class Arr {
         }
         $minArr = self::quickSort( $minArr, $sort );
         $maxArr = self::quickSort( $maxArr, $sort );
-        if( $sort == 'asc' ){
-            return array_merge( $minArr, array( $baseNum ), $maxArr );
+        if ( $sort == 'asc' ) {
+            return array_merge( $minArr, array(
+                    $baseNum 
+            ), $maxArr );
         }
-        return array_merge( $maxArr, array( $baseNum ), $minArr );
+        return array_merge( $maxArr, array(
+                $baseNum 
+        ), $minArr );
     }
-    
-    
 }
