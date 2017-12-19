@@ -12,8 +12,8 @@ return array(
                 'caching' => false,              //是否使用缓存
                 'cache_lifetime' => 0, //缓存时间
                 'template_dir' => APP_PATH,//设置模板目录
-                'compile_dir' => './Tmp/smarty_templates_c',//设置编译目录
-                'cache_dir' => './Tmp/cache/smarty_templates_cache',//缓存文件夹
+                'compile_dir' => '/eagleTemp/smarty_templates_c',//设置编译目录
+                'cache_dir' => '/eagleTemp/cache/smarty_templates_cache',//缓存文件夹
                 //修改左右边界符号
                 'delimiter' => array(
                         'left_delimiter' => '{',
