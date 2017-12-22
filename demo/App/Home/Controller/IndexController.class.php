@@ -536,6 +536,25 @@ class IndexController extends CommonController {
         pr( $Memcache->get( 'test' ) );
     }
     
+    // 文件打包
+    public function zip() {
+        // 传入目录地址
+        
+        $file = array(
+                './Static/js/Eagle.js',
+                './Static/css/base.css',
+                './index.php'
+                
+                
+        );
+        
+        $file = './Static/js/Eagle.js';
+        $file = './Static/';
+        
+        $zip = new \Lib\System\Compress\Zip( $file );
+        $zip->exe();
+    }
+    
     // 远程图片打包下载
     public function remoteDownload() {
         // 传入远程图片地址
