@@ -552,7 +552,9 @@ class IndexController extends CommonController {
         $file = './Static/';
         
         $zip = new \Lib\System\Compress\Zip( $file );
-        $zip->exe();
+        $zipFilePath = $zip->exe();
+        //unlink($zipFilePath);
+        pr( $zipFilePath );
     }
     
     // 远程图片打包下载
