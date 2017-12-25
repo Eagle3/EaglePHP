@@ -536,6 +536,12 @@ class IndexController extends CommonController {
         pr( $Memcache->get( 'test' ) );
     }
     
+    // 文件下载
+    public function down() {
+        $down = new \Lib\System\Download();
+        $down->exe( './Static/font/consolab.ttf');
+    }
+    
     // 文件打包
     public function zip() {
         // 传入目录地址
@@ -544,28 +550,32 @@ class IndexController extends CommonController {
                 './Static/js/Eagle.js',
                 './Static/css/base.css',
                 './index.php'
-                
-                
         );
         
         $file = './Static/js/Eagle.js';
         $file = './Static/';
         
+        $file = array(
+                1 => 'http://pic4.nipic.com/20091217/3885730_124701000519_2.jpg',
+                2 => 'http://img07.tooopen.com/images/20170316/tooopen_sy_201956178977.jpg'
+        );
+        
         $zip = new \Lib\System\Compress\Zip( $file );
         $zipFilePath = $zip->exe();
         //unlink($zipFilePath);
+        
         pr( $zipFilePath );
     }
     
-    // 远程图片打包下载
-    public function remoteDownload() {
+    // 远程资源抓取
+    public function capture() {
         // 传入远程图片地址
         $fileArr = array(
                 1 => 'http://pic4.nipic.com/20091217/3885730_124701000519_2.jpg',
                 2 => 'http://img07.tooopen.com/images/20170316/tooopen_sy_201956178977.jpg' 
         );
-        $remoteDownload = new \Lib\System\RemoteDownload( $fileArr );
+        $remoteDownload = new \Lib\System\Capture( $fileArr );
         
-        $remoteDownload->down();
+        $remoteDownload->exe();
     }
 }

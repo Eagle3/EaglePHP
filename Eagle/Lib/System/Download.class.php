@@ -2,22 +2,20 @@
 
 namespace Lib\System;
 
-class Download{
-    public function __construct( $filename){
-        
-    }
-    
-    public function exe(){
-        if ( !file_exists( $filename ) ) {
-            echo '无法找到文件';
-            exit();
-        }
-        header( "Cache-Control: public" );
-        header( "Content-Description: File Transfer" );
-        header( 'Content-disposition: attachment; filename=' . basename( $filename ) ); // 文件名
-        header( "Content-Type: application/zip" ); // zip格式的
+class Download {
+    public function __construct( $filename ) {}
+    public function exe( $file ) {
+        $position = strripos( $file, '.' );
+        $postfix = substr( $file, $position + 1 );
+        $file = iconv( 'utf-8', 'gbk', $file ); // 兼容windows中文文件名
+        $name = date( 'Ymdhis' ) . '.' . $postfix;
+        header( "Content-type: application/octet-stream" );
+        header( "Content-Type: application/force-download" );
         header( "Content-Transfer-Encoding: binary" ); // 告诉浏览器，这是二进制文件
-        header( 'Content-Length: ' . filesize( $filename ) ); // 告诉浏览器，文件大小
-        @readfile( $filename );
+        header( "Content-Disposition: attachment; filename=" . $name );
+        @readfile( $file );
+        // $contents = file_get_contents($file);
+        // echo $contents;
+        exit();
     }
 }
