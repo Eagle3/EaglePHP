@@ -29,9 +29,6 @@ class Capture {
         unset( $v );
     }
     
-    /**
-     * 抓取远程图片
-     */
     private function http_get_data( $url ) {
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'GET' );
