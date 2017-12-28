@@ -123,6 +123,13 @@ class IndexController extends CommonController {
         $data = $model->insertData();
         pr( $data );
     }
+    
+    public function insertAll() {
+        $model = new \Home\Model\UserModel();
+        $data = $model->insertAllData();
+        pr( $data );
+    }
+    
     public function update() {
         $model = new \Home\Model\UserModel();
         $data = $model->updateData();
