@@ -15,7 +15,7 @@ class UserModel extends Model {
         
         $key = 'test';
         $data = $cache->get( md5( $key ) );
-        $data = false;
+        
         if ( !$data ) {
             echo '查询数据库<br>';
             $pdo = Model::getInstance();
@@ -39,16 +39,13 @@ class UserModel extends Model {
                 'name' => 'jack66',
                 'test' => 21 
         ), 'id=:id', array(
-                ':id' => 8
-        ) )
-        ;
+                ':id' => 8 
+        ) );
     }
-    
     public function deleteData() {
         $model = new Model();
-        return $model->delete( 'user','id=:id', array(
-                ':id' => 7
-        ) )
-        ;
+        return $model->delete( 'user', 'id=:id', array(
+                ':id' => 7 
+        ) );
     }
 }
