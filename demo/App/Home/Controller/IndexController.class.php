@@ -113,9 +113,25 @@ class IndexController extends CommonController {
         ), JSON_UNESCAPED_UNICODE );
         $this->echoJsonp( $callback, $json );
     }
-    public function model() {
+    public function select() {
         $model = new \Home\Model\UserModel();
         $data = $model->getInfo();
+        pr( $data );
+    }
+    public function insert() {
+        $model = new \Home\Model\UserModel();
+        $data = $model->insertData();
+        pr( $data );
+    }
+    public function update() {
+        $model = new \Home\Model\UserModel();
+        $data = $model->updateData();
+        pr( $data );
+    }
+    
+    public function delete() {
+        $model = new \Home\Model\UserModel();
+        $data = $model->deleteData();
         pr( $data );
     }
     public function page() {

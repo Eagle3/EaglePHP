@@ -100,7 +100,7 @@ class Model {
             }
         }
         $insertSql = ($replace ? 'REPLACE' : 'INSERT') . ' INTO ' . $this->prefix . $table . ' (' . implode( ', ', $fields_arr ) . ') VALUES (' . implode( ',', $values_arr ) . ')';
-        return $this->execute( $insertSql, $params_arr, true );
+        return $this->execute( $insertSql, $params_arr );
     }
     
     /**
@@ -135,7 +135,7 @@ class Model {
         }
         $insertSqlAll = substr( $insertSqlAll, 0, -2 );
         
-        return $this->execute( $insertSqlAll, array(), true );
+        return $this->execute( $insertSqlAll, array() );
     }
     
     /**
@@ -211,7 +211,7 @@ class Model {
             $where = str_replace( $key, '?', $where );
         }
         $update_sql = 'UPDATE ' . $this->prefix . $table . ' SET ' . implode( ', ', $update ) . (empty( $where ) ? '' : ' WHERE ' . $where);
-        return $this->execute( $update_sql, $update_params_arr, true );
+        return $this->execute( $update_sql, $update_params_arr );
     }
     public function get( $sql, $params_arr = array() ) {
         if ( $this->query( $sql, $params_arr ) ) {
@@ -227,20 +227,30 @@ class Model {
     }
     
     /**
-     * 执行SQL操作（增、删、改、查）
+     * 执行SQL操作（增、删、改、查）,一般用于增、删、改
      * 
      * @param string $sql
      *            sql语句
      * @param array $params_arr
      *            替换占位符的数组
-     * @param boolean $affect
-     *            是否返回影响行数
+     * @return
+     *            返回影执行结果或插入的Id
      */
-    private function execute( $sql, $params_arr, $affect = false ) {
+    private function execute( $sql, $params_arr ) {
         $this->pdoStmt = $this->pdo->prepare( $sql );
         $status = $this->pdoStmt->execute( $params_arr );
         $this->last_sql = $this->formatSql( $sql, $params_arr );
-        return $affect ? $this->pdoStmt->rowCount() : $status;
+        if( $this->pdo->lastInsertId() ){
+            return $this->pdo->lastInsertId();
+        }
+        return $status;
+        
+        /*
+        if( $status && $this->pdoStmt->rowCount() ){
+            return true;
+        }
+        return false;
+        */
     }
     
     /**
