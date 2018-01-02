@@ -15,7 +15,8 @@ class Validate {
             'ip' => 'ip',
             'postcode' => 'postcode',
             'html' => 'html',
-            'xml' => 'xml' 
+            'xml' => 'xml',
+            'money' => 'money',
     );
     public function __construct( $str, $type ) {
         $this->str = $str;
@@ -29,7 +30,8 @@ class Validate {
         ) );
     }
     private function email() {
-        return ( bool )filter_var( $this->str, FILTER_VALIDATE_EMAIL );
+        //return ( bool )filter_var( $this->str, FILTER_VALIDATE_EMAIL );
+        return  preg_match( '/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/', $this->str );
     }
     private function phone() {
         return preg_match( '/^13[\d]{9}$|^14[5,7,9]{1}\d{8}$|^15[\d]{9}$|^17[0,1,3,6,7,8]{1}\d{8}$|^18[\d]{9}$/', $this->str );
@@ -55,6 +57,9 @@ class Validate {
     }
     private function xml() {
         return preg_match( '/^([a-zA-Z]+-?)+[a-zA-Z0-9]+\\.[x|X][m|M][l|L]$/', $this->str );
+    }
+    private function money() {
+        return preg_match( '/^([0-9]+|[0-9]{1,3}(,[0-9]{3})*)(.[0-9]{1,2})?$/', $this->str );
     }
 }
 
