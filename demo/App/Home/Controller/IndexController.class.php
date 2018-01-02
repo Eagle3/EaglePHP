@@ -601,4 +601,60 @@ class IndexController extends CommonController {
         
         $remoteDownload->exe();
     }
+    
+    
+    public function validate() {
+//         $str = '132@qq.com';
+//         $Validate = new \Lib\System\Validate( $str,'email' );
+//         $res = $Validate->check();
+        
+//         $str = '13012345678';
+//         $Validate = new \Lib\System\Validate( $str,'phone' );
+//         $res = $Validate->check();
+        
+//         $str = '021-87888822';
+//         $Validate = new \Lib\System\Validate( $str,'tel' );
+//         $res = $Validate->check();
+        
+        $str = 'https://www.baidu.com';
+        $Validate = new \Lib\System\Validate( $str,'url' );
+        $res = $Validate->check();
+        var_dump( $res );
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
