@@ -151,7 +151,7 @@ class IndexController extends CommonController {
     }
     public function upload() {
         if ( isset( $_POST['submit'] ) && $_POST['submit'] ) {
-            $mulup = new \Lib\System\Mulupload();
+           
             $config = array(
                     'max_number' => 5, // 最多上传文件个数
                     'max_size' => 0, // 上传大小限制，单位：字节。0，无限制
@@ -168,8 +168,7 @@ class IndexController extends CommonController {
                     ), // 允许上传的类型
                     'save_path' => './upload/'  // 上传文件的保存路径
             );
-            $upload = new Mulupload( $config );
-            
+            $upload= new \Lib\System\Mulupload($config);
             // 上传文件数组
             $file = $_FILES['pic'];
             pr( $upload->doUpload( $file ), $upload->getErrMsg(), $upload->getDbSavePath() );
@@ -177,6 +176,35 @@ class IndexController extends CommonController {
             $this->display( 'upload' );
         }
     }
+    
+    //接收远程上传文件
+    public function apiupload() {
+       // \Lib\System\Log::debug( var_export( $_FILES, true ) );
+        
+        $config = array(
+                'max_size' => 0, // 上传大小限制，单位：字节。0，无限制
+                'ext' => array(
+                        'gif',
+                        'png',
+                        'jpg',
+                        'jpeg',
+                        'doc',
+                        'docx',
+                        'txt',
+                        'xls',
+                        'ppt'
+                ), // 允许上传的类型
+                'save_path' => './Upload/'  // 上传文件的保存路径
+        );
+        $upload= new \Lib\System\Upload($config);
+        // 上传文件数组
+        $file = $_FILES['uploadfile'];
+        $upload->doUpload( $file );
+        echo 1;
+        // \Lib\System\Log::debug( $upload->getErrMsg());
+        // $upload->getDbSavePath();
+    }
+    
     public function check() {
         $v = new \Lib\System\Validate( 'email' );
         $str = 'test@test.com';
@@ -185,6 +213,12 @@ class IndexController extends CommonController {
     
     // 测试CURL发送数据
     public function curl() {
+        $curl = new \Lib\System\Curl( 'https://www.baidu.com', array() );
+        $res = $curl->send();
+        echo $res;
+        exit();
+        
+        
         $appId = 'abcdef';
         $key = '123456';
         $accessTokenUrl = 'http://eagle.test/index.php?r=home&c=index&a=getCurl';
@@ -246,6 +280,109 @@ class IndexController extends CommonController {
         $res = $curl->send();
         pr( $res );
     }
+    
+    //第三方类库curl
+    public function curl2(){
+        $curl = new \Lib\Plugin\Curl\php_curl_class\src\Curl\Curl();
+        
+        //GET请求
+       /*   
+        
+        $curl->get('https://www.baidu.com/', array(
+                //'key' => 'value',
+        ));
+        $curl->setOpts(array(
+                //CURLOPT_SSL_VERIFYPEER => false, // https不验证证书
+                //CURLOPT_SSL_VERIFYHOST => false, // https不验证证书
+                CURLOPT_HEADER => false,
+        ));
+        $curl->exec();
+        if ($curl->error) {
+            echo 'Error: ' . $curl->errorCode . ': ' . $curl->errorMessage . "\n";
+        } else {
+            echo 'Response:' . "\n";
+            echo ($curl->response);
+        } 
+        
+        exit;
+       */
+        
+        /*
+        //POST请求
+        $curl->post('https://httpbin.org/post', array(
+                'id' => '1',
+                'content' => 'Hello world!',
+                'date' => date('Y-m-d H:i:s'),
+        ));
+        $curl->setOpts(array(
+                //CURLOPT_SSL_VERIFYPEER => false,
+                //CURLOPT_SSL_VERIFYHOST => false,
+                CURLOPT_HEADER => false,
+        ));
+        $curl->exec();
+        if ($curl->error) {
+            echo 'Error: ' . $curl->errorCode . ': ' . $curl->errorMessage . "\n";
+        } else {
+            echo 'Data server received via POST:' . "\n";
+            var_dump($curl->response->form);
+        }
+        */
+        
+        /*
+         //post json格式,返回对象格式数据
+        
+        $data = array(
+                'id' => '1',
+                'content' => 'Hello world!',
+                'date' => date('Y-m-d H:i:s'),
+        );
+        $curl->setHeader('Content-Type', 'application/json');
+        $curl->post('https://httpbin.org/post', $data);
+        pr($curl->response->json);
+        */
+        
+        /*  
+        //post json格式,返回数组格式数据
+          
+        $data = array(
+                'id' => '1',
+                'content' => 'Hello world!',
+                'date' => date('Y-m-d H:i:s'),
+        );
+        $curl->setDefaultJsonDecoder($assoc = true);
+        $curl->setHeader('Content-Type', 'application/json');
+        $curl->post('https://httpbin.org/post', $data);
+        pr($curl->response['json']);
+        
+        */
+        
+        /*  
+        
+        //curl文件上传
+        $myfile = curl_file_create('./Static/image/1.jpg', 'image/jpeg', 'postname.jpg');
+        
+        // HINT: If API documentation refers to using something like curl -F "myimage=image.png",
+        // curl --form "myimage=image.png", or the html form is similar to <form enctype="multipart/form-data" method="post">,
+        // then try uncommenting the following line:
+        // $curl->setHeader('Content-Type', 'multipart/form-data');
+        
+        //$url = 'https://httpbin.org/post';
+        $url = 'http://eagle.test/index.php?r=home&c=index&a=apiupload';
+        //$curl->setOpt(CURLOPT_PROXY,'127.0.0.1:8888'); //设置代理服务器，可以用作抓包使用
+        $curl->post($url, array(
+                'uploadfile' => $myfile, //postname.jpg 上传文件名；uploadfile参数名（name="uploadfile"）
+        ));
+        
+        if ($curl->error) {
+            echo 'Error: ' . $curl->errorCode . ': ' . $curl->errorMessage . "\n";
+        } else {
+            echo 'Success' . "\n";
+        }
+        */
+       
+    }
+    
+    
     public function dateTest() {
         $date = new \Lib\System\DateTime();
         

@@ -114,7 +114,6 @@ class Mulupload {
             if ( !$this->checkError( $file['error'] ) ) {
                 return false;
             }
-            
             if ( !$this->checkExt( $file['name'] ) ) {
                 $this->error_msg .= '上传文件类型错误';
                 return false;
@@ -185,8 +184,8 @@ class Mulupload {
      */
     private function checkExt( $ext ) {
         $ext_arr = explode( '.', $ext );
-        $ext_config_arr = $this->ext;
-        return empty( $ext_config_arr ) ? true : in_array( strtolower( $ext_arr[1] ), $ext_config_arr );
+        $ext_config_arr = $this->config['ext'];
+        return empty( $ext_config_arr ) ? true : in_array( strtolower( $ext_arr[count($ext_arr) - 1] ), $ext_config_arr );
     }
     
     /**
@@ -197,7 +196,7 @@ class Mulupload {
      * @return boolean
      */
     private function checkSize( $size ) {
-        $max_size_config = $this->max_size;
+        $max_size_config = $this->config['max_size'];
         return empty( $max_size_config ) ? true : $size <= $max_size_config;
     }
     
@@ -221,18 +220,18 @@ class Mulupload {
      */
     private function move( $file ) {
         // 不存在上传的目录则创建
-        if ( !file_exists( $this->save_path . date( 'Ymd' ) . '/' ) ) {
-            if ( !mkdir( $this->save_path . date( 'Ymd' ) . '/', 0777, true ) ) {
+        if ( !file_exists( $this->config['save_path'] . date( 'Ymd' ) . '/' ) ) {
+            if ( !mkdir( $this->config['save_path']. date( 'Ymd' ) . '/', 0777, true ) ) {
                 $this->error_msg .= '创建上传目录失败！';
                 return false;
             }
         }
-        $this->join_path = $this->save_path . date( 'Ymd' ) . '/';
+        $this->join_path = $this->config['save_path']. date( 'Ymd' ) . '/';
         if ( move_uploaded_file( $file['tmp_name'], $this->join_path . $this->unique_name ) ) {
-            if ( strstr( $this->save_path, './' ) ) {
-                $save_path = str_replace( './', '/', $this->save_path );
+            if ( strstr( $this->config['save_path'], './' ) ) {
+                $save_path = str_replace( './', '/', $this->config['save_path']);
             } else {
-                $save_path = '/' . $this->save_path;
+                $save_path = '/' . $this->config['save_path'];
             }
             array_push( $this->db_save_path, $save_path . $this->unique_name );
             return true;
