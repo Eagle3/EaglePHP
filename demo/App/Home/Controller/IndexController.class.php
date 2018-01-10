@@ -865,6 +865,11 @@ class IndexController extends CommonController {
         }
     }
     
+    public function mp3towav() {
+        $mp3file = './Data/audio/ghsy.mp3';
+        $o = new \Lib\System\Mp3ToWav($mp3file);
+        $o->run();
+    }
     
     
     
