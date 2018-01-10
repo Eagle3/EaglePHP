@@ -72,7 +72,7 @@ class SimpleImage {
   // Loaders
   //////////////////////////////////////////////////////////////////////////////////////////////////
 
-  //
+  // 从URL中加载图片资源
   // Loads an image from a data URI.
   //
   //  $uri* (string) - A data URI.
@@ -105,7 +105,7 @@ class SimpleImage {
     return $this;
   }
 
-  //
+  // 从本地文件中加载图片资源
   // Loads an image from a file.
   //
   //  $file* (string) - The image file to load.
@@ -283,7 +283,7 @@ class SimpleImage {
     return 'data:' . $image['mimeType'] . ';base64,' . base64_encode($image['data']);
   }
 
-  //
+  // 图片下载
   // Forces the image to be downloaded to the clients machine. Must be called before any output is
   // sent to the screen.
   //
@@ -308,7 +308,7 @@ class SimpleImage {
     return $this;
   }
 
-  //
+  // 把处理后的图片保存
   // Writes the image to a file.
   //
   //  $mimeType (string) - The image format to output as a mime type (defaults to the original mime
@@ -328,7 +328,7 @@ class SimpleImage {
     return $this;
   }
 
-  //
+  // 图片输出到屏幕
   // Outputs the image to the screen. Must be called before any output is sent to the screen.
   //
   //  $mimeType (string) - The image format to output as a mime type (defaults to the original mime
@@ -500,7 +500,7 @@ class SimpleImage {
     return $this;
   }
 
-  //
+  // 自适应缩放图片（按比例缩放）
   // Proportionally resize the image to fit inside a specific width and height.
   //
   //  $maxWidth* (int) - The maximum width the image can be.
@@ -538,7 +538,7 @@ class SimpleImage {
     return $this->resize($width, $height);
   }
 
-  //
+  // 剪切图片中的一部分
   // Crop the image.
   //
   //  $x1 - Top left x coordinate.
@@ -673,7 +673,7 @@ class SimpleImage {
     return $this;
   }
 
-  //
+  // 为图片加水印图片
   // Place an image on top of the current image.
   //
   //  $overlay* (string|SimpleImage) - The image to overlay. This can be a filename, a data URI, or
@@ -749,7 +749,7 @@ class SimpleImage {
     return $this;
   }
 
-  //
+  // 固定尺寸缩放图片（不按比例缩放，按传入的长和宽缩放）
   // Resize an image to the specified dimensions. If only one dimension is specified, the image will
   // be resized proportionally.
   //
@@ -976,7 +976,7 @@ class SimpleImage {
     return $this;
   }
 
-  //
+  // 创建缩略图
   // Creates a thumbnail image. This function attempts to get the image as close to the provided
   // dimensions as possible, then crops the remaining overflow to force the desired size. Useful
   // for generating thumbnail images.
