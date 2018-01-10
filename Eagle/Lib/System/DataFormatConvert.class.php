@@ -67,7 +67,7 @@ class DataFormatConvert {
     
     /**
      * JSON转XML(先转成数组，再转成XML)
-     * 
+     *
      * @param string $jsonStr            
      * @return string
      */
@@ -81,8 +81,58 @@ class DataFormatConvert {
     }
     
     /**
+     * XML转JSON(先解析成XML对象，然后转成JSON)
+     *
+     * @param string $xmlStr            
+     * @return string
+     */
+    public function xmlToJson( $xmlStr = '' ) {
+        if ( !$xmlStr ) {
+            return array();
+        }
+        libxml_disable_entity_loader( true );
+        $xmlstring = simplexml_load_string( $xmlStr, 'SimpleXMLElement', LIBXML_NOCDATA );
+        return json_encode( $xmlstring );
+    }
+    
+    /**
+     * 将数组转换为xml
+     *
+     * @param array $arr:数组            
+     * @param object $dom:Document对象，默认null即可            
+     * @param object $node:节点对象，默认null即可            
+     * @param string $root:根节点名称            
+     * @param string $cdata:是否加入CDATA标签，默认为false            
+     * @return string
+     */
+    public function arrayToXml2( $arr, $dom = null, $node = null, $root = 'xml', $cdata = false ) {
+        if ( !$dom ) {
+            $dom = new \DOMDocument( '1.0', 'utf-8' );
+        }
+        if ( !$node ) {
+            $node = $dom->createElement( $root );
+            $dom->appendChild( $node );
+        }
+        foreach ( $arr as $key => $value ) {
+            $child_node = $dom->createElement( is_string( $key ) ? $key : 'node' );
+            $node->appendChild( $child_node );
+            if ( !is_array( $value ) ) {
+                if ( !$cdata ) {
+                    $data = $dom->createTextNode( $value );
+                } else {
+                    $data = $dom->createCDATASection( $value );
+                }
+                $child_node->appendChild( $data );
+            } else {
+                $this->arrayToXml2( $value, $dom, $child_node, $root, $cdata );
+            }
+        }
+        return $dom->saveXML();
+    }
+    
+    /**
      * 数组转XML
-     * 
+     *
      * @param array $arr
      *            PHP数组
      * @return string XML格式数据
@@ -97,35 +147,39 @@ class DataFormatConvert {
     }
     
     /**
-     * XML转JSON(先解析成XML对象，然后转成JSON)
-     * 
-     * @param string $xmlStr            
-     * @return string
-     */
-    public function xmlToJson( $xmlStr = '' ) {
-        if ( !$xmlStr ) {
-            return array();
-        }
-        libxml_disable_entity_loader( true );
-        $xmlstring = simplexml_load_string( $xmlStr, 'SimpleXMLElement', LIBXML_NOCDATA );
-        return json_encode( $xmlstring );
-    }
-    
-    /**
      * XML转数组（先转成json再转成数组）
-     * 
+     *
      * @param string $xmlStr            
      * @return array
      */
     public function xmlToArray( $xmlStr = '' ) {
         libxml_disable_entity_loader( true );
-        $xmlstring = simplexml_load_string( $xmlStr, 'SimpleXMLElement', LIBXML_NOCDATA );
-        return json_decode( json_encode( $xmlstring ), true );
+        $xmlObject = simplexml_load_string( $xmlStr, 'SimpleXMLElement', LIBXML_NOCDATA );
+        return json_decode( json_encode( $xmlObject ), true );
+    }
+    
+    /**
+     * 将xml转换为数组
+     * 
+     * @param string $xml:xml文件或字符串            
+     * @return array
+     */
+    public function xmlToArray2( $xml ) {
+        // 考虑到xml文档中可能会包含<![CDATA[]]>标签，第三个参数设置为LIBXML_NOCDATA
+        if ( file_exists( $xml ) ) {
+            libxml_disable_entity_loader( false );
+            $xml_string = simplexml_load_file( $xml, 'SimpleXMLElement', LIBXML_NOCDATA );
+        } else {
+            libxml_disable_entity_loader( true );
+            $xml_string = simplexml_load_string( $xml, 'SimpleXMLElement', LIBXML_NOCDATA );
+        }
+        $result = json_decode( json_encode( $xml_string ), true );
+        return $result;
     }
     
     /**
      * 递归生成XML格式数据
-     * 
+     *
      * @param array $data
      *            PHP数组
      * @return string XML格式数据

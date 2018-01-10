@@ -296,31 +296,61 @@ class IndexController extends CommonController {
         // file_put_contents('./tmp/curl.log', '--------------------------------------------------------'.PHP_EOL,FILE_APPEND);
     }
     
-    // 测试数据格式转换
-    public function dataConvert() {
-        echo '<pre/>';
-        
+    
+    public function xml2array() {
         $xmlData = '<?xml version="1.0" encoding="utf-8"?>
 				<content>
 				<name>jack</name>
 				<from>中国</from>
 				<data>{"name":"jack","from":"中国"}</data>
 				</content>';
-        $jsonData = \Lib\System\DataFormatConvert::getInstance()->xmlToJson( $xmlData );
-        echo $jsonData;
-        file_put_contents( './tmp/curl.log', '-$jsonData：' . $jsonData . PHP_EOL, FILE_APPEND );
-        file_put_contents( './tmp/curl.log', '--------------------------------------------------------' . PHP_EOL, FILE_APPEND );
         
-        echo '<br>';
+        $xmlData = '<xml>
+  <appid><![CDATA[wx2421b1c4370ec43b]]></appid>
+  <attach><![CDATA[支付测试]]></attach>
+  <bank_type><![CDATA[CFT]]></bank_type>
+  <fee_type><![CDATA[CNY]]></fee_type>
+  <is_subscribe><![CDATA[Y]]></is_subscribe>
+  <mch_id><![CDATA[10000100]]></mch_id>
+  <nonce_str><![CDATA[5d2b6c2a8db53831f7eda20af46e531c]]></nonce_str>
+  <openid><![CDATA[oUpF8uMEb4qRXf22hE3X68TekukE]]></openid>
+  <out_trade_no><![CDATA[1409811653]]></out_trade_no>
+  <result_code><![CDATA[SUCCESS]]></result_code>
+  <return_code><![CDATA[SUCCESS]]></return_code>
+  <sign><![CDATA[B552ED6B279343CB493C5DD0D78AB241]]></sign>
+  <sub_mch_id><![CDATA[10000100]]></sub_mch_id>
+  <time_end><![CDATA[20140903131540]]></time_end>
+  <total_fee>1</total_fee>
+<coupon_fee><![CDATA[10]]></coupon_fee>
+<coupon_count><![CDATA[1]]></coupon_count>
+<coupon_type><![CDATA[CASH]]></coupon_type>
+<coupon_id><![CDATA[10000]]></coupon_id>
+<coupon_fee><![CDATA[100]]></coupon_fee>
+  <trade_type><![CDATA[JSAPI]]></trade_type>
+  <transaction_id><![CDATA[1004400740201409030005092168]]></transaction_id>
+</xml>';
         
-        print_r( \Lib\System\DataFormatConvert::getInstance()->xmlToArray( $xmlData ) );
+        /*
+        $xmlData = '<?xml version="1.0" encoding="utf-8"?><xml><name>jack</name><from>中国</from><data><node>北京</node><node>上海</node></data></xml>';
+        */
         
-        echo '<br>';
+        /*
+        $xmlData = '<?xml version="1.0" encoding="utf-8"?><xml><appid>wx2421b1c4370ec43b</appid><attach>支付测试</attach><bank_type>CFT</bank_type><fee_type>CNY</fee_type><is_subscribe>Y</is_subscribe><mch_id>10000100</mch_id><nonce_str>5d2b6c2a8db53831f7eda20af46e531c</nonce_str><openid>oUpF8uMEb4qRXf22hE3X68TekukE</openid><out_trade_no>1409811653</out_trade_no><result_code>SUCCESS</result_code><return_code>SUCCESS</return_code><sign>B552ED6B279343CB493C5DD0D78AB241</sign><sub_mch_id>10000100</sub_mch_id><time_end>20140903131540</time_end><total_fee>1</total_fee><coupon_fee><node>10</node><node>100</node></coupon_fee><coupon_count>1</coupon_count><coupon_type>CASH</coupon_type><coupon_id>10000</coupon_id><trade_type>JSAPI</trade_type><transaction_id>1004400740201409030005092168</transaction_id></xml>';
+        */
+        
+        //$arrData = \Lib\System\DataFormatConvert::getInstance()->xmlToArray( $xmlData );
+        $arrData = \Lib\System\DataFormatConvert::getInstance()->xmlToArray2( $xmlData );
+        pr( $arrData );
     }
     
-    // 测试数据格式转换2,测试数组转XML数据并输出
-    public function dataConvert2() {
+    public function array2xml() {
         header( "Content-type: text/xml" );
+        
+        $arr = array(
+                'name' => 'jack',
+                'from' => '中国',
+        );
+        
         $arr = array(
                 'name' => 'jack',
                 'from' => '中国',
@@ -329,7 +359,58 @@ class IndexController extends CommonController {
                         'from' => '中国' 
                 ), JSON_UNESCAPED_UNICODE ) 
         );
-        echo \Lib\System\DataFormatConvert::getInstance()->arrayToXml( $arr );
+        
+        $arr = array(
+                'name' => 'jack',
+                'from' => '中国',
+                'data' => array(
+                       'city' => array(
+                               'city1' => '北京',
+                               'city2' => '上海',
+                       ),
+                ),
+        );
+        
+        $arr = array(
+                'name' => 'jack',
+                'from' => '中国',
+                'data' => array(
+                        '北京',
+                        '上海',
+                ),
+        );
+        
+        $arr = array (
+                'appid' => 'wx2421b1c4370ec43b',
+                'attach' => '支付测试',
+                'bank_type' => 'CFT',
+                'fee_type' => 'CNY',
+                'is_subscribe' => 'Y',
+                'mch_id' => '10000100',
+                'nonce_str' => '5d2b6c2a8db53831f7eda20af46e531c',
+                'openid' => 'oUpF8uMEb4qRXf22hE3X68TekukE',
+                'out_trade_no' => '1409811653',
+                'result_code' => 'SUCCESS',
+                'return_code' => 'SUCCESS',
+                'sign' => 'B552ED6B279343CB493C5DD0D78AB241',
+                'sub_mch_id' => '10000100',
+                'time_end' => '20140903131540',
+                'total_fee' => '1',
+                'coupon_fee' =>
+                array (
+                        0 => '10',
+                        1 => '100',
+                ),
+                'coupon_count' => '1',
+                'coupon_type' => 'CASH',
+                'coupon_id' => '10000',
+                'trade_type' => 'JSAPI',
+                'transaction_id' => '1004400740201409030005092168',
+        );
+        
+        echo \Lib\System\DataFormatConvert::getInstance()->arrayToXml2( $arr );
+        
+        //echo \Lib\System\DataFormatConvert::getInstance()->arrayToXml( $arr );
     }
     
     // 测试加密解密数据
