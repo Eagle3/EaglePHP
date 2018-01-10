@@ -724,10 +724,8 @@ class IndexController extends CommonController {
             ->toScreen();                         // output to the screen           输出到屏幕
             
         } catch(\Exception $err) {
-            // Handle errors
             echo $err->getMessage();
-//         }
-        
+        }
     }
     
     
