@@ -14,7 +14,8 @@ class Mp3ToWav {
         if (file_exists($wavFile) == true) {
             return $wavFile;
         } else {
-            $command = "/usr/local/bin/ffmpeg -i {$this->mp3file} {$wavFile}";
+            //$command = "/usr/local/bin/ffmpeg -i {$this->mp3file} {$wavFile}"; //Linux
+            $command = "D:/ffmpeg/bin/ffmpeg.exe -i {$this->mp3file} {$wavFile}"; //Windows
             system($command, $error);
         }
         return $wavFile;
