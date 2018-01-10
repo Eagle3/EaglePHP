@@ -701,15 +701,32 @@ class IndexController extends CommonController {
         $Validate = new \Lib\System\Validate( $str,'url' );
         $res = $Validate->check();
         var_dump( $res );
-        
-        
-        
-        
-        
-        
     }
     
-    
+    public function image() {
+        try {
+            // Create a new SimpleImage object
+            $img = new \Lib\Plugin\Image\SimpleImage\src\claviska\SimpleImage();
+            
+            // Manipulate it
+            $img
+            ->fromFile('./Static/image/2.jpg')              // load parrot.jpg
+            //->autoOrient()                        // adjust orientation based on exif data  根据exif数据调整方向
+            //->bestFit(512, 500)                   // proportinoally resize to fit inside a 250x400 box  按比例调整图像大小，以适应特定的宽度和高度。
+            //->resize(512, 500)                      // 不按比例缩放图片
+            ->flip('y')                           // flip horizontally  水平翻转 ( x y both)
+            //->colorize('DarkGreen')               // tint dark green      给图片着色深绿色
+            //->border('black', 5)                  // add a 5 pixel black border  添加一个5像素的黑色边框
+            //->overlay('./Static/image/water.jpg', 'bottom right') // add a watermark image  添加水印图片
+            //->toFile('./Static/image/2_x.jpg',  null, 100), //把处理后的图片保存
+            ->toScreen();                         // output to the screen           输出到屏幕
+            
+        } catch(\Exception $err) {
+            // Handle errors
+            echo $err->getMessage();
+        }
+        
+    }
     
     
     
