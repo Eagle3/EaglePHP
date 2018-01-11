@@ -871,11 +871,15 @@ class IndexController extends CommonController {
         //$o->run();
     }
     
+    public function socketServer() {
+        $Socket= new \Lib\System\Socket\Server();
+        $Socket->run();
+    }
     
-    
-    
-    
-    
+    public function socketClient() {
+        $Socket= new \Lib\System\Socket\Client();
+        $Socket->run();
+    }
     
     
     
