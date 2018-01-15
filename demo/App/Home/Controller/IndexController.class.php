@@ -205,6 +205,29 @@ class IndexController extends CommonController {
         // $upload->getDbSavePath();
     }
     
+    //第三方上传类
+    public function upload2() {
+        
+        \Lib\System\Import::load( 'Lib/Plugin/Upload/src/class.upload.php' );
+        $handle = new \upload($_FILES['pic']);
+        if ($handle->uploaded) {
+            $handle->file_new_name_body   = 'image_resized';
+            $handle->image_resize         = true;
+            $handle->image_x              = 100;
+            $handle->image_ratio_y        = true;
+            $handle->process('./Upload/');
+            if ($handle->processed) {
+                echo 'image resized';
+                $handle->clean();
+            } else {
+                echo 'error : ' . $handle->error;
+            }
+        }
+        
+        
+        
+    }
+    
     public function check() {
         $v = new \Lib\System\Validate( 'email' );
         $str = 'test@test.com';
