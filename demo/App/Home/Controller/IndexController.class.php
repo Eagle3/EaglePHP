@@ -222,10 +222,7 @@ class IndexController extends CommonController {
             } else {
                 echo 'error : ' . $handle->error;
             }
-        }
-        
-        
-        
+        }        
     }
     
     public function check() {
