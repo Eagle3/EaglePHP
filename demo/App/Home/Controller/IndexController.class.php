@@ -1044,11 +1044,11 @@ class IndexController extends CommonController {
         //定义纠错级别
         $errorLevel = "L";
         //定义生成图片宽度和高度;默认为3
-        $size = "4";
+        $size = "5";
         //定义生成内容
         $content="微信公众平台：思维与逻辑;公众号:siweiyuluoji";
         //调用QRcode类的静态方法png生成二维码图片//
-       // \QRcode::png($content, false, $errorLevel, $size);
+        \QRcode::png($content, false, $errorLevel, $size);
        
        
         //生成网址类型
