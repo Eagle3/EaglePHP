@@ -1037,7 +1037,28 @@ class IndexController extends CommonController {
         pr( $res);
     }
     
-    
+    //二维码
+    public function qrcode(){
+        \Lib\System\Import::load( 'Lib/Plugin/PHPQrcode/phpqrcode.php' );
+       
+        //定义纠错级别
+        $errorLevel = "L";
+        //定义生成图片宽度和高度;默认为3
+        $size = "4";
+        //定义生成内容
+        $content="微信公众平台：思维与逻辑;公众号:siweiyuluoji";
+        //调用QRcode类的静态方法png生成二维码图片//
+       // \QRcode::png($content, false, $errorLevel, $size);
+       
+       
+        //生成网址类型
+        $url="https://www.baidu.com";
+       // \QRcode::png($url, false, $errorLevel, $size);
+        
+        
+       //  \QRcode::png('PHP QR Code :)');
+        
+    }
     
     
     
