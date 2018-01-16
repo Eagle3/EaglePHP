@@ -56,27 +56,11 @@ if ( !isset( $projectConfig['DEFAULT_LANGUAGE'] ) || $projectConfig['DEFAULT_LAN
     $lang = $sysConfig['DEFAULT_LANGUAGE'];
 }
 $langData = getLangConfig( $lang );
-function autoLoad( $class ) {
-    $class = str_replace( array(
-            '\\',
-            '/' 
-    ), DIRECTORY_SEPARATOR, $class );
-    $classFile = $class . '.class.php';
-    $classDir = array(
-            EAGLE_PATH,
-            APP_PATH 
-    );
-    
-    foreach ( $classDir as $key => $val ) {
-        if ( file_exists( $val . $classFile ) ) {
-            // echo $val.$classFile.'<br>';
-            require $val . $classFile;
-            break;
-        }
-        continue;
-    }
-}
 
-spl_autoload_register( 'autoLoad' );
-use Lib\System\Dispatch;
-Dispatch::getInstance()->run();
+// 注册自动加载
+require_once EAGLE_PATH . 'Lib/System/Autoloader.class.php';
+Lib\System\Autoloader::register();
+
+// 执行
+use Lib\System\App;
+App::getInstance()->run();
