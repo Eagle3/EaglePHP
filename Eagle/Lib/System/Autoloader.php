@@ -18,7 +18,8 @@ class Autoloader {
                 '\\',
                 '/' 
         ), DIRECTORY_SEPARATOR, $class );
-        $classFile = $class . '.class.php';
+        //$classFile = $class . '.class.php';
+        $classFile = $class . '.php';
         $classDir = array(
                 EAGLE_PATH,
                 APP_PATH 

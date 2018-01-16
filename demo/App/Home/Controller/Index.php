@@ -2,15 +2,15 @@
 
 namespace Home\Controller;
 
-use Home\Controller\CommonController as CommonController;
-use Lib\System\Arr as Arr;
-use Lib\System\Mail as Mail;
-use Lib\System\Excel as Excel;
-use Lib\System\Code as Code;
-use Lib\System\File as File;
+use Home\Controller\Common;
+// use Lib\System\Arr as Arr;
+// use Lib\System\Mail as Mail;
+// use Lib\System\Excel as Excel;
+// use Lib\System\Code as Code;
+// use Lib\System\File as File;
 
 // use Lib\System\Fsocket;
-class IndexController extends CommonController {
+class Index extends Common {
     public function init() {
         parent::init();
         // echo 'init operation <br>';

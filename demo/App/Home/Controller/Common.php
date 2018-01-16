@@ -2,7 +2,7 @@
 
 namespace Home\Controller;
 
-class CommonController extends \Lib\System\Controller {
+class Common extends \Lib\System\Controller {
     protected $verifyType = 'cookie';
     protected $verifyName = '_verifyCode';
     public function init() {

@@ -4,6 +4,6 @@ namespace Home\Model;
 
 use Lib\System\Model;
 
-class CommonModel extends Model {
+class Common extends Model {
     public function __construct() {}
 }

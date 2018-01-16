@@ -58,7 +58,7 @@ if ( !isset( $projectConfig['DEFAULT_LANGUAGE'] ) || $projectConfig['DEFAULT_LAN
 $langData = getLangConfig( $lang );
 
 // 注册自动加载
-require_once EAGLE_PATH . 'Lib/System/Autoloader.class.php';
+require_once EAGLE_PATH . 'Lib/System/Autoloader.php';
 Lib\System\Autoloader::register();
 
 // 执行

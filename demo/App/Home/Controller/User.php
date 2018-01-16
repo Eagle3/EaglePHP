@@ -3,9 +3,9 @@
 namespace Home\Controller;
 
 use Lib\System\Controller;
-use Home\Model\UserModel;
+use Home\Model\User;
 
-class UserController extends Controller {
+class User extends Controller {
     function index() {
         echo 999;
     }

@@ -14,7 +14,9 @@ class App {
     }
     public function run() {
         $paramArr = Dispatch::getInstance()->handRoute();
-        $class = "\\" . $paramArr['r'] . "\Controller\\" . $paramArr['c'] . 'Controller';
+        //$class = "\\" . $paramArr['r'] . "\Controller\\" . $paramArr['c'] . 'Controller';
+        $class = "\\" . $paramArr['r'] . "\Controller\\" . $paramArr['c'];
+        
         $controller = new $class();
         call_user_func_array( array(
                 $controller,
