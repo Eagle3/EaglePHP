@@ -26,7 +26,7 @@ class Capture {
             fwrite( $fp, $return_content );
             $v = $filename;
         }
-        unset( $v );
+        unset( $v ); 
     }
     
     private function http_get_data( $url ) {
