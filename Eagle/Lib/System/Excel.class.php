@@ -119,7 +119,7 @@ class Excel {
             exit();
         }
     }
-    public static function inport( $excelFileName = '', $sheet = 0 ) {
+    public static function import( $excelFileName = '', $sheet = 0 ) {
         self::init();
         if ( empty( $excelFileName ) or !file_exists( $excelFileName ) ) {
             die( 'file not exists' );

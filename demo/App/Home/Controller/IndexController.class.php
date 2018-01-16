@@ -698,6 +698,8 @@ class IndexController extends CommonController {
     // Excel表格导出
     public function export() {
         $fileName = '测试';
+        
+        /*
         $headFields = array(
                 '名字',
                 '年龄' 
@@ -726,6 +728,21 @@ class IndexController extends CommonController {
                         'age' => 23 
                 ) 
         );
+        */
+        
+        $model = new \Home\Model\CityModel();
+        $data = $model->getInfo();
+        $headFields = array(
+                '城市ID',
+                '父城市ID',
+                '城市名',
+        );
+        
+        $keys = array(
+                'area_id',
+                'parent_id',
+                'area_name',
+        );
         
         $version = '2003';
         
@@ -743,8 +760,8 @@ class IndexController extends CommonController {
          * @param unknown $keys
          *            导出的字段名称 可选
          */
-        Excel::export( $data ); // 默认
-                                    // Excel::import( $data, $version, $fileName, $headFields, $keys ); //传递自定义参数
+        //Excel::export( $data ); // 默认
+        Excel::export( $data, $version, $fileName, $headFields, $keys ); //传递自定义参数
     }
     
     // 输出验证码
