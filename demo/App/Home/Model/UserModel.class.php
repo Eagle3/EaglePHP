@@ -3,11 +3,12 @@
 namespace Home\Model;
 
 use Lib\System\Model;
-// use Lib\System\Cache\File;
+//use Lib\System\Cache\File;
 use Lib\System\Cache\Memcache;
+//use Lib\System\Cache\Redis;
 
-// use Lib\System\Cache\Redis;
 class UserModel extends Model {
+
     public function getInfo() {
         // $cache = File::getInstance();
         $cache = Memcache::getInstance();

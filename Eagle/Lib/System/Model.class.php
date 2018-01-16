@@ -36,7 +36,7 @@ class Model {
     
     /**
      * 单例模式获取Pdomysql对象
-     * 
+     *
      * @return object Pdomysql对象
      */
     public static function getInstance() {
@@ -76,7 +76,7 @@ class Model {
     
     /**
      * 插入单条数据
-     * 
+     *
      * @param string $table
      *            表名
      * @param array $data
@@ -105,7 +105,7 @@ class Model {
     
     /**
      * 批量插入数据
-     * 
+     *
      * @param string $table
      *            表名
      * @param array $data
@@ -140,7 +140,7 @@ class Model {
     
     /**
      * 删除数据
-     * 
+     *
      * @param string $table
      *            表名
      * @param string $where
@@ -172,7 +172,7 @@ class Model {
     
     /**
      * 修改数据
-     * 
+     *
      * @param string $table
      *            表名
      * @param array $update_data
@@ -213,12 +213,30 @@ class Model {
         $update_sql = 'UPDATE ' . $this->prefix . $table . ' SET ' . implode( ', ', $update ) . (empty( $where ) ? '' : ' WHERE ' . $where);
         return $this->execute( $update_sql, $update_params_arr );
     }
+    
+    /**
+     * 获取一条数据
+     * 
+     * @param string $sql            
+     * @param array $params_arr
+     *            替换占位符的数组
+     * @return array
+     */
     public function get( $sql, $params_arr = array() ) {
         if ( $this->query( $sql, $params_arr ) ) {
             return $this->fetch();
         }
         return array();
     }
+    
+    /**
+     * 获取多条数据
+     * 
+     * @param string $sql            
+     * @param array $params_arr
+     *            替换占位符的数组
+     * @return array
+     */
     public function getAll( $sql, $params_arr = array() ) {
         if ( $this->query( $sql, $params_arr ) ) {
             return $this->fetchAll();
@@ -228,34 +246,33 @@ class Model {
     
     /**
      * 执行SQL操作（增、删、改、查）,一般用于增、删、改
-     * 
+     *
      * @param string $sql
      *            sql语句
      * @param array $params_arr
      *            替换占位符的数组
-     * @return
-     *            返回影执行结果或插入的Id
+     * @return 返回影执行结果或插入的Id
      */
     private function execute( $sql, $params_arr ) {
         $this->pdoStmt = $this->pdo->prepare( $sql );
         $status = $this->pdoStmt->execute( $params_arr );
         $this->last_sql = $this->formatSql( $sql, $params_arr );
-        if( $this->pdo->lastInsertId() ){
+        if ( $this->pdo->lastInsertId() ) {
             return $this->pdo->lastInsertId();
         }
         return $status;
         
         /*
-        if( $status && $this->pdoStmt->rowCount() ){
-            return true;
-        }
-        return false;
-        */
+         * if( $status && $this->pdoStmt->rowCount() ){
+         * return true;
+         * }
+         * return false;
+         */
     }
     
     /**
      * 执行SQL操作（一般用于查询）
-     * 
+     *
      * @param string $sql
      *            sql语句
      * @param array $params_arr
@@ -309,7 +326,7 @@ class Model {
     
     /**
      * 获取错误信息
-     * 
+     *
      * @return string
      */
     public function getErrMsg() {
@@ -339,7 +356,7 @@ class Model {
     
     /**
      * 处理预处理SQL语句并返回拼接后的SQL（并不是PDO实际执行的sql，只是为了调试对应）
-     * 
+     *
      * @param string $sql
      *            预处理SQL
      * @param array $params_arr
@@ -373,7 +390,7 @@ class Model {
     
     /**
      * SQL指令安全过滤
-     * 
+     *
      * @access public
      * @param string $str
      *            SQL字符串
@@ -395,14 +412,6 @@ class Model {
         }
     }
     
-    /**
-     * __construct
-     * 
-     * @access public
-     * @param
-     *            void
-     * @return void
-     */
     public function __destruct() {
         $this->close();
     }
