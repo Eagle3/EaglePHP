@@ -871,7 +871,8 @@ class Index extends Common {
         var_dump( $res );
     }
     
-    public function image() {
+    //第三方类库图片处理
+    public function image3() {
         try {
             // Create a new SimpleImage object
             $img = new \Lib\Plugin\Image\SimpleImage\src\claviska\SimpleImage();
@@ -1090,6 +1091,7 @@ class Index extends Common {
        //  \QRcode::png('PHP QR Code :)');
         
     }
+    
     
     
     
