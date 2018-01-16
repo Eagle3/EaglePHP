@@ -3,11 +3,11 @@
 namespace Home\Controller;
 
 use Home\Controller\Common;
-// use Lib\System\Arr as Arr;
-// use Lib\System\Mail as Mail;
-// use Lib\System\Excel as Excel;
-// use Lib\System\Code as Code;
-// use Lib\System\File as File;
+use Lib\System\Arr as Arr;
+use Lib\System\Mail as Mail;
+use Lib\System\Excel as Excel;
+use Lib\System\Code as Code;
+use Lib\System\File as File;
 
 // use Lib\System\Fsocket;
 class Index extends Common {
@@ -114,30 +114,30 @@ class Index extends Common {
         $this->echoJsonp( $callback, $json );
     }
     public function select() {
-        $model = new \Home\Model\UserModel();
+        $model = new \Home\Model\User();
         $data = $model->getInfo();
         pr( $data );
     }
     public function insert() {
-        $model = new \Home\Model\UserModel();
+        $model = new \Home\Model\User();
         $data = $model->insertData();
         pr( $data );
     }
     
     public function insertAll() {
-        $model = new \Home\Model\UserModel();
+        $model = new \Home\Model\User();
         $data = $model->insertAllData();
         pr( $data );
     }
     
     public function update() {
-        $model = new \Home\Model\UserModel();
+        $model = new \Home\Model\User();
         $data = $model->updateData();
         pr( $data );
     }
     
     public function delete() {
-        $model = new \Home\Model\UserModel();
+        $model = new \Home\Model\User();
         $data = $model->deleteData();
         pr( $data );
     }
@@ -226,9 +226,10 @@ class Index extends Common {
     }
     
     public function check() {
-        $v = new \Lib\System\Validate( 'email' );
         $str = 'test@test.com';
-        pr( $v->check( $str ) );
+        $v = new \Lib\System\Validate($str,'email' );
+       
+        pr( $v->check() );
     }
     
     // 测试CURL发送数据
@@ -400,13 +401,6 @@ class Index extends Common {
         }
         */
        
-    }
-    
-    
-    public function dateTest() {
-        $date = new \Lib\System\DateTime();
-        
-        pr( $date );
     }
     
     // 测试CURL接收数据配合curl使用
@@ -730,7 +724,7 @@ class Index extends Common {
         );
         */
         
-        $model = new \Home\Model\CityModel();
+        $model = new \Home\Model\City();
         $data = $model->getInfo();
         $headFields = array(
                 '城市ID',
