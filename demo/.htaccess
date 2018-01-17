@@ -1,5 +1,8 @@
 <IfModule mod_rewrite.c>
-	RewriteEngine Off
+	RewriteEngine On
+	
+	#静态资源不重写
+	RewriteRule ^(.*)\.(js|css|jpg|jpeg|gif)(.*)$ $1\.$2$3  [NC,L]
 	
 	RewriteRule ^(.*)/(.*)/(.*)$ index.php?r=$1&c=$2&a=$3  [NC,QSA]
 	RewriteRule ^(.*)/(.*)$ index.php?r=$1&c=$2&a=index  [NC,QSA]
