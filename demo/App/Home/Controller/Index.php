@@ -1134,7 +1134,7 @@ class Index extends Common {
         pr( $tree );
     }
     
-    //城市联动信息按格式写入文件
+    //城市联动信息按格式写入文件,不用查询数据库
     public function city() {
         $model = new \Home\Model\City();
         $all = $model->getInfo();
@@ -1166,4 +1166,52 @@ class Index extends Common {
         //file_put_contents( './Data/cityData/city.json', json_encode( $p, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT) );
         file_put_contents( './Data/cityData/city.js', 'var city = '.json_encode( $p, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT).';');
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
