@@ -1265,7 +1265,7 @@ class Index extends Common {
 
         //pr( $p );
         
-        //file_put_contents( './Data/cityData/city.php', '<?php '.PHP_EOL.' return '.var_export( $p, true ) );
+        //file_put_contents( './Data/cityData/city.php', '<?php '.PHP_EOL.' return '.var_export( $p, true ).';' );
         //file_put_contents( './Data/cityData/city.json', json_encode( $p, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT) );
         //file_put_contents( './Data/cityData/city.js', 'var city = '.json_encode( $p, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT).';');
     }
