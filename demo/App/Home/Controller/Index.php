@@ -479,9 +479,17 @@ class Index extends Common {
          * $xmlData = '<?xml version="1.0" encoding="utf-8"?><xml><appid>wx2421b1c4370ec43b</appid><attach>支付测试</attach><bank_type>CFT</bank_type><fee_type>CNY</fee_type><is_subscribe>Y</is_subscribe><mch_id>10000100</mch_id><nonce_str>5d2b6c2a8db53831f7eda20af46e531c</nonce_str><openid>oUpF8uMEb4qRXf22hE3X68TekukE</openid><out_trade_no>1409811653</out_trade_no><result_code>SUCCESS</result_code><return_code>SUCCESS</return_code><sign>B552ED6B279343CB493C5DD0D78AB241</sign><sub_mch_id>10000100</sub_mch_id><time_end>20140903131540</time_end><total_fee>1</total_fee><coupon_fee><node>10</node><node>100</node></coupon_fee><coupon_count>1</coupon_count><coupon_type>CASH</coupon_type><coupon_id>10000</coupon_id><trade_type>JSAPI</trade_type><transaction_id>1004400740201409030005092168</transaction_id></xml>';
          */
         
-        // $arrData = \Lib\System\DataFormatConvert::getInstance()->xmlToArray( $xmlData );
-        $arrData = \Lib\System\DataFormatConvert::getInstance()->xmlToArray2( $xmlData );
-        pr( $arrData );
+        //$arrData = \Lib\System\DataFormatConvert::getInstance()->xmlToArray( $xmlData );
+        //$arrData = \Lib\System\DataFormatConvert::getInstance()->xmlToArray2( $xmlData );
+        
+        $o = new \Lib\Plugin\DataConvert\Xml2Array_v1\Xml2Array();
+        $arr = $o->run($xmlData);
+        pr( $arr);
+        
+        $o = new \Lib\Plugin\DataConvert\Xml2Array_v2\Xml2Array();
+        $arr = $o->xmlstr_to_array($xmlData);
+        pr( $arr);
+        
     }
     public function array2xml() {
         header( "Content-type: text/xml" );
@@ -547,9 +555,78 @@ class Index extends Common {
                 'transaction_id' => '1004400740201409030005092168' 
         );
         
-        echo \Lib\System\DataFormatConvert::getInstance()->arrayToXml2( $arr );
+/*         $arr = array('product' => array(
+                '@id' => 7,
+                'name' => 'some string',
+                'seo' => 'some-string',
+                'ean' => '',
+                'producer' => array(
+                        'name' => null,
+                        'photo' => '1.png'
+                ),
+                'stock' => 123,
+                'trackstock' => 0,
+                'new' => 0,
+                'pricewithoutvat' => 1111,
+                'price' => 1366.53,
+                'discountpricenetto' => null,
+                'discountprice' => null,
+                'vatvalue' => 23,
+                'currencysymbol' => 'PLN',
+                '#description' => '',
+                '#longdescription' => '',
+                '#shortdescription' => '',
+                'category' => array(
+                        'photo' => '1.png',
+                        'name' => 'test3',
+                ),
+                'staticattributes' => array(
+                        'attributegroup' => array(
+                                1 => array(
+                                        '@name' => 'attributes group',
+                                        'attribute' => array(
+                                                0 => array(
+                                                        'name' => 'second',
+                                                        'description' => 'desc2',
+                                                        'file' => '',
+                                                ),
+                                                1 =>
+                                                array(
+                                                        'name' => 'third',
+                                                        'description' => 'desc3',
+                                                        'file' => '',
+                                                ),
+                                        )
+                                )
+                        )
+                ),
+                'attributes' => array(),
+                'photos' => array(
+                        'photo' => array(
+                                0 => array(
+                                        '@mainphoto' => '1',
+                                        '%' => '1.png',
+                                ),
+                                1 => array(
+                                        '@mainphoto' => '0',
+                                        '%' => '2.png',
+                                ),
+                                2 => array(
+                                        '@mainphoto' => '0',
+                                        '%' => '3.png',
+                                )
+                        )
+                )
+        ));
+         */
         
-        // echo \Lib\System\DataFormatConvert::getInstance()->arrayToXml( $arr );
+          // echo \Lib\System\DataFormatConvert::getInstance()->arrayToXml($arr);
+        
+        //$o = new \Lib\Plugin\DataConvert\Array2Xml_v1\Array2Xml();
+        //echo $o->buildXML($arr);
+        
+        echo \Lib\Plugin\DataConvert\Array2Xml_v2\Array2Xml::run($arr);
+        
     }
     
     // 测试加密解密数据
