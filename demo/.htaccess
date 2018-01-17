@@ -4,9 +4,10 @@
 	#静态资源不重写
 	RewriteRule ^(.*)\.(js|css|jpg|jpeg|gif)(.*)$ $1\.$2$3  [NC,L]
 	
-	RewriteRule ^(.*)/(.*)/(.*)$ index.php?r=$1&c=$2&a=$3  [NC,QSA]
-	RewriteRule ^(.*)/(.*)$ index.php?r=$1&c=$2&a=index  [NC,QSA]
-	RewriteRule ^(.*)$ index.php?r=$1&c=Index&a=index  [NC,QSA]
+	RewriteRule ^(.*)/(.*)/(.*)$ index.php?r=$1&c=$2&a=$3  [NC,QSA,L]	
+	RewriteRule ^(.*)/(.*)$ index.php?r=home&c=$1&a=$2  [NC,QSA,L]
+	#RewriteRule ^(.*)/(.*)$ index.php?r=$1&c=$2&a=index  [NC,QSA]
+	#RewriteRule ^(.*)$ index.php?r=$1&c=Index&a=index  [NC,QSA]
 	
 	#RewriteCond %{REQUEST_FILENAME} !-d 
 	#RewriteCond %{REQUEST_FILENAME} !-f 

@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 use Lib\System\Controller;
 
-class IndexController extends Controller {
+class Index extends Controller {
     public function index() {
         pr( $_GET, 'admin\controller\index' );
     }
