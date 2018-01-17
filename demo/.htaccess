@@ -1,5 +1,5 @@
 <IfModule mod_rewrite.c>
-	RewriteEngine On
+	RewriteEngine Off
 	
 	RewriteRule ^(.*)/(.*)/(.*)$ index.php?r=$1&c=$2&a=$3  [NC,QSA]
 	RewriteRule ^(.*)/(.*)$ index.php?r=$1&c=$2&a=index  [NC,QSA]
