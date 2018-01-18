@@ -1,29 +1,7 @@
 {include file="../Common/header.html"}
 
-
-
-
-
-js
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <p id="results"><b>Results: </b> </p>
+<!-- 
+<h1> 测试H5 input新属性 </h1>
 <form id="formId" action="http://eagle.test/index.php?r=home&c=index&a=ajax" method="post">
    <select name="select">
     <option value="1">下拉1</option>
@@ -62,11 +40,15 @@ js
   <input type="range" name="range"><br/>
   <input type="image" src="/static/image/1.jpg" alt="Submit"><br/>
 
-</form> -->
+</form> 
+-->
 
+<!--  
+<h1> 测试jQuery追加元素 </h1>
+<p id="results"><b>Results: </b> </p>
 <script>
 
-/*$("#results").append( "<tt>" + $("form").serialize() + "</tt>" );
+$("#results").append( "<tt>" + $("form").serialize() + "</tt>" );
 
 var data = eagle.getFormData( document.getElementById('formId') );
 
@@ -77,22 +59,28 @@ eagle.ajaxPost({
 		//res = JSON.parse(res);
 		//console.log(res);
 	}
-});*/
+});
 
 </script>
+-->
 
 
-<!-- <span id="info">test</span> -->
+
+<!-- 
+
+<h1> 测试ajax </h1>
+
+<span id="info">test</span> 
 <script>
-	/* eagle.loadJs(['http://localhost/note/eagle/static/js/test.js','http://localhost/note/eagle/static/js/test2.js','http://libs.baidu.com/jquery/2.0.0/jquery.min.js'],function(){
+	eagle.loadJs(['http://localhost/note/eagle/static/js/test.js','http://localhost/note/eagle/static/js/test2.js','http://libs.baidu.com/jquery/2.0.0/jquery.min.js'],function(){
 		console.log(test2());
-	}); */
+	});
 		
-	/* eagle.loadJs('http://localhost/note/eagle/static/js/test.js',function(){
+	 eagle.loadJs('http://localhost/note/eagle/static/js/test.js',function(){
 		console.log(test());
-	}); */
+	});
 	
-	/* 
+	
 	document.getElementById('info').onclick = function(){
 		eagle.ajaxPost({
 			url : 'http://eagle.test/index.php?r=home&c=index&a=ajax',
@@ -120,31 +108,150 @@ eagle.ajaxPost({
 		
 		
 	};
-	
-	*/
-
 </script>
+-->
 
+
+<!-- 
+
+<h1> 测试手机拍照，并预览上传 </h1>
+<p>
+    <input type="file" id="take-picture" accept="image/*">
+</p>
+<h2>Preview:</h2>
+<p>
+    <img src="about:blank" alt="" id="show-picture">
+</p>
 <script>
+(function () {
+    var takePicture = document.querySelector("#take-picture"),
+        showPicture = document.querySelector("#show-picture");
 
+    if (takePicture && showPicture) {
+        // Set events
+        takePicture.onchange = function (event) {
+            // Get a reference to the taken picture or chosen file
+            var files = event.target.files,
+                file;
+            if (files && files.length > 0) {
+                file = files[0];
+                try {
+                    // Get window.URL object
+                    var URL = window.URL || window.webkitURL;
 
-
-
+                    /*  在网页中展示拍照的图片   */
+                    
+                   
+                    //方法1
+                    // Create ObjectURL
+                    var imgURL = URL.createObjectURL(file);
+                    // Set img src to ObjectURL
+                    showPicture.src = imgURL;
+                    // Revoke ObjectURL
+                    URL.revokeObjectURL(imgURL);
+                   
+                    // 方法2：  如果createObjectURL方法不可用
+                    var fileReader = new FileReader();
+                    fileReader.onload = function (event) {
+                        showPicture.src = event.target.result;
+                    };
+                    fileReader.readAsDataURL(file);
+                }
+                catch (e) {
+                    try {
+                        // Fallback if createObjectURL is not supported
+                        var fileReader = new FileReader();
+                        fileReader.onload = function (event) {
+                            showPicture.src = event.target.result;
+                        };
+                        fileReader.readAsDataURL(file);
+                    }
+                    catch (e) {
+                        //
+                        var error = document.querySelector("#error");
+                        if (error) {
+                            error.innerHTML = "Neither createObjectURL or FileReader are supported";
+                        }
+                    }
+                }
+            }
+        };
+    }
+})();
 </script>
+ -->
 
+<!--  
 
+<h1> H5地理位置 </h1>
 
+<script src="http://api.map.baidu.com/api?v=1.4" type="text/javascript"></script>
+<script type="text/javascript" >
+function getLocation() {
+    var options = {
+        enableHighAccuracy : true,
+        maximumAge : 1000
+    }
+    alert('this is getLocation()');
+    if (navigator.geolocation) {
+        //浏览器支持geolocation
+        navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+    } else {
+        //浏览器不支持geolocation
+        alert('您的浏览器不支持地理位置定位');
+    }
+}
 
+//成功时
+function onSuccess(position) {
+    //返回用户位置
+    //经度
+    var longitude = position.coords.longitude;
+    //纬度
+    var latitude = position.coords.latitude;
+    alert('当前地址的经纬度：经度' + longitude + '，纬度' + latitude);
+    //根据经纬度获取地理位置，不太准确，获取城市区域还是可以的
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(longitude, latitude);
+    var gc = new BMap.Geocoder();
+    gc.getLocation(point, function(rs) {
+        var addComp = rs.addressComponents;
+        alert(addComp.province + ", " + addComp.city + ", "+ addComp.district + ", " + addComp.street + ", "+ addComp.streetNumber);
+    });
+    // 这里后面可以写你的后续操作了
+    postData(longitude, latitude);
+}
+//失败时
+function onError(error) {
+    switch (error.code) {
+        case 1:
+            alert("位置服务被拒绝");
+            break;
+        case 2:
+            alert("暂时获取不到位置信息");
+            break;
+        case 3:
+            alert("获取信息超时");
+            break;
+        case 4:
+            alert("未知错误");
+            break;
+    }
+    // 这里后面可以写你的后续操作了
+    //经度
+    var longitude = 23.1823780000;
+    //纬度
+    var latitude = 113.4233310000;
+    postData(longitude, latitude);
+}
 
-
-
-
-
-
-
-
-
-
+// 页面载入时请求获取当前地理位置
+window.onload = function(){
+    // html5获取地理位置
+    getLocation();
+};
+</script>
+-->
 
 
 
