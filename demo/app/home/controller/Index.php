@@ -1270,6 +1270,47 @@ class Index extends Common {
         //file_put_contents( './Data/cityData/city.js', 'var city = '.json_encode( $p, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT).';');
     }
     
+    public function canvas(){
+        $this->display('canvas');
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
