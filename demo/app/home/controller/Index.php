@@ -422,11 +422,12 @@ class Index extends Common {
     
     // 测试CURL接收数据配合curl使用
     public function getCurl() {
-        Log::debug( 'request:' . var_export( $_REQUEST, true ) . ',header:' . var_export( getallheaders(), true ) );
+        header('Content-type: application/json');
+        //Log::debug( 'request:' . var_export( $_REQUEST, true ) . ',header:' . var_export( getallheaders(), true ) );
         echo json_encode( array(
                 'request' => $_REQUEST 
         ) );
-        
+        exit;
         echo '收到数据';
         
         // 测试curl get
