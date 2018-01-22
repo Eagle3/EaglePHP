@@ -27,7 +27,6 @@ class Dispatch {
     }
     public function handRoute() {
         $route = isset( $_GET[$this->RouteParam] ) && $_GET[$this->RouteParam] ? $_GET[$this->RouteParam] : $this->Route;
-        $route = ucfirst( $route );
         $controller = isset( $_GET[$this->ControllerParam] ) && $_GET[$this->ControllerParam] ? $_GET[$this->ControllerParam] : $this->Controller;
         $controller = ucfirst( $controller );
         $action = isset( $_GET[$this->ActionParam] ) && $_GET[$this->ActionParam] ? $_GET[$this->ActionParam] : $this->Action;

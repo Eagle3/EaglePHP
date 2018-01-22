@@ -41,7 +41,7 @@ class Smarty {
         return $path;
     }
     private function initSmarty() {
-        Import::load( 'Lib/Plugin/smarty/Autoloader.php' );
+        Import::load( 'lib/plugin/smarty/Autoloader.php' );
         \Smarty_Autoloader::register();
         $this->smarty = new \Smarty();
         
@@ -56,7 +56,7 @@ class Smarty {
             if ( is_array( $tplName ) ) {
                 $tplName = $tplName[ROUTE_NAME];
             }
-            $this->smarty->template_dir = $smartyConfigArr["template_dir"] . ROUTE_NAME . DIRECTORY_SEPARATOR . $tplName . DIRECTORY_SEPARATOR . CONTROLLER_NAME . DIRECTORY_SEPARATOR;
+            $this->smarty->template_dir = $smartyConfigArr["template_dir"] . ROUTE_NAME . DIRECTORY_SEPARATOR . $tplName . DIRECTORY_SEPARATOR . strtolower(CONTROLLER_NAME) . DIRECTORY_SEPARATOR;
         }
         
         if ( isset( $smartyConfigArr["compile_dir"] ) ) {

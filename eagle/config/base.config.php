@@ -12,8 +12,8 @@ return array(
                 'caching' => false, // 是否使用缓存
                 'cache_lifetime' => 0, // 缓存时间
                 'template_dir' => APP_PATH, // 设置模板目录
-                'compile_dir' => './Tmp/smarty_templates_c', // 设置编译目录
-                'cache_dir' => './Tmp/cache/smarty_templates_cache', // 缓存文件夹
+                'compile_dir' => './tmp/smarty_templates_c', // 设置编译目录
+                'cache_dir' => './tmp/cache/smarty_templates_cache', // 缓存文件夹
                                                                      // 修改左右边界符号
                 'delimiter' => array(
                         'left_delimiter' => '{',
@@ -28,8 +28,8 @@ return array(
                 'caching' => false, // 是否使用缓存
                 'cache_lifetime' => 0, // 缓存时间
                 'template_dir' => APP_PATH, // 设置模板目录
-                'compile_dir' => DIR . '/Tmp/system_templates_c/', // 设置编译目录
-                'cache_dir' => DIR . '/Tmp/cache/system_templates_cache/', // 缓存文件夹
+                'compile_dir' => DIR . '/tmp/system_templates_c/', // 设置编译目录
+                'cache_dir' => DIR . '/tmp/cache/system_templates_cache/', // 缓存文件夹
                                                                          // 修改左右边界符号
                 'delimiter' => array(
                         'left_delimiter' => '{',
@@ -47,8 +47,8 @@ return array(
         
         // 分组下默认模板
         'DEFAULT_TPL_NAME' => array(
-                'Home' => 'View',
-                'Admin' => 'View' 
+                'home' => 'view',
+                'admin' => 'view' 
         ),
         
         // 默认语言包
@@ -81,7 +81,7 @@ return array(
         'CACHE_CONFIG' => array(
                 'FILE' => array(
                         'CACHE_TIME' => 3, // 缓存时间
-                        'CACHE_PATH' => './Tmp/cache/file_cache/', // 设置文件缓存目录
+                        'CACHE_PATH' => './tmp/cache/file_cache/', // 设置文件缓存目录
                         'CACHE_PREFIX' => 'file', // 文件缓存前缀
                         'CACHE_POSTFIX' => '.txt'  // 缓存文件后缀名
                 ),

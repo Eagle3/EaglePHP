@@ -17,7 +17,7 @@ return array(
         		'ROUTE_PARAM' => 'r',
         		'CONTROLLER_PARAM' => 'c',
         		'ACTION_PARAM' => 'a',
-                'ROUTE' => 'Home',
+                'ROUTE' => 'home',
                 'CONTROLLER' => 'Index',
                 'ACTION' => 'index',
         ),
