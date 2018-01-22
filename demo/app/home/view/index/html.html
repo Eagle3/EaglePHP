@@ -1,0 +1,23 @@
+{include file="../Common/header.html"}
+<table border="1">
+	<tr>
+		<th>ID</th>
+		<th>城市</th>
+	</tr>
+	
+	{*
+	{foreach from=$data item=foo}
+	<tr>
+		<td>{$foo.area_id}</td>
+		<td>{$foo.area_name}</td>
+	</tr>
+	{/foreach}
+	*}
+	
+	<tr>
+		<td>{$data.area_id}</td>
+		<td>{$data.area_name}</td>
+	</tr>
+	
+</table>
+{include file="../Common/footer.html"}

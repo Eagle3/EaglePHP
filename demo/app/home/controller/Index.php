@@ -40,7 +40,6 @@ use lib\system\Luck;
 use lib\system\Reward\CreateReward;
 use lib\plugin\hanziToPinyin\src\Pinyin;
 
-
 class Index extends Common {
     public function init() {
         parent::init();
@@ -1275,7 +1274,27 @@ class Index extends Common {
         $this->display('canvas');
     }
     
-    
+    //页面静态化
+    public function html(){
+        //ob_start(); 
+        $model = new City();
+        $data= $model->getInfo();
+        
+        $i = 1;
+        foreach ( $data as $k=>$v ){
+            if( $i == 4 ){
+                break;
+            }
+            $this->assign('data',$v);
+            $data = $this->fetch('html');
+            $fileName = "./html/{$v['area_id']}.html";
+            //$fileName = mb_convert_encoding($fileName, 'gbk','utf-8');
+            file_put_contents($fileName, $data);
+            $i++;
+        }
+        
+        // ob_end_clean();
+    }
     
     
     
