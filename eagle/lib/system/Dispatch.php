@@ -31,12 +31,13 @@ class Dispatch {
         $controller = ucfirst( $controller );
         $action = isset( $_GET[$this->ActionParam] ) && $_GET[$this->ActionParam] ? $_GET[$this->ActionParam] : $this->Action;
         
-        // 如果请求的文件不存在走默认请求。此处也可以不判断，让程序报错
+        // 如果请求的方法不存在: 可以走默认请求；此处也可以不判断，让程序报错; 或者转向404页面
         $class = DIRECTORY_SEPARATOR . $route . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . $controller . '.php';
         if ( !file_exists( APP_PATH . $class ) ) {
 //             $route = $this->Route;
 //             $controller = $this->Controller;
 //             $action = $this->Action;
+            header('Location: /404.html');
         }
         
         defined( 'ROUTE_NAME' ) or define( 'ROUTE_NAME', $route );
