@@ -39,6 +39,7 @@ use lib\system\Socket\Client;
 use lib\system\Luck;
 use lib\system\Reward\CreateReward;
 use lib\plugin\hanziToPinyin\src\Pinyin;
+use lib\system\Xml;
 
 class Index extends Common {
     public function init() {
@@ -1296,7 +1297,44 @@ class Index extends Common {
         // ob_end_clean();
     }
     
-    
+   
+    public function xml(){
+        $o = new Xml();
+        
+        /*   
+        $data = [
+            'name' => 'jack',
+            'from' => '中国',
+            'data' => array(
+                    'city' => array(
+                            '北京',
+                            '上海'
+                    )
+            ),
+        ];
+        $xml = $o->array2Xml($data);
+        header( "Content-type: text/xml" );
+        echo $xml;
+        exit;
+       */
+        
+        /* */
+        $xmldata = <<<xml
+        <root>
+          <name>jack</name>
+          <from>中国</from>
+          <data>
+            <city>
+              <item>北京</item>
+              <item>上海</item>
+            </city>
+          </data>
+        </root>
+xml;
+        $arr = $o->xml2Array($xmldata);
+        pr( $arr );
+        
+    }
     
     
     
