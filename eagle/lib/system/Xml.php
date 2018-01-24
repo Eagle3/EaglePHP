@@ -14,7 +14,7 @@ class Xml {
      * @param array $arrayData
      *            数组
      * @param string $parentNodeName
-     *            父节点名称
+     *            根(父)节点名称
      * @param object $domDocument
      *            new \DOMDocument
      * @param object $parentNode
