@@ -9,7 +9,7 @@ class Xml {
     public function __construct() {}
     
     /**
-     * 数组转XML
+     * DOMDocument写XML - 数组转XML
      *
      * @param array $arrayData
      *            数组
@@ -44,7 +44,7 @@ class Xml {
     }
     
     /**
-     * XML字符串转数组
+     * SimpleXML读取-XML字符串转数组
      *
      * @param string $xmlData
      *            XML格式数据
