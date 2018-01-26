@@ -47,6 +47,7 @@ class Index extends Common {
         // echo 'init operation <br>';
     }
     public function index() {
+        echo 'windows nginx <br>';
         // pr( $_SERVER );
         // $o = Index();
         // $o->index2();
