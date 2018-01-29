@@ -997,6 +997,15 @@ class Index extends Common {
         $Socket = new Client();
         $Socket->run();
     }
+    
+    public function webSocket() {
+        $this->display('websocket');
+    }
+    
+    public function webSocketSwoole() {
+        $this->display('websocket_swoole');
+    }
+    
     public function luck() {
         $weight = [
                 [

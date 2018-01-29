@@ -16,8 +16,8 @@ return array(
                 'cache_dir' => './tmp/cache/smarty_templates_cache', // 缓存文件夹
                                                                      // 修改左右边界符号
                 'delimiter' => array(
-                        'left_delimiter' => '{',
-                        'right_delimiter' => '}' 
+                        'left_delimiter' => '{%',
+                        'right_delimiter' => '%}' 
                 ) 
         
         ),
