@@ -1,68 +1,41 @@
+<!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Web sockets test</title>
-    <script type="text/javascript">
-        var ws;
-        function ToggleConnectionClicked() {   
-            if( typeof(ws) != 'undefined' && ws.readyState == 1 ) {
-                alert('已连接服务器，请勿重复连接！');
-                return false;
-            }
-
-            try {
-                ws = new WebSocket("ws://127.0.0.1:8889");//连接服务器,改成你服务器地址
-                ws.onopen = function(event){
-                    alert("已经与服务器建立了连接\r\n当前连接状态："+this.readyState);
-                };
-                ws.onmessage = function(event){
-                    // alert("接收到服务器发送的数据：\r\n"+event.data);
-                    var chat_content = document.getElementById("chat_content");
-                    chat_content.innerHTML = chat_content.innerHTML+event.data+"<br />";
-                    // console.log(event.data);
-                };
-                ws.onclose = function(event){
-                    alert("已经与服务器断开连接\r\n当前连接状态："+this.readyState);
-                };
-                ws.onerror = function(event){
-                    alert("WebSocket异常！");
-                };
-            } catch (ex) {
-                alert(ex.message);      
-            }
-        };
- 
-        function SendData() {
-            try{
-                var content = document.getElementById("content").value;
-                if(content){
-                    ws.send(content);
-                }
-                
-            }catch(ex){
-                alert(ex.message);
-            }
-        };
- 
-        function seestate(){
-            if( typeof(ws) == 'undefined' ) {
-                alert('还未连接服务器！');
-                return false;
-            }
-            alert(ws.readyState);
-        };
-
-        function ClearChatContent(){
-            document.getElementById("chat_content").innerHTML = "";
-        };
-    </script>
+<meta charset="utf-8">
+<title>websocket_TEST</title>
 </head>
 <body>
-    <button id='ToggleConnection' type="button" onclick='ToggleConnectionClicked();'>连接服务器</button><br /><br />
-    <textarea id="content" ></textarea>
-    <button id='ToggleConnection' type="button" onclick='SendData();'>发送</button><br /><br />
-    <button id='ToggleConnection' type="button" onclick='seestate();'>查看状态</button><br /><br />
-    <button type="button" onclick='ClearChatContent();'>清屏</button><br /><br />
-    <div id="chat_content"></div>
+<script src="/static/js/jquery-1.8.0.min.js"></script>
+<script>
+function link(){
+  var url='ws://10.0.6.196:8889';
+  socket=new WebSocket(url);
+  socket.onopen=function(){log('连接成功')}
+  socket.onmessage=function(msg){log('获得消息:'+msg.data);console.log(msg);}
+  socket.onclose=function(){log('断开连接')}
+}
+function dis(){
+  socket.close();
+  socket=null;
+}
+function log(var1){
+  $('.log').append(var1+"\r\n");
+}
+function send(){
+  socket.send($('#text').attr('value'));
+}
+function send2(){
+  var json = JSON.stringify({'type':'php','msg':$('#text2').attr('value')})
+  socket.send(json);
+}
+</script>
+<textarea class="log" style="width: 100%; height: 500px;">
+=======websocket======
+</textarea>
+<input type="button" value="连接" onClick="link()"> 
+<input type="button" value="断开" onClick="dis()">
+<input type="text" id="text">
+<input type="button" value="发送" onClick="send()">
+
 </body>
 </html>

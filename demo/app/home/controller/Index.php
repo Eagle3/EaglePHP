@@ -46,6 +46,11 @@ class Index extends Common {
         parent::init();
         // echo 'init operation <br>';
     }
+    
+    public function phpinfo() {
+        phpinfo();
+    }
+    
     public function index() {
         echo 'windows nginx <br>';
         // pr( $_SERVER );
