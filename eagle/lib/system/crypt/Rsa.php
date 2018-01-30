@@ -140,6 +140,46 @@ class Rsa {
     }
     
     /**
+     * 公钥加密
+     *
+     * @param string $data
+     *            原始数据
+     */
+    public function publicKeyEn( $data, $padding = OPENSSL_PKCS1_PADDING ) {
+        if ( $this->rsa_private_key_is_file ) {
+            $publicKey = file_get_contents( $this->rsa_public_key );
+            $res = openssl_get_publickey( $publicKey );
+            openssl_public_encrypt( $data, $enData, $publicKey, $padding );
+            openssl_free_key( $res );
+            return base64_encode( $enData );
+        } else {
+            openssl_public_encrypt( $data, $enData, $this->rsa_public_key, $padding );
+            return base64_encode( $enData );
+            ;
+        }
+    }
+    
+    /**
+     * 私钥解密
+     *
+     * @param string $enData
+     *            加密的数据
+     */
+    public function privateKeyDe( $enData, $padding = OPENSSL_PKCS1_PADDING ) {
+        $enData = base64_decode( $enData );
+        if ( $this->rsa_private_key_is_file ) {
+            $privateKey = file_get_contents( $this->rsa_private_key, $padding );
+            $res = openssl_get_privatekey( $privateKey );
+            openssl_private_decrypt( $enData, $deData, $res, $padding );
+            openssl_free_key( $res );
+            return $deData;
+        } else {
+            openssl_private_decrypt( $enData, $deData, $this->rsa_private_key, $padding );
+            return $deData;
+        }
+    }
+    
+    /**
      * 私钥加密(超过117字节时分段加密)
      * 
      * @param string $data
@@ -195,46 +235,6 @@ class Rsa {
                 openssl_public_decrypt( $data, $decrypt, $this->rsa_public_key, $padding );
                 $deData .= $decrypt;
             }
-            return $deData;
-        }
-    }
-    
-    /**
-     * 公钥加密
-     * 
-     * @param string $data
-     *            原始数据
-     */
-    public function publicKeyEn( $data, $padding = OPENSSL_PKCS1_PADDING ) {
-        if ( $this->rsa_private_key_is_file ) {
-            $publicKey = file_get_contents( $this->rsa_public_key );
-            $res = openssl_get_publickey( $publicKey );
-            openssl_public_encrypt( $data, $enData, $publicKey, $padding );
-            openssl_free_key( $res );
-            return base64_encode( $enData );
-        } else {
-            openssl_public_encrypt( $data, $enData, $this->rsa_public_key, $padding );
-            return base64_encode( $enData );
-            ;
-        }
-    }
-    
-    /**
-     * 私钥解密
-     * 
-     * @param string $enData
-     *            加密的数据
-     */
-    public function privateKeyDe( $enData, $padding = OPENSSL_PKCS1_PADDING ) {
-        $enData = base64_decode( $enData );
-        if ( $this->rsa_private_key_is_file ) {
-            $privateKey = file_get_contents( $this->rsa_private_key, $padding );
-            $res = openssl_get_privatekey( $privateKey );
-            openssl_private_decrypt( $enData, $deData, $res, $padding );
-            openssl_free_key( $res );
-            return $deData;
-        } else {
-            openssl_private_decrypt( $enData, $deData, $this->rsa_private_key, $padding );
             return $deData;
         }
     }
