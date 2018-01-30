@@ -9,7 +9,6 @@ class Dispatch {
     private static $RouteParam = '';
     private static $ControllerParam = '';
     private static $ActionParam = '';
-
     public static function handRoute() {
         $Call = getConfig( 'DEFAULT_CALL' );
         self::$Route = $Call['ROUTE'];
@@ -27,10 +26,10 @@ class Dispatch {
         // 如果请求的方法不存在: 可以走默认请求；此处也可以不判断，让程序报错; 或者转向404页面
         $class = DIRECTORY_SEPARATOR . $route . DIRECTORY_SEPARATOR . "controller" . DIRECTORY_SEPARATOR . $controller . '.php';
         if ( !file_exists( APP_PATH . $class ) ) {
-//             $route = self::$Route;
-//             $controller = self::$Controller;
-//             $action = self::$Action;
-            header('Location: /404.html');
+            // $route = self::$Route;
+            // $controller = self::$Controller;
+            // $action = self::$Action;
+            header( 'Location: /404.html' );
         }
         
         defined( 'ROUTE_NAME' ) or define( 'ROUTE_NAME', $route );
