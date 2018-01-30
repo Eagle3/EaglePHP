@@ -34,7 +34,7 @@ use lib\system\Xml;
  */
 class Curl {
     private static $ch = null;
-    private static $timeout = 300;
+    private static $timeout = 30;
     private static $methodArr = array(
             'GET',
             'POST' 
@@ -203,6 +203,7 @@ class Curl {
         $res = curl_exec( self::$ch );
         $errno = curl_errno( self::$ch );
         $error = curl_error( self::$ch );
+        echo "curl exec error: {$errno} {$error}";
         if ( $errno ) {
             log::error( "curl exec error: {$errno} {$error}" );
         }
