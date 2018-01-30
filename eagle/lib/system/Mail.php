@@ -43,7 +43,7 @@ class Mail {
             // $mail->IsHTML(true); // send as HTML
             /* 发送的内容是html文件模板时 结束 */
             
-            $mail->Send();
+            //$mail->Send();
             
             return '邮件已发送';
         } catch ( phpmailerException $e ) {
