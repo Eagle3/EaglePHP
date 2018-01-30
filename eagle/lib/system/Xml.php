@@ -6,7 +6,6 @@
 namespace lib\system;
 
 class Xml {
-    public function __construct() {}
     
     /**
      * DOMDocument写XML - 数组转XML
@@ -21,7 +20,7 @@ class Xml {
      *            父节点对象
      * @return string XML格式字符串
      */
-    public function array2Xml_DOMDocument( $arrayData, $rootNodeName = 'root', $domDocument = NULL, $parentNode = NULL ) {
+    public static function array2Xml_DOMDocument( $arrayData, $rootNodeName = 'root', $domDocument = NULL, $parentNode = NULL ) {
         if ( !$domDocument ) {
             $domDocument = new \DOMDocument( '1.0', 'utf-8' );
             $domDocument->formatOutput = true;
@@ -37,7 +36,7 @@ class Xml {
                 $valObj = $domDocument->createTextNode( $val );
                 $keyNode->appendChild( $valObj );
             } else {
-                $this->array2Xml_DOMDocument( $val, 'root', $domDocument, $keyNode );
+                self::array2Xml_DOMDocument( $val, 'root', $domDocument, $keyNode );
             }
         }
         return $domDocument->saveXML();
@@ -56,7 +55,7 @@ class Xml {
      *            父节点对象
      * @return string XML格式字符串
      */
-    public function array2Xml_SimpleXML( $arrayData, $rootNodeName = 'root', $SimpleXMLElement = NULL, $parentNode = NULL ) {
+    public static function array2Xml_SimpleXML( $arrayData, $rootNodeName = 'root', $SimpleXMLElement = NULL, $parentNode = NULL ) {
         if ( !$SimpleXMLElement ) {
             $SimpleXMLElement = new \SimpleXMLElement( "<?xml version=\"1.0\" encoding=\"utf-8\"?><{$rootNodeName}></{$rootNodeName}>" );
         }
@@ -73,7 +72,7 @@ class Xml {
                 } else {
                     $keyNode = $SimpleXMLElement->addChild( is_string( $key ) ? $key : 'item' );
                 }
-                $this->array2Xml_SimpleXML( $val, '', $SimpleXMLElement, $keyNode );
+                self::array2Xml_SimpleXML( $val, '', $SimpleXMLElement, $keyNode );
             }
         }
         return $SimpleXMLElement->asXml();
@@ -88,19 +87,19 @@ class Xml {
      *            根节点名称
      * @return string XML格式字符串
      */
-    public function array2Xml_XMLWriter( $arrayData, $rootNodeName = 'root' ) {
+    public static function array2Xml_XMLWriter( $arrayData, $rootNodeName = 'root' ) {
         $XMLWriter = new \XMLWriter();
         $XMLWriter->openUri( "php://output" );
         $XMLWriter->setIndentString( "\t" );
         $XMLWriter->setIndent( true );
         $XMLWriter->startDocument( '1.0', 'utf-8' );
         $XMLWriter->startElement( $rootNodeName );
-        $this->XMLWriterBuildXml( $XMLWriter, $arrayData );
+        self::XMLWriterBuildXml( $XMLWriter, $arrayData );
         $XMLWriter->endElement();
         $XMLWriter->endDocument();
         return $XMLWriter->outputMemory();
     }
-    private function XMLWriterBuildXml( $XMLWriter, $arrayData ) {
+    private static function XMLWriterBuildXml( $XMLWriter, $arrayData ) {
         foreach ( $arrayData as $key => $val ) {
             if ( !is_array( $val ) ) {
                 $XMLWriter->startElement( is_string( $key ) ? $key : 'item' );
@@ -108,7 +107,7 @@ class Xml {
                 $XMLWriter->endElement();
             } else {
                 $XMLWriter->startElement( is_string( $key ) ? $key : 'item' );
-                $this->XMLWriterBuildXml( $XMLWriter, $val );
+                self::XMLWriterBuildXml( $XMLWriter, $val );
                 $XMLWriter->endElement();
             }
         }
@@ -121,7 +120,7 @@ class Xml {
      *            XML格式数据
      * @return array 数组
      */
-    public function xml2Array_SimpleXML( $xmlData = '' ) {
+    public static function xml2Array_SimpleXML( $xmlData = '' ) {
         libxml_disable_entity_loader( true );
         return json_decode( json_encode( simplexml_load_string( $xmlData, 'SimpleXMLElement', LIBXML_NOCDATA ) ), true );
     }

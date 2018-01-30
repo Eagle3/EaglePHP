@@ -259,14 +259,27 @@ class Index extends Common {
     
     // 测试CURL发送数据
     public function curl() {
-        $curl = new Curl( 'https://www.baidu.com', array() );
-        $res = $curl->send();
-        echo $res;
-        exit();
+        $url = 'http://eagle.local.test/index.php?r=home&c=index&a=getCurl';
+        $data = array(
+                'name' => 'jack',
+                'from' => '中国',
+                'data' => json_encode( array(
+                        'name' => 'jack',
+                        'from' => '中国'
+                ), JSON_UNESCAPED_UNICODE )
+        );
+        //$data = 'name=jack&age=20';
+        Curl::init( $url, $data, 'get', 1001 );
+        $res = Curl::send();
+        pr( $res );
+        
+        Curl::init( 'https://www.baidu.com', array() );
+        $res = Curl::send();
+        pr($res) ;
         
         $appId = 'abcdef';
         $key = '123456';
-        $accessTokenUrl = 'http://eagle.test/index.php?r=home&c=index&a=getCurl';
+        $accessTokenUrl = 'http://eagle.local.test/index.php?r=home&c=index&a=getCurl';
         $timestamp = time();
         $nonce = md5( uniqid( microtime( true ), true ) );
         $method = 'POST';
@@ -288,10 +301,10 @@ class Index extends Common {
                 "Authorization: MAC id=\"{$appId}\",ts=\"{$timestamp}\",nonce=\"{$nonce}\",mac=\"{$signature}\"" 
         );
         
-        $curl = new Curl( $accessTokenUrl, $postData, 'POST', 1001 );
-        $curl->setOption( CURLOPT_HTTPHEADER, $header );
-        $res = $curl->send();
-        exit();
+        $curl = Curl::init( $accessTokenUrl, $postData, 'POST', 1001 );
+        Curl::setOption( CURLOPT_HTTPHEADER, $header );
+        $res = Curl::send();
+        pr( $res );
         
         $url = 'https://blast.triumbest.net:11001/TopUp_server/rechangeEgret.json';
         $data = array(
@@ -306,23 +319,8 @@ class Index extends Common {
                 'sign' => 'efbbb014b5ad5ece7be72873179df784' 
         );
         
-        $curl = new  Curl( $url, $data, 'POST', 1001 );
-        $res = $curl->send();
-        var_dump( $res );
-        exit();
-        
-        $url = 'http://eagle.test/index.php?r=home&c=index&a=getCurl';
-        $data = array(
-                'name' => 'jack',
-                'from' => '中国',
-                'data' => json_encode( array(
-                        'name' => 'jack',
-                        'from' => '中国' 
-                ), JSON_UNESCAPED_UNICODE ) 
-        );
-        // $data = 'name=jack&age=20';
-        $curl = new  Curl( $url, $data, 'get', 1001 );
-        $res = $curl->send();
+        Curl::init( $url, $data, 'POST', 1001 );
+        $res = Curl::send();
         pr( $res );
     }
     
@@ -351,6 +349,21 @@ class Index extends Common {
          *
          * exit;
          */
+        
+        
+        $url = 'http://eagle.local.test/index.php?r=home&c=index&a=getCurl';
+
+        $data = 'name=jack&age=20';
+        $curl->get($url, array(
+                'name' => 'jack',
+                'from' => '中国',
+                'data' => json_encode( array(
+                        'name' => 'jack',
+                        'from' => '中国'
+                ), JSON_UNESCAPED_UNICODE )
+                ));
+        pr( 'Error: ' . $curl->errorCode . ': ' . $curl->errorMessage . "\n", $curl->response );
+        
         
         /*
          * //POST请求
@@ -1314,8 +1327,6 @@ class Index extends Common {
     
    
     public function xml(){
-        $o = new Xml();
-        
         /*    */
         $data = [
             'name' => 'jack',
@@ -1332,12 +1343,12 @@ class Index extends Common {
             ),
         ];
         
-        /*
-        //$xml = $o->array2Xml_DOMDocument($data);
+        /* 
+        //$xml = XML::array2Xml_DOMDocument($data);
         
-        //$xml = $o->array2Xml_SimpleXML($data);
+       // $xml = XML::array2Xml_SimpleXML($data);
         
-        $xml = $o->array2Xml_XMLWriter($data);
+        $xml = XML::array2Xml_XMLWriter($data);
         
         header( "Content-type: text/xml" );
         echo $xml;
@@ -1387,7 +1398,7 @@ xml;
   <transaction_id><![CDATA[1004400740201409030005092168]]></transaction_id>
 </xml>';
         
-        $arr = $o->xml2Array_SimpleXML($xmldata);
+        $arr = XML::xml2Array_SimpleXML($xmldata);
         
         pr( $arr );
         
