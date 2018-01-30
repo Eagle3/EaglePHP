@@ -26,7 +26,7 @@
     ];
 
 
-private $weight = [
+$weight = [
         [
                 'name' => '超级大奖',
                 'weight' => [10010], // 0
@@ -53,25 +53,25 @@ private $weight = [
 
 namespace lib\system;
 class Luck {
-    private $numBase = 100;
-    private $weight = [];
-    private $weightNum = [];
+    private static $numBase = 100;
+    private static $weight = [];
+    private static $weightNum = [];
     
-    public function __construct( $weight, $numBase = 100 ){
-        $this->numBase = $numBase;
-        $this->weight= $weight;
-        $this->weightNum = array_combine(array_keys($this->weight), array_column($this->weight,'weight'));
-        $this->initWeight();
+    public static function init( $weight, $numBase = 100 ){
+       self::$numBase = $numBase;
+       self::$weight= $weight;
+       self::$weightNum = array_combine(array_keys(self::$weight), array_column(self::$weight,'weight'));
+       self::initWeight();
     }
     
-    private function initWeight(){
+    private static function initWeight(){
         $i = 0;
-        foreach ( $this->weight as $k => &$v ){
-            $preTotalNum = array_sum(array_slice($this->weightNum, 0, $i));
+        foreach (self::$weight as $k => &$v ){
+            $preTotalNum = array_sum(array_slice(self::$weightNum, 0, $i));
             if( $v['weight'] == 0 ){
-                $v['weight'] = [$this->numBase + 10];
+                $v['weight'] = [self::$numBase + 10];
             }else{
-                $v['weight'] = [$this->numBase - $preTotalNum - $v['weight'] + 1, $this->numBase - $preTotalNum];
+                $v['weight'] = [self::$numBase - $preTotalNum - $v['weight'] + 1,self::$numBase - $preTotalNum];
             }
             $i++;
         }
@@ -79,10 +79,10 @@ class Luck {
     }
     
     //抽奖
-    public function run(){
+    public static function run(){
         $res = [];
-        $num = mt_rand(1, $this->numBase);
-        foreach ( $this->weight as $v){
+        $num = mt_rand(1,self::$numBase);
+        foreach (self::$weight as $v){
             if( $num >= $v['weight'][0] && $num <= $v['weight'][1]){
                 $res['num'] = $num;
                 $res['name'] = $v['name'];
@@ -93,11 +93,11 @@ class Luck {
     }
     
     //统计执行n次抽奖获奖情况
-    public function test($n = 10000){
+    public static function test($n = 10000){
         $res = [];
         for( $i=1;$i<=$n;$i++ ){
-            $num = mt_rand(1, $this->numBase);
-            foreach ( $this->weight as $v){
+            $num = mt_rand(1,self::$numBase);
+            foreach (self::$weight as $v){
                 if( $num >= $v['weight'][0] && $num <= $v['weight'][1]){
                     $res[$i]['num'] = $num;
                     $res[$i]['name'] = $v['name'];

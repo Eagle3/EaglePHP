@@ -3,25 +3,25 @@
 namespace lib\system;
 
 class Capture {
-    private $fileArr = NULL;
-    private $saveDir = './Tmp/capture/';
-    public function __construct( $fileArr, $saveDir = '' ) {
-        $this->fileArr = $fileArr;
+    private static $fileArr = NULL;
+    private static $saveDir = './tmp/capture/';
+    public static function init( $fileArr, $saveDir = '' ) {
+        self::$fileArr = $fileArr;
         if ( $saveDir ) {
-            $this->saveDir = $saveDir;
+            self::$saveDir = $saveDir;
         }
     }
     
     // 抓取网络资源图片
-    public function exe() {
-        $fileArr = $this->fileArr;
-        if ( !file_exists( $this->saveDir ) ) {
-            mkdir( $this->saveDir, 0777, TRUE );
+    public static function exe() {
+        $fileArr = self::$fileArr;
+        if ( !file_exists( self::$saveDir ) ) {
+            mkdir( self::$saveDir, 0777, TRUE );
         }
         foreach ( $fileArr as $k => &$v ) {
             $postfix = substr( $v, strrpos( $v, '.' ) );
-            $filename = $this->saveDir . $k . $postfix;
-            $return_content = $this->http_get_data( $v );
+            $filename = self::$saveDir . $k . $postfix;
+            $return_content = self::http_get_data( $v );
             $fp = fopen( $filename, "a" );
             fwrite( $fp, $return_content );
             $v = $filename;
@@ -29,7 +29,7 @@ class Capture {
         unset( $v ); 
     }
     
-    private function http_get_data( $url ) {
+    private static function http_get_data( $url ) {
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'GET' );
         curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );

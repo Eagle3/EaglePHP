@@ -3,8 +3,7 @@
 namespace lib\system;
 
 class Download {
-    public function __construct( $filename ) {}
-    public function exe( $file ) {
+    public static function exe( $file ) {
         $position = strripos( $file, '.' );
         $postfix = substr( $file, $position + 1 );
         $file = iconv( 'utf-8', 'gbk', $file );

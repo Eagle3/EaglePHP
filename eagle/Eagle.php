@@ -62,4 +62,4 @@ require_once EAGLE_PATH . 'lib/system/Autoloader.php';
 lib\system\Autoloader::register();
 
 // 执行
-lib\system\App::getInstance()->run();
+lib\system\App::run();

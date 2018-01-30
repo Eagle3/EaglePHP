@@ -3,99 +3,99 @@
 namespace lib\system;
 
 class Code {
-    private $charSet = 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789';
-    private $code;
-    private $imgHandle;
-    private $fontColor;
-    private $fontPath = '';
-    private $verifyType = 'cookie';
-    private $verifyName = '_verifyCode';
-    private $width = 130;
-    private $height = 50;
-    private $fontSize = 20;
-    private $codeLen = 4;
-    public function __construct() {
-        $this->fontPath = FONT_PATH . 'georgiab.ttf';
+    private static $charSet = 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789';
+    private static $code;
+    private static $imgHandle;
+    private static $fontColor;
+    private static $fontPath = '';
+    private static $verifyType = 'cookie';
+    private static $verifyName = '_verifyCode';
+    private static $width = 130;
+    private static $height = 50;
+    private static $fontSize = 20;
+    private static $codeLen = 4;
+    public static function init() {
+        self::$fontPath = FONT_PATH . 'georgiab.ttf';
         $verifyType = getConfig( 'DEFAULT_CODE_VERIFY' );
         $verifyName = getConfig( 'DEFAULT_CODE_NAME' );
         if ( ( int )$verifyType == 1 ) {
-            $this->verifyType = 'cookie';
+            self::$verifyType = 'cookie';
         } else {
-            $this->verifyType = 'session';
+            self::$verifyType = 'session';
         }
-        $this->verifyName = $verifyName;
+        self::$verifyName = $verifyName;
     }
-    public function set( $setArr = array() ) {
+    public static function set( $setArr = array() ) {
         if ( $setArr ) {
             foreach ( $setArr as $k => $v ) {
-                $this->$k = $v;
+                self::$$k = $v;
             }
         }
     }
     
     // 获取验证码
-    public function getCode() {
-        return strtolower( $this->code );
+    public static function getCode() {
+        return strtolower( self::$code );
     }
-    public function output() {
-        if ( isset( $_SESSION[$this->verifyName] ) ) {
-            unset( $_SESSION[$this->verifyName] );
+    public static function output() {
+        if ( isset( $_SESSION[self::$verifyName] ) ) {
+            unset( $_SESSION[self::$verifyName] );
         }
-        $this->createBg();
-        $this->createCode();
-        if ( $this->verifyType == 'cookie' ) {
-            setcookie( $this->verifyName, $this->code );
+        self::createBg();
+        self::createCode();
+        if ( self::$verifyType == 'cookie' ) {
+            setcookie( self::$verifyName, self::$code );
         } else {
             // session_start();
-            $_SESSION[$this->verifyName] = $this->code;
+            $_SESSION[self::$verifyName] = self::$code;
         }
-        $this->createLine();
-        $this->createFont();
-        $this->export();
+        self::createLine();
+        self::createFont();
+        self::export();
     }
     
     // 生成背景
-    private function createBg() {
-        $this->imgHandle = imagecreatetruecolor( $this->width, $this->height );
-        $color = imagecolorallocate( $this->imgHandle, mt_rand( 157, 255 ), mt_rand( 157, 255 ), mt_rand( 157, 255 ) );
-        imagefilledrectangle( $this->imgHandle, 0, $this->height, $this->width, 0, $color );
+    private static function createBg() {
+        self::$imgHandle = imagecreatetruecolor( self::$width, self::$height );
+        $color = imagecolorallocate( self::$imgHandle, mt_rand( 157, 255 ), mt_rand( 157, 255 ), mt_rand( 157, 255 ) );
+        imagefilledrectangle( self::$imgHandle, 0, self::$height, self::$width, 0, $color );
     }
     
     // 生成随机码
-    private function createCode() {
-        $_len = strlen( $this->charSet ) - 1;
-        for ( $i = 0; $i < $this->codeLen; $i ++ ) {
-            $this->code .= $this->charSet[mt_rand( 0, $_len )];
+    private static function createCode() {
+        $_len = strlen( self::$charSet ) - 1;
+        for ( $i = 0; $i < self::$codeLen; $i ++ ) {
+            self::$code .= self::$charSet[mt_rand( 0, $_len )];
         }
     }
     
     // 生成线条、雪花
-    private function createLine() {
+    private static function createLine() {
         // 线条
         for ( $i = 0; $i < 6; $i ++ ) {
-            $color = imagecolorallocate( $this->imgHandle, mt_rand( 0, 156 ), mt_rand( 0, 156 ), mt_rand( 0, 156 ) );
-            imageline( $this->imgHandle, mt_rand( 0, $this->width ), mt_rand( 0, $this->height ), mt_rand( 0, $this->width ), mt_rand( 0, $this->height ), $color );
+            $color = imagecolorallocate( self::$imgHandle, mt_rand( 0, 156 ), mt_rand( 0, 156 ), mt_rand( 0, 156 ) );
+            imageline( self::$imgHandle, mt_rand( 0, self::$width ), mt_rand( 0, self::$height ), mt_rand( 0, self::$width ), mt_rand( 0, self::$height ), $color );
         }
         // 雪花
         for ( $i = 0; $i < 100; $i ++ ) {
-            $color = imagecolorallocate( $this->imgHandle, mt_rand( 200, 255 ), mt_rand( 200, 255 ), mt_rand( 200, 255 ) );
-            imagestring( $this->imgHandle, mt_rand( 1, 5 ), mt_rand( 0, $this->width ), mt_rand( 0, $this->height ), '*', $color );
+            $color = imagecolorallocate( self::$imgHandle, mt_rand( 200, 255 ), mt_rand( 200, 255 ), mt_rand( 200, 255 ) );
+            imagestring( self::$imgHandle, mt_rand( 1, 5 ), mt_rand( 0, self::$width ), mt_rand( 0, self::$height ), '*', $color );
         }
     }
     
     // 生成文字
-    private function createFont() {
-        $_x = $this->width / $this->codeLen;
-        for ( $i = 0; $i < $this->codeLen; $i ++ ) {
-            $this->fontColor = imagecolorallocate( $this->imgHandle, mt_rand( 0, 156 ), mt_rand( 0, 156 ), mt_rand( 0, 156 ) );
-            imagettftext( $this->imgHandle, $this->fontSize, mt_rand( -30, 30 ), $_x * $i + mt_rand( 1, 5 ), $this->height / 1.4, $this->fontColor, $this->fontPath, $this->code[$i] );
+    private static function createFont() {
+        $_x = self::$width / self::$codeLen;
+        for ( $i = 0; $i < self::$codeLen; $i ++ ) {
+            self::$fontColor = imagecolorallocate( self::$imgHandle, mt_rand( 0, 156 ), mt_rand( 0, 156 ), mt_rand( 0, 156 ) );
+            imagettftext( self::$imgHandle, self::$fontSize, mt_rand( -30, 30 ), $_x * $i + mt_rand( 1, 5 ), self::$height / 1.4, self::$fontColor, self::$fontPath, self::$code[$i] );
         }
     }
     
     // 输出
-    private function export() {
+    private static function export() {
         header( 'Content-type:image/png' );
-        imagepng( $this->imgHandle );
-        imagedestroy( $this->imgHandle );
+        imagepng( self::$imgHandle );
+        imagedestroy( self::$imgHandle );
     }
 }

@@ -872,12 +872,12 @@ class Index extends Common {
     
     // 输出验证码
     public function code() {
-        $code = new Code();
-        $code->set( array(
+        Code::init();
+        Code::set( array(
                 'width' => 100,
                 'height' => 40 
         ) );
-        $code->output();
+        Code::output();
     }
     
     // 校验验证码
@@ -922,8 +922,7 @@ class Index extends Common {
     
     // 文件下载
     public function down() {
-        $down = new Download();
-        $down->exe( './static/font/consolab.ttf' );
+        Download::exe( './static/font/consolab.ttf' );
     }
     
     // 文件打包
@@ -957,9 +956,9 @@ class Index extends Common {
                 1 => 'http://pic4.nipic.com/20091217/3885730_124701000519_2.jpg',
                 2 => 'http://img07.tooopen.com/images/20170316/tooopen_sy_201956178977.jpg' 
         );
-        $remoteDownload = new Capture( $fileArr );
+        Capture::init( $fileArr );
         
-        $remoteDownload->exe();
+        Capture::exe();
     }
     public function validate() {
         // $str = '132@qq.com';
@@ -1004,8 +1003,7 @@ class Index extends Common {
     }
     public function mp3towav() {
         $mp3file = './Data/audio/ghsy.mp3';
-        $o = new Mp3ToWav( $mp3file );
-        // $o->run();
+        Mp3ToWav::run( $mp3file );
     }
     public function socketServer() {
         $Socket = new Server();
@@ -1048,9 +1046,9 @@ class Index extends Common {
                 ] 
         ];
         
-        $luck = new Luck( $weight, 100000 );
-        $res = $luck->run(); // 抽奖
-        $total = $luck->test( 10000 ); // 统计10000次抽奖获奖记录
+        Luck::init( $weight, 100000 );
+        $res = Luck::run(); // 抽奖
+        $total = Luck::test( 10000 ); // 统计10000次抽奖获奖记录
         pr( $res, $total );
     }
     public function randm() {
