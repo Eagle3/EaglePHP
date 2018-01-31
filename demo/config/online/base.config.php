@@ -46,6 +46,7 @@ return array(
                         'CACHE_POSTFIX' => '.txt', //缓存文件后缀名
                 ),
                 'REDIS' => array(
+                        'SELECT_DB' => 0, //默认选择的数据库
                         'CACHE_TIME' => 2, //缓存时间
                         //多台redis服务器
                         'SERVERS' => array(

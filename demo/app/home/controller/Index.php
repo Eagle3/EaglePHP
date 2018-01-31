@@ -27,6 +27,7 @@ use lib\plugin\dataConvert\array2Xml_v1\Array2Xml as Array2XmlV1;
 use lib\plugin\dataConvert\array2Xml_v2\Array2Xml as Array2XmlV2;
 use lib\system\Crypt\Mcrypt3DesEcb;
 use lib\system\Crypt\Rsa;
+use lib\system\Cache\File as FileCache;
 use lib\system\Cache\Redis;
 use lib\system\Cache\Memcache;
 use lib\system\Download;
@@ -886,8 +887,23 @@ class Index extends Common {
         var_dump( $this->verifyCode( $code ) );
     }
     public function file() {
-        $file = PROJECT_PATH . 'Data/readMe.txt';
+        $file = PROJECT_PATH . 'data/readMe.txt';
         pr( File::dir2array( PROJECT_PATH, true ) );
+    }
+    public function fileCache() {
+        $file= FileCache::getInstance();
+        $data = array(
+                array(
+                        'name' => 'jack',
+                        'age' => 20
+                ),
+                array(
+                        'name' => 'jack1',
+                        'age' => 21
+                )
+        );
+        $file->set( 'test', $data );
+        pr( $file->get( 'test' ) );
     }
     public function redis() {
         $redis = Redis::getInstance();

@@ -1,8 +1,9 @@
 <?php
 
 namespace lib\system\cache;
+use lib\system\cache\abstractCache;
 
-class File {
+class File extends abstractCache{
     private static $instance = NULL;
     private $cacheHandler = NULL;
     private $setOptions = array();
@@ -54,7 +55,7 @@ class File {
         }
         return false;
     }
-    public function rm( $key ) {
+    public function delete( $key ) {
         $path = $this->setOptions['CACHE_PATH'];
         $prefix = $this->setOptions['CACHE_PREFIX'];
         $postfix = $this->setOptions['CACHE_POSTFIX'];
@@ -69,6 +70,8 @@ class File {
         $path = $this->setOptions['CACHE_PATH'];
         $this->deleteDir( $path );
     }
+    public function incr(){}
+    public function decr(){}
     private function deleteDir( $dir ) {
         if ( is_dir( $dir ) ) {
             foreach ( scandir( $dir ) as $row ) {

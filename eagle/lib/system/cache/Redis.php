@@ -2,7 +2,9 @@
 
 namespace lib\system\cache;
 
-class Redis {
+use lib\system\cache\abstractCache;
+
+class Redis extends abstractCache {
     private static $instance = NULL;
     private $cacheHandler = NULL;
     private $setOptions = array();
@@ -18,17 +20,20 @@ class Redis {
         if ( !$this->setOptions ) {
             $this->setOptions = $setOptions;
         }
-        // 初始化
         $this->cacheHandler = new \Redis();
         $this->cacheHandler->connect( $setOptions['SERVERS'][0]['HOST'], $setOptions['SERVERS'][0]['PORT'] );
+        $select_db = 0;
+        if ( isset( $setOptions['SELECT_DB'] ) ) {
+            $select_db = $setOptions['SELECT_DB'];
+        }
+       
+        $this->cacheHandler->select( $select_db );
     }
     public function get( $key ) {
         return unserialize( $this->cacheHandler->get( $key ) );
     }
-    public function set( $key, $value, $expire = null ) {
-        $value = serialize( $value );
-        $setOptions = $this->setOptions;
-        return $this->cacheHandler->set( $key, $value, $expire ? $expire : $setOptions['CACHE_TIME'] );
+    public function set( $key, $value, $expire = NULL ) {
+        return $this->cacheHandler->set( $key, serialize( $value ), $expire ? $expire : $this->setOptions['CACHE_TIME'] );
     }
     public function delete( $key ) {
         return $this->cacheHandler->delete( $key );
@@ -36,6 +41,8 @@ class Redis {
     public function clear() {
         return $this->cacheHandler->flushDB();
     }
+    public function incr() {}
+    public function decr() {}
     public function __destruct() {
         // $this->cacheHandler->close();
     }

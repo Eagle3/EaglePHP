@@ -1,8 +1,9 @@
 <?php
 
 namespace lib\system\cache;
+use lib\system\cache\abstractCache;
 
-class Memcache {
+class Memcache extends abstractCache {
     private static $instance = NULL;
     private $cacheHandler = NULL;
     private $setOptions = array();
@@ -18,7 +19,6 @@ class Memcache {
         if ( !$this->setOptions ) {
             $this->setOptions = $setOptions;
         }
-        // 初始化
         $this->cacheHandler = new \Memcache();
         // 现在的写法只支持一台memcache服务器
         // $this->cacheHandler->connect($setOptions['SERVERS'][0]['HOST'],$setOptions['SERVERS'][0]['PORT']);
@@ -30,8 +30,7 @@ class Memcache {
         return $this->cacheHandler->get( $key );
     }
     public function set( $key, $value, $expire = null ) {
-        $setOptions = $this->setOptions;
-        return $this->cacheHandler->set( $key, $value, MEMCACHE_COMPRESSED, $expire ? $expire : $setOptions['CACHE_TIME'] );
+        return $this->cacheHandler->set( $key, $value, MEMCACHE_COMPRESSED, $expire ? $expire : $this->setOptions['CACHE_TIME'] );
     }
     public function delete( $key ) {
         return $this->cacheHandler->delete( $key );
@@ -39,6 +38,8 @@ class Memcache {
     public function clear() {
         return $this->cacheHandler->flush();
     }
+    public function incr(){}
+    public function decr(){}
     public function __destruct() {
         $this->cacheHandler->close();
     }
