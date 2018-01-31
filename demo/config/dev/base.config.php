@@ -88,14 +88,14 @@ return array(
         // 缓存配置
         'CACHE_CONFIG' => array(
                 'FILE' => array(
-                        'CACHE_TIME' => 3, // 缓存时间
+                        'CACHE_TIME' => 180, // 缓存时间
                         'CACHE_PATH' => './tmp/cache/file_cache/', // 设置文件缓存目录
                         'CACHE_PREFIX' => 'file', // 文件缓存前缀
                         'CACHE_POSTFIX' => '.txt'  // 缓存文件后缀名
                 ),
                 'REDIS' => array(
                         'SELECT_DB' => 0, //默认选择的数据库
-                        'CACHE_TIME' => 3, // 缓存时间
+                        'CACHE_TIME' => 180, // 缓存时间
                                            // 多台redis服务器
                         'SERVERS' => array(
                                 array(
@@ -107,7 +107,7 @@ return array(
                         ) 
                 ),
                 'MEMCACHE' => array(
-                        'CACHE_TIME' => 3, // 缓存时间
+                        'CACHE_TIME' => 180, // 缓存时间
                                            // 多台memcache服务器
                         'SERVERS' => array(
                                 array(

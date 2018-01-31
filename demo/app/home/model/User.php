@@ -3,8 +3,8 @@
 namespace home\model;
 
 use lib\system\Model;
-//use lib\system\Cache\File;
-use lib\system\Cache\Memcache;
+//use lib\system\cache\File;
+use lib\system\cache\Memcache;
 //use lib\system\Cache\Redis;
 
 class User extends Model {
@@ -20,8 +20,8 @@ class User extends Model {
         if ( !$data ) {
             echo '查询数据库<br>';
             $pdo = Model::getInstance();
-            $data = $pdo->getAll( 'select * from user where id > :id ', array(
-                    ':id' => 0 
+            $data = $pdo->getAll( 'select * from `ceshi2` where id > :id limit 10 ', array(
+                    ':id' => 200175
             ) );
             $cache->set( md5( $key ), $data );
         }
