@@ -20,11 +20,16 @@ class Memcache extends abstractCache {
             $this->setOptions = $setOptions;
         }
         $this->cacheHandler = new \Memcache();
-        // 现在的写法只支持一台memcache服务器
-        // $this->cacheHandler->connect($setOptions['SERVERS'][0]['HOST'],$setOptions['SERVERS'][0]['PORT']);
         
-        $this->cacheHandler->addserver( $setOptions['SERVERS'][0]['HOST'], $setOptions['SERVERS'][0]['PORT'] );
-        // $this->cacheHandler->addserver($setOptions['SERVERS'][1]['HOST'],$setOptions['SERVERS'][1]['PORT']);
+        // memcache扩展向连接池添加多台服务器
+        $this->cacheHandler->connect($setOptions['SERVERS'][0]['HOST'],$setOptions['SERVERS'][0]['PORT']);
+        $this->cacheHandler->addserver( $setOptions['SERVERS'][1]['HOST'], $setOptions['SERVERS'][1]['PORT'] );
+        $this->cacheHandler->addserver($setOptions['SERVERS'][2]['HOST'],$setOptions['SERVERS'][2]['PORT']);
+      
+        // memcached扩展向连接池添加多台服务器
+//         $this->cacheHandler = new \Memcached();
+//         $this->cacheHandler->addServers($setOptions['SERVERS']);
+        
     }
     public function get( $key ) {
         return $this->cacheHandler->get( $key );
