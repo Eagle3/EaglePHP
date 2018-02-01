@@ -27,7 +27,7 @@ class Autoloader {
         foreach ( $classDir as $key => $val ) {
             if ( file_exists( $val . $classFile ) ) {
                 // echo $val.$classFile.'<br>';
-                require $val . $classFile;
+                require_once $val . $classFile;
                 break;
             }
             continue;
