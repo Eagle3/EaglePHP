@@ -45,6 +45,7 @@ use lib\system\Xml;
 class Index extends Common {
     public function init() {
         parent::init();
+        $this->jsonp();
         // echo 'init operation <br>';
     }
     

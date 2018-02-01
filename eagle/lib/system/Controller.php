@@ -55,4 +55,7 @@ class Controller {
             }
         }
     }
+    public function test(){
+        echo 11;
+    }
 }
