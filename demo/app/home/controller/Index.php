@@ -49,7 +49,7 @@ class Index extends Common {
     }
     
     public function phpinfo() {
-        phpinfo();
+        phpinfo(); 
     }
     
     public function index() {
