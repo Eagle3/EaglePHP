@@ -1,0 +1,3 @@
+@echo off 
+echo Stoping MySQL...
+net stop MySQL
