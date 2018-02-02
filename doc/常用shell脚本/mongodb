@@ -1,0 +1,32 @@
+#!/bin/bash
+#chkconfig: 2345 80 90
+#description: mongodb
+MONGOD=/usr/local/mongodb/bin/mongod
+mongod_start(){
+    $MONGOD --dbpath=/usr/local/mongodb/data/ --logpath=/usr/local/mongodb/dblog --fork
+    }
+mongod_stop(){
+    $MONGOD --shutdown --dbpath=/usr/local/mongodb/data/
+    }
+case "$1" in 
+start)
+    echo start...
+    mongod_start
+    if [ $? == 0 ];then
+        echo "Secuss start MongoDB!"
+    fi
+    ;;
+stop)
+    mongod_stop
+    if [ $? == 0 ];then
+        echo "MongoDB is shutdown now !"
+    fi
+    ;;
+restart)
+    mongod_stop
+    mongod_start
+    ;;
+*)
+    echo "Use args (start|stop|restart)"
+    ;;
+esac
