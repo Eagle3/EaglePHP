@@ -1,6 +1,6 @@
 #!/bin/sh
  
-# Linux环境SVN服务脚本
+# Linux环境SVN服务脚本和开机自启动方法
 # cp svn /etc/init.d/svn   拷贝脚本到 /etc/init.d/目录
 # chkconfig --add svn      (首先，添加为系统服务,注意add前面有两个横杠)、
 # chkconfig --level 2345 （启动级别）
