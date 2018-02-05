@@ -1,0 +1,18 @@
+	进入yum源配置路径
+	cd /etc/yum.repos.d
+	修改前先备份
+	cp CentOS-Base.repo  CentOS-Base.repo.bak
+	cp CentOS-Media.repo  CentOS-Media.repo.bak
+		
+	步骤：
+	1、yum源默认使用网络yum源（CentOS-Base.repo）
+	2、如果想使用本地光盘yum源，需要把网络yum源修改名称（如：mv CentOS-Base.repo CentOS-Base.repo.bak）
+	3、挂载光盘： mount /dev/cdrom /mnt/cdrom （ 卸载光盘：umount /dev/cdrom /mnt/cdrom）
+	4、把CentOS-Media.repo中的enabled改成1，把光盘挂在路径写对即可 （baseurl=file:///mnt/cdrom ）
+	5、yum clean all  清除缓存
+	6、yum makecache  将服务器上的软件包信息缓存到本地,以提高搜索安装软件的速度
+	7、如果想更改网络yum源，需要把CentOS-Base.repo的内容修改成新的yum源内（比如国内的163，即文件夹中的CentOS6-Base-163.repo的内容）
+	   重复5 6两步即可
+	
+	备注：
+	163相关连接：         http://mirrors.163.com/.help/centos.html
