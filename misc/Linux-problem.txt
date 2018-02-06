@@ -1,6 +1,6 @@
 ### Linux小问题记录  ###
 
-1. service network restart 重启网卡，出现如下错误：    弹出界面eth0: 错误：没有找到合适的设备：没有找到可用于链接System eth0 的设备
+1.  service network restart 重启网卡，出现如下错误：    弹出界面eth0: 错误：没有找到合适的设备：没有找到可用于链接System eth0 的设备
 	解决方式：  http://blog.51cto.com/wenzhongxiang/1433858
 	
 2. Linux下文件无法写入（文件无法上传）时可能原因
@@ -62,18 +62,48 @@
 	即时生效
 	source /etc/sysconfig/i18n	
 		
-7. 修改Linux默认启动级别	
+7.  修改Linux默认启动级别	
 	vi /etc/inittab
 	
-	# 5 多用户有界面
-	#id:5:initdefault:
-	
-	# 3 多用户命令行
+	# 5 多用户图形界面
+	id:5:initdefault:
+	# 3 多用户命令行界面
 	id:3:initdefault:
 	
-	
-	
-	
+8.	Linux下某个服务设为开机启动
+	第一种：修改/etc/rc.local脚本 (以Apache为例)
+		A： vi /etc/rc.local
+		B: 只需要把下面一行加入文件末尾即可
+		   /usr/local/apache2/bin/apachectl start
+		C: 或者 A B两步忽略，直接执行此步。 echo '/usr/local/apache2/bin/apachectl start ' >> /etc/rc.local   
+		   
+        第二种：利用chkconfig修改 (以Apache为例)。此步也同时把Apache置为Linux系统服务，可以使用service httpd start|stop|restart 等命令
+        A: cp /usr/local/apache2/bin/apachectl /etc/init.d/httpd   #拷贝脚本
+        B: vi /etc/init.d/httpd        		#编辑脚本，添加如下两行
+           #chkconfig:2345 85 85       		#此行的345参数表示,在哪些运行级别启动,启动序号(S61);关闭序号(K61)
+		   #description:Apache httpd   		#此行必写,描述服务
+		C: chkconfig --add httpd            #把httpd加为Linux系统服务，可以使用service命令
+		D: chkconfig --level 2345 httpd on  #把httpd加入开机启动并且设置启动级别
+		E: chmod 755 /etc/init.d/httpd      #脚本添加执行权限
+		F： chkconfig --list|grep httpd      #查看httpd是否加入系统服务 (httpd 	0:off	1:off	2:on	3:on	4:on	5:on	6:off )
+		
+		附：chkconfig命令
+		chkconfig       [--add]      [--del]     [--list]      [系统服务]
+　　		chkconfig       [--level/levels]      [等级代号]      [系统服务]      [on/off/reset]
+		
+		chkconfig --list      			    显示开机可以自动启动的服务 
+		chkconfig --add httpd   	            把httpd服务加入到Linux系统服务中 
+		chkconfig --del httpd   		    删除开机自动启动httpd服务
+		chkconfig --level 2345 httpd on   把httpd服务加入开机启动并且设置启动级别
+		
+		等级代码：linux系统的运行级别。linux 将操作 环境分为以下7个等级，即
+		0：关机
+		1：单用户模式（单用户、无网络）
+		2：无网络支持的多用户模式（多用户、无网络）
+		3：有网络支持的多用户模式（多用户、有网络）
+		4：保留，未使用
+		5：有网络支持有X-Window支持的多用户模式（多用户、有网络、X-Window界面）
+		6：重新引导系统，即重启
 	
 	
 	
