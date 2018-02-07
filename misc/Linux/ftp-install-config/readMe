@@ -1,0 +1,71 @@
+###   Linux下FTP服务器安装及简单配置     ####
+
+
+
+步骤：
+1、 安装：  
+	 yum -y install vsftpd
+
+2、 设置服务开机自动启动
+	service vsftpd status 				查看vsftpd服务状态
+	service vsftpd start  				启动vsftpd服务
+	chkconfig  --level 2345 vsftpd on  设置开机自动启动
+	chkconfig  --list vsftpd  			查看vsftpd服务开机自动启动是否设置成功
+
+3、修改vsftpd服务配置文件(详情看 vsftpd.conf)
+	加强vsftp安全设置：
+	限制系统用户锁定在家目录（也就是看到的根目录就是 / == /usr/local/nginx/html）：
+	#vim  /etc/vsftpd/vsftpd.conf 
+	chroot_list_enable=YES 
+	chroot_list_file=/etc/vsftpd/chroot_list  限制更多的系统用户，把需要限制的用户加入/etc/vsftpd/chroot_list中即可 
+	#设置ftp用户默认访问的目录
+	local_root=/usr/local/nginx/html
+	
+	
+	创建chroot_list
+	touch /etc/vsftpd/chroot_list
+	把ftpuser1填入chroot_list文件
+
+4、 重启vsftpd服务  service vsftpd restart
+
+5、创建一个直接登录系统用户来登录ftp：
+	#useradd -s /sbin/nologin ftpuser1 
+	#passwd 123
+	
+
+6、设置防火墙
+	直接关闭防火墙   service iptables stop
+	
+	或者
+	
+	添加防火墙规则（详情看 iptables）
+	#ftp
+	-A INPUT -m state --state NEW -m tcp -p tcp --dport 21 -j ACCEPT
+	
+	然后重启防火墙   service iptables restart
+	
+7、关闭SELinux
+	A： 查看是否关闭。未关闭时执行 B C D三步
+	/usr/sbin/sestatus -v
+	
+	B:临时关闭（不用重启机器）
+	setenforce 0
+	
+	C:修改配置文件(永久关闭),需要重启机器
+	修改/etc/selinux/config 文件
+	将SELINUX=enforcing改为SELINUX=disabled
+	
+	D:重启机器  reboot
+
+8、使用ftp客户端软件连接ftp服务器
+	输入用户名：  ftpuser1
+	密码：  123
+
+9、可能登录失败
+	A: 提示  500 OOPS: could not read chroot() list file:/etc/vsftpd/chroot_list
+		需要创建chroot_list文件      touch /etc/vsftpd/chroot_list  
+	
+	B:读取列表失败
+		FTP客户端软件传输设置更改为主动模式
+	
+
