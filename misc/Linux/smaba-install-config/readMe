@@ -1,0 +1,99 @@
+###   Linux下Samba服务器安装及简单配置     ####
+
+需要软件包：
+	samba-3.6.9-151.el6.x86_64                           //服务器端软件，主要提供samba服务器的守护程序，共享文档，日志的轮替
+	samba-common-3.6.9-151.el6.x86_64               	 //主要提供samba服务器的设置文件与设置文件语法检验程序testparm
+	samba-client-3.6.9-151.el6.x86_64                    //客户端软件，主要提供linux主机作为客户端时，所需要的工具指令集
+
+
+安装成功之后，系统会生成服务的配置文件和一些命令工具：
+	/etc/samba/smb.conf   		//是samba服务的主配置文件
+	/etc/init.d/smb             //是samba的启动/关闭文件
+
+使用smbpasswd添加共享用户的常用方法：
+　　smbpasswd -a 添加用户（被添加用户必须是系统用户）
+　　smbpasswd -d 冻结用户 （这个用户不能用了）
+　　smbpasswd -e 恢复用户 （将冻结的用户解冻）
+　　smbpasswd -n 将用户密码设置为空 
+　　smbpasswd -x 删除用户
+
+
+步骤：
+1、 安装：  
+	 yum -y install samba samba-client samba-common
+
+2、 设置服务开机自动启动
+	service smb status 				查看Samba服务状态
+	service smb start  				启动Samba服务
+	chkconfig  --level 2345 smb on  设置开机自动启动
+	chkconfig  --list smb  			查看Samba服务开机自动启动是否设置成功
+
+3、修改smb服务配置文件(详情看 smb.conf)
+	[global]　　　　　　　　　　　　　　　　　　　　			//设置samba服务整体环境
+	workgroup = WORKGROUP　　　　　　　　　　 				//设置工作组名称
+	server string = Samba Server Version %v                 //服务器说明
+	
+	#配置共享目录(webroot-nginx-101  随便设置，对外显示此名称)
+	[webroot-nginx-101]
+        #注释说明
+        comment = webroot Directorties
+        #共享目录
+        path = /usr/local/nginx/html
+        #是否显示共享目录
+        browseable = yes
+        #若为no则进行身份验证(只有当security = share 时此项才起作用)
+        guest ok = yes
+        #目录是否可写
+        writable = yes
+	
+	保存配置后，使用 testparm 命令查看配置是否有误
+	
+4、 重启Samba服务  service smb restart
+
+5、添加一个共享用户，用来访问共享文件。
+	先添加一个普通用户 （因为要添加的共享用户必须是系统用户）
+	# useradd  samba_user1   　　　　//因为不需要在shell中登录，所以可以不设置密码
+	然后使用smbpasswd添加共享用户并设置密码
+	# smbpasswd -a samba_user1
+	
+
+6、设置防火墙
+	直接关闭防火墙   service iptables stop
+	
+	或者
+	
+	添加防火墙规则（详情看 iptables）
+	#samba
+	-A INPUT -m state --state NEW -m tcp -p tcp --dport 137 -j ACCEPT
+	-A INPUT -m state --state NEW -m tcp -p tcp --dport 138 -j ACCEPT
+	-A INPUT -m state --state NEW -m tcp -p tcp --dport 139 -j ACCEPT
+	-A INPUT -m state --state NEW -m tcp -p tcp --dport 389 -j ACCEPT
+	-A INPUT -m state --state NEW -m tcp -p tcp --dport 445 -j ACCEPT
+	-A INPUT -m state --state NEW -m tcp -p tcp --dport 901 -j ACCEPT
+	
+	然后重启防火墙   service iptables restart
+	
+7、关闭SELinux
+	A： 查看是否关闭。未关闭时执行 B C D三步
+	/usr/sbin/sestatus -v
+	
+	B:临时关闭（不用重启机器）
+	setenforce 0
+	
+	C:修改配置文件(永久关闭),需要重启机器
+	修改/etc/selinux/config 文件
+	将SELINUX=enforcing改为SELINUX=disabled
+	
+	D:重启机器  reboot
+
+8、最后在windows中打开文件资源管理器输入  \\192.168.1.101  进行访问
+	输入用户名：  samba_user1
+	密码：  123
+
+9、打开文件修改，然后保存失败；或者创建目录和文件失败
+	把共享目录权限改成777
+
+10、 samba更详细用户权限配置查看
+	http://blog.csdn.net/lan120576664/article/details/50396511
+
+
