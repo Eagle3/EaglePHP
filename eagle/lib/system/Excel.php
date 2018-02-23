@@ -6,20 +6,20 @@ use lib\system\Import;
 
 class Excel {
     private static function init() {
-        Import::load( 'Lib/Plugin/PHPExcel/PHPExcel.php' );
+        Import::load( 'lib/plugin/PHPExcel/PHPExcel.php' );
         
         // 用于输出.xls文件
-        Import::load( 'Lib/Plugin/PHPExcel/PHPExcel/Writer/Excel5.php' );
+        Import::load( 'lib/plugin/PHPExcel/PHPExcel/Writer/Excel5.php' );
         
         // 用于输出.xlsx
-        Import::load( 'Lib/Plugin/PHPExcel/PHPExcel/Writer/Excel2007.php' );
-        Import::load( 'Lib/Plugin/PHPExcel/PHPExcel/IOFactory.php' );
+        Import::load( 'lib/plugin/PHPExcel/PHPExcel/Writer/Excel2007.php' );
+        Import::load( 'lib/plugin/PHPExcel/PHPExcel/IOFactory.php' );
         
         // 用于修改输出样式
-        Import::load( 'Lib/Plugin/PHPExcel/PHPExcel/Style/Color.php' );
-        Import::load( 'Lib/Plugin/PHPExcel/PHPExcel/Style/Font.php' );
-        Import::load( 'Lib/Plugin/PHPExcel/PHPExcel/Style/Alignment.php' );
-        Import::load( 'Lib/Plugin/PHPExcel/PHPExcel/Style/Border.php' );
+        Import::load( 'lib/plugin/PHPExcel/PHPExcel/Style/Color.php' );
+        Import::load( 'lib/plugin/PHPExcel/PHPExcel/Style/Font.php' );
+        Import::load( 'lib/plugin/PHPExcel/PHPExcel/Style/Alignment.php' );
+        Import::load( 'lib/plugin/PHPExcel/PHPExcel/Style/Border.php' );
     }
     
     /**
