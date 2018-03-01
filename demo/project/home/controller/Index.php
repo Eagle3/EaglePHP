@@ -152,7 +152,35 @@ class Index extends Common {
     public function select() {
         $model = new User();
         $data = $model->getInfo();
-        pr( $data );
+        //pr( count($data), $data );
+        
+        $pinyin = new Pinyin();
+        
+        /*
+         * - 内存型，适用于服务器内存空间较富余，优点：转换快
+         * - 小内存型(默认)，适用于内存比较紧张的环境，优点：占用内存小，转换不如内存型快
+         * - I/O型，适用于虚拟机，内存限制比较严格环境。优点：非常微小内存消耗。缺点：转换慢，不如内存型转换快,php >= 5.5
+         */
+        
+        // 内存型
+        //$pinyin = new Pinyin('lib\plugin\hanziToPinyin\src\FileDictLoader');
+        // I/O型
+        // $pinyin = new Pinyin('Overtrue\Pinyin\GeneratorFileDictLoader');
+        
+        $city_f = array();
+        foreach ( $data as $k => $v ){
+            $res = $pinyin->convert( $v['area_name']);
+            if( $res[0] ){
+                $v['first_letter'] = substr($res[0], 0,1);
+                $city_f[$v['area_name']] = $v['first_letter'];
+            }else{
+                continue;
+            }
+        }
+        
+        $d = var_export( $city_f,true );
+        file_put_contents('./data/cityData/cityFirstLetter.php', $d);
+        
     }
     public function insert() {
         $model = new User();

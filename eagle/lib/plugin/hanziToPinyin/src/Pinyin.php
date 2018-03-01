@@ -64,7 +64,7 @@ class Pinyin
      */
     public function __construct($loaderName = null)
     {
-        $this->loader = $loaderName ?: 'Lib\\Plugin\\HanziToPinyin\\src\\FileDictLoader';
+        $this->loader = $loaderName ?: 'lib\\plugin\\hanziToPinyin\\src\\FileDictLoader';
     }
 
     /**

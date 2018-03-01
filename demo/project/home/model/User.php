@@ -11,19 +11,22 @@ class User extends Model {
 
     public function getInfo() {
         // $cache = File::getInstance();
-        $cache = Memcache::getInstance();
+        //$cache = Memcache::getInstance();
         // $cache = Redis::getInstance();
         
-        $key = 'test';
-        $data = $cache->get( md5( $key ) );
-        
+        //$key = 'test';
+        //$data = $cache->get( md5( $key ) );
+        $data = null;
         if ( !$data ) {
             echo '查询数据库<br>';
             $pdo = Model::getInstance();
             $data = $pdo->getAll( 'select * from `ceshi2` where id > :id limit 10 ', array(
                     ':id' => 200175
             ) );
-            $cache->set( md5( $key ), $data );
+            
+            $data = $pdo->getAll( 'select area_name from `citys` where area_type=2 ');
+            
+            //$cache->set( md5( $key ), $data );
         }
         return $data;
     }
