@@ -92,23 +92,26 @@ function getSmartyObj() {
  * @param string $dir_path
  *            目录
  */
-function listFiles( $dir_path ) {
-    if ( is_dir( $dir_path ) ) {
-        $dir_handle = opendir( $dir_path );
-        if ( $dir_handle ) {
-            while ( ($file = readdir( $dir_handle )) !== false ) {
-                if ( $file != '.' && $file != '..' && is_dir( $dir_path . '/' . $file ) ) {
-                    echo "<font color='red'><b>$file</b></font><br />";
-                    list_files( $dir_path . '/' . $file );
-                } else {
-                    if ( $file != '.' && $file != '..' ) {
-                        echo $file . '<br />';
+function listFiles( $dir ){
+    if( is_dir( $dir ) ){
+        $dirHandle = opendir( $dir );
+        if( $dirHandle ){
+            while( ( $file = readdir( $dirHandle ) ) !== false ){
+                if( $file != '.' && $file != '..' ){
+                    if( listFiles( $dir.'\\'.$file ) ){
+                        echo "<font color='red'>目录:{$dir}\\{$file}</font><br>";
+                        //usleep(10000);
+                        lFile( $dir.'\\'.$file );
+                    }else{
+                        echo "{$file}<br>";
+                        //usleep(10000);
                     }
                 }
             }
         }
     }
 }
+
 /*
  * echo '<h1>The red tag is directory</h1><br />';
  * list_files('C:\Program Files\TortoiseSVN')
