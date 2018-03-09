@@ -74,6 +74,79 @@ class Index extends Common {
         $this->display( 'index' );
     }
     
+    //99乘法表
+    public function times99(){
+        for( $i=1;$i<=9;$i++ ){
+            for( $j=1;$j<=$i;$j++ ){
+                echo "{$j} x {$i} = ".($i*$j)."&nbsp;&nbsp;";
+            }
+            echo '<br>';
+        }
+        echo '<br>';
+        
+        for( $i=9;$i>=1;$i-- ){
+            for( $j=1;$j<=$i;$j++ ){
+                echo "{$j} x {$i} = ".($i*$j)."&nbsp;&nbsp;";
+            }
+            echo '<br>';
+        }
+        echo '<br>';
+        
+        echo '<table>';
+        for( $i=9;$i>=1;$i-- ){
+            echo '<tr>';
+            echo $this->space( 9 - $i );
+            for( $j=1;$j<=$i;$j++ ){
+                echo '<td align="right">';
+                echo "{$j} x {$i} = ".($i*$j).'&nbsp;&nbsp;';
+                echo '</td>';
+            }
+            echo '</tr>';
+        }
+        echo '</table>';
+        echo '<br>';
+        
+        echo '<table>';
+        for( $i=1;$i<=9;$i++ ){
+            echo '<tr>';
+            echo $this->space( 9 - $i );
+            for( $j=1;$j<=$i;$j++ ){
+                echo '<td align="right">';
+                echo "{$j} x {$i} = ".($i*$j).'&nbsp;&nbsp;';
+                echo '</td>';
+            }
+            echo '</tr>';
+        }
+        echo '</table>';
+        echo '<br>';
+        
+    }
+    
+    //阶乘
+    public function jiecheng(){
+        $num = 1;
+        $s = '';
+        $i = 10;
+        for ( $n = $i;$n >= 1;$n-- ){
+            $s .= "{$n} x ";
+            $num = $num * $n;
+        }
+        $s = rtrim($s,' x');
+        echo "!{$i} = {$s} = {$num}";
+    }
+    
+    
+    private function space( $n ){
+        $s = '';
+        if( $n == 0 ){
+            return $s;
+        }
+        for( $i=1;$i<=$n;$i++ ){
+            $s .= "<td></td>";
+        }
+        return $s;
+    }
+    
     // 测试httpheader Authorization
     public function oauthor() {
         $header = array(
