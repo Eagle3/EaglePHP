@@ -136,6 +136,7 @@ class Index extends Common {
     }
     
     
+    
     private function space( $n ){
         $s = '';
         if( $n == 0 ){
