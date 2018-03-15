@@ -98,10 +98,10 @@ function listFiles( $dir ){
         if( $dirHandle ){
             while( ( $file = readdir( $dirHandle ) ) !== false ){
                 if( $file != '.' && $file != '..' ){
-                    if( listFiles( $dir.'\\'.$file ) ){
+                    if( is_dir( $dir.'\\'.$file ) ){
                         echo "<font color='red'>目录:{$dir}\\{$file}</font><br>";
                         //usleep(10000);
-                        lFile( $dir.'\\'.$file );
+                        listFiles( $dir.'\\'.$file );
                     }else{
                         echo "{$file}<br>";
                         //usleep(10000);
