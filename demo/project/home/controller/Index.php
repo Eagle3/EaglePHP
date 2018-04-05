@@ -54,7 +54,7 @@ class Index extends Common {
     
     public function index() {
         echo 'EaglePHP works ; windows nginx <br>';
-        exit;
+        exit; 
         // pr( $_SERVER );
         // $o = Index();
         // $o->index2();
