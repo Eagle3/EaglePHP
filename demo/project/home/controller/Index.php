@@ -225,7 +225,7 @@ class Index extends Common {
     }
     public function select() {
         $model = new User();
-        $data = $model->getInfo();
+        $data = $model->getInfo(); 
         //pr( count($data), $data );
         
         $pinyin = new Pinyin();
