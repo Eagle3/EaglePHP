@@ -45,7 +45,6 @@ use lib\system\Xml;
 class Index extends Common {
     public function init() {
         parent::init();
-        echo '初始化方法';
         // echo 'init operation <br>';
     }
     
