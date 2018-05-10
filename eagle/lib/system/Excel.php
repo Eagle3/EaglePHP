@@ -124,9 +124,9 @@ class Excel {
         if ( empty( $excelFileName ) or !file_exists( $excelFileName ) ) {
             die( 'file not exists' );
         }
-        $PHPReader = new PHPExcel_Reader_Excel2007(); // 建立reader对象
+        $PHPReader = new \PHPExcel_Reader_Excel2007(); // 建立reader对象
         if ( !$PHPReader->canRead( $excelFileName ) ) {
-            $PHPReader = new PHPExcel_Reader_Excel5();
+            $PHPReader = new \PHPExcel_Reader_Excel5();
             if ( !$PHPReader->canRead( $excelFileName ) ) {
                 echo 'no Excel';
                 return;
@@ -141,7 +141,7 @@ class Excel {
             for ( $colIndex = 'A'; $colIndex <= $allColumn; $colIndex ++ ) {
                 $addr = $colIndex . $rowIndex;
                 $cell = $currentSheet->getCell( $addr )->getValue();
-                if ( $cell instanceof PHPExcel_RichText ) { // 富文本转换字符串
+                if ( $cell instanceof \PHPExcel_RichText ) { // 富文本转换字符串
                     $cell = $cell->__toString();
                 }
                 $data[$rowIndex][$colIndex] = $cell;
