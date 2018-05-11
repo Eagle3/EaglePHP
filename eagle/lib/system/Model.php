@@ -25,7 +25,7 @@ class Model {
             $this->prefix = $dbConfig['prefix'];
             $this->dsn = "mysql:host={$dbConfig['host']};dbname={$dbConfig['dbName']};port={$dbConfig['port']};charset=utf8";
             $this->pdo = new \PDO( $this->dsn, $dbConfig['userName'], $dbConfig['passWord'], $dbConfig['driverOptions'] );
-            //$this->pdo->query( "set names {$dbConfig['charSet']}" );
+            $this->pdo->query( "set names {$dbConfig['charSet']}" );
             $this->pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION ); // 设置错误处理模式
             $this->pdo->setAttribute( \PDO::ATTR_AUTOCOMMIT, 1 ); // 关闭或开启自动提交
             $this->pdo->setAttribute( \PDO::ATTR_EMULATE_PREPARES, false ); // 禁用模拟预处理语句
