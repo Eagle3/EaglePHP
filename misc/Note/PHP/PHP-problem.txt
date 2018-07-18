@@ -40,8 +40,7 @@
 	打开 fastcgi_params 文件添加以下类似代码
 	fastcgi_param  APP_ENV 			  dev;
 
-
-
+7. PHP7在Windows下默认不支持短标签 即 <? ?> ,如果有短标签，修改PHP配置文件开启支持短标签。Linux下默认支持短标签。   short_open_tag = On
 
 
 
