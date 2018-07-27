@@ -212,10 +212,21 @@ class Index extends Common {
         );
         $this->echoAjax( $res );
     }
+    //另一个应用登录成功后请求此接口，此接口接受数据并在cookie中写入数据
+    public function crossCookie(){
+        header('Content-type: application/json');
+        Log::debug( 'request:' . var_export( $_REQUEST, true ) . ',header:' . var_export( getallheaders(), true ) );
+        setcookie('name',isset($_GET['name']) ? $_GET['name'] : '',time()+3600*24*30,'/');
+        echo json_encode( array(
+                'request' => $_REQUEST
+        ) );
+        exit;
+        
+    }
     public function jsonp() {
-        header( "ACCESS-CONTROL-ALLOW-ORIGIN:http://eagle.test" );
+        header( "ACCESS-CONTROL-ALLOW-ORIGIN:http://eagle.local" );
         $data = $_REQUEST;
-        $callback = $data['callbackfun'];
+        $callback = isset($data['callbackfun']) ? $data['callbackfun'] : '';
         $json = json_encode( array(
                 'code' => 1,
                 'msg' => 'ok',
