@@ -586,27 +586,23 @@ function utf8_to_gbk( $data ) {
  *            截取长度
  * @param string $charset
  *            编码
- * @param string $is_c
- *            是否是中文
+ * @param string $suffix
+ *            截取后补充部分
  * @return string
  */
-function msubstr( $str, $start = 0, $length, $charset = "utf-8", $is_c = true ) {
+function msubstr( $str, $start = 0, $length, $charset = "utf-8", $suffix = '…' ) {
     if ( function_exists( "mb_substr" ) ) {
-        $slice = mb_substr( $str, $start, $length, $charset );
+        $slice = mb_substr( $str, $start, $length, $charset ).$suffix;
     } elseif ( function_exists( 'iconv_substr' ) ) {
-        $slice = iconv_substr( $str, $start, $length, $charset );
+        $slice = iconv_substr( $str, $start, $length, $charset ).$suffix;
     } else {
         $re['utf-8'] = "/[\x01-\x7f]|[\xc2-\xdf][\x80-\xbf]|[\xe0-\xef][\x80-\xbf]{2}|[\xf0-\xff][\x80-\xbf]{3}/";
         $re['gb2312'] = "/[\x01-\x7f]|[\xb0-\xf7][\xa0-\xfe]/";
         $re['gbk'] = "/[\x01-\x7f]|[\x81-\xfe][\x40-\xfe]/";
         $re['big5'] = "/[\x01-\x7f]|[\x81-\xfe]([\x40-\x7e]|\xa1-\xfe])/";
         preg_match_all( $re[$charset], $str, $match );
-        $slice = join( "", array_slice( $match[0], $start, $length ) );
+        return join( "", array_slice( $match[0], $start, $length ) ).$suffix;
     }
-    if ( mb_strlen( $str ) != mb_strlen( $slice ) && $is_c ) {
-        $slice .= "…";
-    }
-    return $slice;
 }
 // var_dump(msubstr('中国ass服务过问过1231123efweggr',1,20));
 
