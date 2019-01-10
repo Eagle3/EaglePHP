@@ -985,6 +985,12 @@ class Index extends Common {
         Excel::export( $data, $version, $fileName, $headFields, $keys ); // 传递自定义参数
     }
     
+    public function import() {
+
+        $data = Excel::import( "E:/1.xlsx" ); // 传递自定义参数
+        pr($data);
+    }
+    
     // 输出验证码
     public function code() {
         Code::init();
