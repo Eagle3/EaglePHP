@@ -21,6 +21,14 @@ function pr() {
 }
 
 /**
+ * 检测是不是内网IP。内网返回true，公网返回ip值
+ * @param string $ip
+ */
+function checkIp($ip = ''){
+    return filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+}
+
+/**
  * 获取自定义所有常量
  * 
  * @return array
